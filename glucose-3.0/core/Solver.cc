@@ -189,7 +189,7 @@ void Solver::initNbInitialVars(int nb) {
 // Creates a new SAT variable in the solver. If 'decision' is cleared, variable will not be
 // used as a decision variable (NOTE! This has effects on the meaning of a SATISFIABLE result).
 //
-Var Solver::newVar(bool sign, bool dvar)
+Var Solver::newVar(double varActivity, bool sign, bool dvar)
 {
     int v = nVars();
     watches  .init(mkLit(v, false));
@@ -199,7 +199,7 @@ Var Solver::newVar(bool sign, bool dvar)
     assigns  .push(l_Undef);
     vardata  .push(mkVarData(CRef_Undef, 0));
     //activity .push(0);
-    activity .push(rnd_init_act ? drand(random_seed) * 0.00001 : 0);
+    activity .push(rnd_init_act ? drand(random_seed) * 0.00001 : varActivity);
     seen     .push(0);
     permDiff  .push(0);
     polarity .push(sign);
