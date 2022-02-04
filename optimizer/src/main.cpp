@@ -8,7 +8,46 @@ namespace bp = boost::process;
 
 static std::mt19937 random_generator;
 static size_t n;
-static size_t population_size;
+static size_t population_size = 10;
+static size_t offspring_size = 20;
+static size_t mutations_count = 5;
+static size_t generations = 1000;
+
+struct cnf {
+    std::string header;
+    std::vector<std::string> body;
+
+    explicit cnf(const std::string &path_to_dimacs) {
+        std::ifstream input_stream(path_to_dimacs);
+        std::string line;
+        while (std::getline(input_stream, line)) {
+            if (line[0] == 'c') {
+                continue;
+            } else if (line.find("p cnf") == 0) {
+                std::stringstream line_stream(line);
+                std::string dummy;
+                line_stream >> dummy >> dummy >> n;
+                header = line;
+            } else {
+                body.push_back(line);
+            }
+        }
+    }
+
+    void send_cnf(bp::opstream &in, const std::vector<double> &activity) const {
+        in << header << '\n';
+        in << "activity " << std::scientific;
+        for (const auto &a : activity) {
+            in << a << ' ';
+        }
+        in << '\n';
+        for (const auto &s : body) {
+            in << s << '\n';
+        }
+        in.close();
+        in.pipe().close();
+    }
+};
 
 struct sample {
     std::vector<double> activity;
@@ -21,7 +60,9 @@ struct sample {
         });
     }
 
-    sample(const sample &a, const sample &b, size_t cut_pos) : activity(n) {
+    sample(const sample &a, const sample &b) : activity(n) {
+        std::uniform_int_distribution<size_t> cut_pos_distribution(0, n - 1);
+        size_t cut_pos = cut_pos_distribution(random_generator);
         for (size_t i = 0; i < n; ++i) {
             if (i < cut_pos) {
                 activity[i] = a.activity[i];
@@ -30,17 +71,39 @@ struct sample {
             }
         }
     }
+
+    void evaluate(const cnf &cnf) {
+        bp::opstream in;
+
+        std::ostringstream proof_file_path;
+//        proof_file_path << static_cast<const void*>(this);
+        proof_file_path << "proof.dimacs";
+
+        boost::process::child c("./glucose -certified -certified-output=" + proof_file_path.str(), bp::std_in < in, bp::std_out > bp::null);
+        cnf.send_cnf(in, activity);
+        c.wait();
+
+        std::ifstream proof_stream(proof_file_path.str());
+        size_t proof_size = 0;
+        std::string line;
+        while (std::getline(proof_stream, line)) {
+            ++proof_size;
+        }
+        fitness = static_cast<double>(proof_size);
+    }
 };
+
+bool operator<(const sample &a, const sample &b) {
+    return a.fitness < b.fitness;
+}
+
+bool operator==(const sample &a, const sample &b) {
+    return a.fitness == b.fitness;
+}
 
 std::vector<sample> create_population() {
     std::vector<sample> population(population_size);
     return population;
-}
-
-std::pair<sample, sample> crossover(const sample &a, const sample &b) {
-    std::uniform_int_distribution<size_t> distribution(0, n);
-    size_t cut_pos = distribution(random_generator);
-    return std::make_pair(sample(a, b, cut_pos), sample(b, a, cut_pos));
 }
 
 sample mutate(sample &s) {
@@ -55,19 +118,44 @@ sample mutate(sample &s) {
 }
 
 int main() {
-    bp::opstream in;
-    bp::ipstream out;
+    cnf cnf("../../sat/dubois/dubois20.cnf");
 
-    boost::process::child c("./glucose -certified -certified-output=proof.dimacs", bp::std_in < in, bp::std_out > stdout);
+    std::vector<sample> population = create_population();
+    for (size_t i = 0; i < generations; ++i) {
+        std::cout << "=== Generation " << i << " ===\n";
+        std::vector<sample> offspring;
+        offspring.reserve(offspring_size);
+        std::uniform_int_distribution<size_t> population_distribution(0, population_size - 1);
+        std::uniform_int_distribution<size_t> offspring_distribution(0, offspring_size - 1);
 
-    in << "p cnf 3 3\n" << "1 2 3 0\n" << "-1 -2 0\n" << "-2 -3 0\n" << std::endl;
-    in.close();
-    c.wait();
+        std::cout << "Generating offspring...\n";
+        for (size_t j = 0; j < offspring_size; ++j) {
+            size_t parent_a = population_distribution(random_generator);
+            size_t parent_b = population_distribution(random_generator);
+            offspring.emplace_back(population[parent_a], population[parent_b]);
+        }
+
+        std::cout << "Mutating...\n";
+        for (size_t j = 0; j < mutations_count; ++j) {
+            mutate(offspring[offspring_distribution(random_generator)]);
+        }
+
+        std::cout << "Evaluating...\n";
+        for (size_t j = 0; j < offspring_size; ++j) {
+            offspring[j].evaluate(cnf);
+        }
+
+        std::sort(offspring.begin(), offspring.end());
+
+        std::cout << "Top results: ";
+        for (size_t j = 0; j < offspring_size; ++j) {
+            std::cout << offspring[j].fitness << ' ';
+        }
+        std::cout << '\n';
+        population.clear();
+        for (size_t j = 0; j < population_size; ++j) {
+            population.push_back(offspring[j]);
+        }
+        offspring.clear();
+    }
 }
-
-// main -> create_population = (sample)    [generation_size]
-//      \> evolve
-// evolve -> crossover      [offspring_size]
-//        \> mutate         [count_of_mutations]
-//        \> evaluate
-//        \> elect          [generation_size]
