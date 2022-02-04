@@ -118,7 +118,7 @@ sample mutate(sample &s) {
 }
 
 int main() {
-    cnf cnf("../../sat/dubois/dubois20.cnf");
+    cnf cnf("../../sat/dubois/dubois21.cnf");
 
     std::vector<sample> population = create_population();
     for (size_t i = 0; i < generations; ++i) {
