@@ -47,19 +47,19 @@ void printStats(Solver& solver)
 {
     double cpu_time = cpuTime();
     double mem_used = 0;//memUsedPeak();
-    printf("c restarts              : %"PRIu64" (%"PRIu64" conflicts in avg)\n", solver.starts,(solver.starts>0 ?solver.conflicts/solver.starts : 0));
-    printf("c blocked restarts      : %"PRIu64" (multiple: %"PRIu64") \n", solver.nbstopsrestarts,solver.nbstopsrestartssame);
-    printf("c last block at restart : %"PRIu64"\n",solver.lastblockatrestart);
+    printf("c restarts              : %" PRIu64" (%" PRIu64" conflicts in avg)\n", solver.starts,(solver.starts>0 ?solver.conflicts/solver.starts : 0));
+    printf("c blocked restarts      : %" PRIu64" (multiple: %" PRIu64") \n", solver.nbstopsrestarts,solver.nbstopsrestartssame);
+    printf("c last block at restart : %" PRIu64"\n",solver.lastblockatrestart);
     printf("c nb ReduceDB           : %lld\n", solver.nbReduceDB);
     printf("c nb removed Clauses    : %lld\n",solver.nbRemovedClauses);
     printf("c nb learnts DL2        : %lld\n", solver.nbDL2);
     printf("c nb learnts size 2     : %lld\n", solver.nbBin);
     printf("c nb learnts size 1     : %lld\n", solver.nbUn);
 
-    printf("c conflicts             : %-12"PRIu64"   (%.0f /sec)\n", solver.conflicts   , solver.conflicts   /cpu_time);
-    printf("c decisions             : %-12"PRIu64"   (%4.2f %% random) (%.0f /sec)\n", solver.decisions, (float)solver.rnd_decisions*100 / (float)solver.decisions, solver.decisions   /cpu_time);
-    printf("c propagations          : %-12"PRIu64"   (%.0f /sec)\n", solver.propagations, solver.propagations/cpu_time);
-    printf("c conflict literals     : %-12"PRIu64"   (%4.2f %% deleted)\n", solver.tot_literals, (solver.max_literals - solver.tot_literals)*100 / (double)solver.max_literals);
+    printf("c conflicts             : %-12" PRIu64"   (%.0f /sec)\n", solver.conflicts   , solver.conflicts   /cpu_time);
+    printf("c decisions             : %-12" PRIu64"   (%4.2f %% random) (%.0f /sec)\n", solver.decisions, (float)solver.rnd_decisions*100 / (float)solver.decisions, solver.decisions   /cpu_time);
+    printf("c propagations          : %-12" PRIu64"   (%.0f /sec)\n", solver.propagations, solver.propagations/cpu_time);
+    printf("c conflict literals     : %-12" PRIu64"   (%4.2f %% deleted)\n", solver.tot_literals, (solver.max_literals - solver.tot_literals)*100 / (double)solver.max_literals);
     printf("c nb reduced Clauses    : %lld\n",solver.nbReducedClauses);
     
     if (mem_used != 0) printf("Memory used           : %.2f MB\n", mem_used);
@@ -115,7 +115,7 @@ int main(int argc, char** argv)
 
         S.verbosity = verb;
         S.verbEveryConflicts = vv;
-	S.showModel = mod;
+	    S.showModel = mod;
         solver = &S;
         // Use signal handlers that forcibly quit until the solver will be able to respond to
         // interrupts:
@@ -194,7 +194,7 @@ int main(int argc, char** argv)
             printf("\n"); }
 
 	//-------------- Result is put in a external file
-        if (res != NULL){  
+    if (res != NULL){
 	  if (ret == l_True){
 	    fprintf(res, "SAT\n");
 	    for (int i = 0; i < S.nVars(); i++)
@@ -208,7 +208,7 @@ int main(int argc, char** argv)
 	  fclose(res);
 	
 	//-------------- Want certified output
-        } else { 
+    } else {
 	  printf(ret == l_True ? "s SATISFIABLE\n" : ret == l_False ? "s UNSATISFIABLE\n" : "s INDETERMINATE\n");
 	  if(S.showModel && ret==l_True) {
 	    printf("v ");
