@@ -47,7 +47,7 @@ RUN apt-get update \
       libgoogle-glog-dev \
       libgflags-dev \
       libeigen3-dev \
-      apt-get clean
+  && apt-get clean
 
 RUN git clone https://github.com/CMA-ES/libcmaes.git \
   && mkdir libcmaes/build \
