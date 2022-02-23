@@ -1,18 +1,39 @@
 cmake_minimum_required(VERSION 3.16)
 project(Optimizer)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
-add_executable(optimizer src/main.cpp)
-
+# Search for packages
 find_package(libcmaes REQUIRED)
-find_package(Boost REQUIRED)
+find_package(Boost COMPONENTS filesystem REQUIRED)
+include_directories(${Boost_LIBRARIES})
+
+# Build standalone optimizers
+include_directories(src/optimizers)
+
+add_executable(optimizer
+        src/optimizers/cmaes/main.cpp
+        src/optimizers/cmaes/cmaes_optimizer.h
+        src/optimizers/cmaes/cmaes_optimizer.cpp
+        src/optimizers/commons/commons.h
+        src/optimizers/commons/commons.cpp)
 
 target_link_libraries(optimizer libcmaes::cmaes ${Boost_LIBRARIES})
 
-message(STATUS ${libcmaes_FOUND})
+# Build experiments runner
+include_directories(src/runner)
 
+add_executable(runner
+        src/runner/runner.cpp
+        src/optimizers/cmaes/main.cpp
+        src/optimizers/cmaes/cmaes_optimizer.h
+        src/optimizers/cmaes/cmaes_optimizer.cpp
+        src/optimizers/commons/commons.h
+        src/optimizers/commons/commons.cpp)
 
+target_link_libraries(optimizer libcmaes::cmaes ${Boost_LIBRARIES})
+
+# Build SAT solver
 include_directories(src/glucose)
 
 find_package(ZLIB)
@@ -41,10 +62,3 @@ add_executable(glucose
         src/glucose/utils/System.h)
 
 target_link_libraries(glucose ZLIB::ZLIB)
-
-#set(libcmaes_DIR /libcmaes/build)
-#set(CMAKE_PREFIX_PATH /home/user/.local)
-#find_package(libcmaes REQUIRED)
-
-#include_directories(.)
-

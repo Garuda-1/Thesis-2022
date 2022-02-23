@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  clion_remote_env:
+    build: .
+    ports:
+      - "22099:22"
+    volumes:
+      - $HOME/Thesis-2022:/Thesis
+    cap_add:
+      - SYS_PTRACE
+  postgres:
+    image: postgres
+    environment:
+        POSTGRES_DB: "experiments"
+        POSTGRES_USER: "postgres"
+        POSTGRES_PASSWORD: "postgres"
+    ports:
+      - "5432:5432"

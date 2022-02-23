@@ -2,9 +2,14 @@
 #
 # Build and run:
 #   docker build -t clion/remote-cpp-env:0.5 -f Dockerfile .
-#   docker run -d --cap-add sys_ptrace -p127.0.0.1:2222:22 --name clion_remote_env -v /Users/iandolzhansky/Thesis:/Thesis clion/remote-cpp-env:0.5
-#   docker run -d --cap-add sys_ptrace -p127.0.0.1:2222:22 --name clion_remote_env clion/remote-cpp-env:0.5
+#   docker network create thesis-network
+#   docker run -d --cap-add sys_ptrace -p127.0.0.1:22099:22 --name clion_remote_env -v $HOME/Thesis-2022:/Thesis  --network thesis-network --network-alias clion clion/remote-cpp-env:0.5
+#   docker run --name experiments-db -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d --network thesis-network --network-alias postgres postgres
 #   ssh-keygen -f "$HOME/.ssh/known_hosts" -R "[localhost]:2222"
+
+
+# 
+
 #
 # stop:
 #   docker stop clion_remote_env
@@ -34,6 +39,7 @@ RUN apt-get update \
       tar \
       python \
       git \
+      htop \
       libboost-all-dev \
       autoconf \
       automake \
@@ -41,13 +47,23 @@ RUN apt-get update \
       libgoogle-glog-dev \
       libgflags-dev \
       libeigen3-dev \
-  && apt-get clean \
-  && git clone https://github.com/CMA-ES/libcmaes.git \
+      apt-get clean
+
+RUN git clone https://github.com/CMA-ES/libcmaes.git \
   && mkdir libcmaes/build \
   && cd libcmaes/build \
   && cmake .. \
   && make -j2 \
-  && make install
+  && make install \
+  && cd -
+
+RUN wget http://pqxx.org/download/software/libpqxx/libpqxx-4.0.tar.gz \
+  && tar xvfz libpqxx-4.0.tar.gz \
+  && cd libpqxx-4.0 \
+  && ./configure \
+  && make \
+  && make install \
+  && cd -
 
 RUN ( \
     echo 'LogLevel DEBUG2'; \

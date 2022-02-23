@@ -15,7 +15,7 @@ static size_t generations = 1000;
 
 struct cnf {
     std::string header;
-    std::vector<std::string> body;
+    std::vector<std::string> clauses;
 
     explicit cnf(const std::string &path_to_dimacs) {
         std::ifstream input_stream(path_to_dimacs);
@@ -29,7 +29,7 @@ struct cnf {
                 line_stream >> dummy >> dummy >> n;
                 header = line;
             } else {
-                body.push_back(line);
+                clauses.push_back(line);
             }
         }
     }
@@ -41,7 +41,7 @@ struct cnf {
             in << a << ' ';
         }
         in << '\n';
-        for (const auto &s : body) {
+        for (const auto &s : clauses) {
             in << s << '\n';
         }
         in.close();
