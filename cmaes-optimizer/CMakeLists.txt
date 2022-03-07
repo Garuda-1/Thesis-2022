@@ -6,11 +6,15 @@ set(CMAKE_CXX_STANDARD 17)
 # Search for packages
 find_package(libcmaes REQUIRED)
 find_package(Boost COMPONENTS filesystem REQUIRED)
+find_package(PostgreSQL 9.6.2 REQUIRED)
+find_package(ZLIB)
+
 include_directories(${Boost_LIBRARIES})
+include_directories(src/optimizers)
+include_directories(src/runner)
+include_directories(src/glucose)
 
 # Build standalone optimizers
-include_directories(src/optimizers)
-
 add_executable(optimizer
         src/optimizers/cmaes/main.cpp
         src/optimizers/cmaes/cmaes_optimizer.h
@@ -18,26 +22,25 @@ add_executable(optimizer
         src/optimizers/commons/commons.h
         src/optimizers/commons/commons.cpp)
 
-target_link_libraries(optimizer libcmaes::cmaes ${Boost_LIBRARIES})
+target_link_libraries(optimizer
+        libcmaes::cmaes
+        ${Boost_LIBRARIES})
 
 # Build experiments runner
-include_directories(src/runner)
-
 add_executable(runner
+        src/runner/experiment.h
         src/runner/runner.cpp
-        src/optimizers/cmaes/main.cpp
         src/optimizers/cmaes/cmaes_optimizer.h
         src/optimizers/cmaes/cmaes_optimizer.cpp
         src/optimizers/commons/commons.h
         src/optimizers/commons/commons.cpp)
 
-target_link_libraries(optimizer libcmaes::cmaes ${Boost_LIBRARIES})
+target_link_libraries(runner
+        libcmaes::cmaes
+        ${Boost_LIBRARIES}       )
+#        /*PostgreSQL::PostgreSQL*/)
 
 # Build SAT solver
-include_directories(src/glucose)
-
-find_package(ZLIB)
-
 add_executable(glucose
         src/glucose/core/BoundedQueue.h
         src/glucose/core/Constants.h

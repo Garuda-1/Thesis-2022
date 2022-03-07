@@ -47,6 +47,8 @@ RUN apt-get update \
       libgoogle-glog-dev \
       libgflags-dev \
       libeigen3-dev \
+      libpq-dev \
+      postgresql-server-dev-all \
   && apt-get clean
 
 RUN git clone https://github.com/CMA-ES/libcmaes.git \
