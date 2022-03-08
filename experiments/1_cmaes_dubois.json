@@ -1,0 +1,10 @@
+{
+  "experiments": [
+    {
+      "name": "Initial: Steiner",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/dubois/dubois50.cnf",
+      "optimizer": "cmaes"
+    }
+  ]
+}

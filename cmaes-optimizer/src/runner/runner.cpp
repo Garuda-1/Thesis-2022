@@ -57,6 +57,4 @@ int main(int argc, char *argv[]) {
         finish_experiment(experiment_id, pg_conn);
         PQfinish(pg_conn);
     }
-
-    
 }
