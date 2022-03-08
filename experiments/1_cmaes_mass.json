@@ -1,6 +1,24 @@
 {
   "experiments": [
     {
+      "name": "Mass: Dubois 30",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/dubois/dubois30.cnf",
+      "optimizer": "cmaes"
+    },
+    {
+      "name": "Mass: Dubois 50",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/dubois/dubois50.cnf",
+      "optimizer": "cmaes"
+    },
+    {
+      "name": "Mass: Dubois 100",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/dubois/dubois100.cnf",
+      "optimizer": "cmaes"
+    },
+    {
       "name": "Mass: Steiner",
       "path_to_solver": "./glucose",
       "path_to_dimacs": "/Thesis/sat/simpler_g3/Steiner-45-16-bce.cnf",
@@ -64,24 +82,6 @@
       "name": "Mass: Dubois 20",
       "path_to_solver": "./glucose",
       "path_to_dimacs": "/Thesis/sat/dubois/dubois20.cnf",
-      "optimizer": "cmaes"
-    },
-    {
-      "name": "Mass: Dubois 30",
-      "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/dubois/dubois30.cnf",
-      "optimizer": "cmaes"
-    },
-    {
-      "name": "Mass: Dubois 50",
-      "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/dubois/dubois50.cnf",
-      "optimizer": "cmaes"
-    },
-    {
-      "name": "Mass: Dubois 100",
-      "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/dubois/dubois100.cnf",
       "optimizer": "cmaes"
     }
   ]
