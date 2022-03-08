@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
         boost::filesystem::create_directories(path_to_storage);
         std::cout << "Temp files directory: " << path_to_storage << std::endl;
 
-        cmaes_optimizer opt(path_to_solver, path_to_dimacs, path_to_storage, 1, 1, -1, pg_conn, experiment_id);
+        cmaes_optimizer opt(path_to_solver, path_to_dimacs, path_to_storage, 1, 0.2, -1, pg_conn, experiment_id);
         opt.fit();
 
         finish_experiment(experiment_id, pg_conn);
