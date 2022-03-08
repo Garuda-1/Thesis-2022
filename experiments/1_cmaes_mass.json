@@ -1,0 +1,88 @@
+{
+  "experiments": [
+    {
+      "name": "Mass: Steiner",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/simpler_g3/Steiner-45-16-bce.cnf",
+      "optimizer": "cmaes"
+    },
+    {
+      "name": "Mass: SV Comp19",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/simpler_g3/sv-comp19_prop-reachsafety.sine_8_true-unreach-call_true-termination.i-witness.cnf",
+      "optimizer": "cmaes"
+    },
+    {
+      "name": "Mass: G2",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/benchmarks_part/g2-hwmcc15deep-6s340rb63-k16.cnf",
+      "optimizer": "cmaes"
+    },
+    {
+      "name": "Mass: Blockpuzzle",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-blockpuzzle_7x10_s9_free6.cnf",
+      "optimizer": "cmaes"
+    },
+    {
+      "name": "Mass: Bsat",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-bsat180-648.cnf",
+      "optimizer": "cmaes"
+    },
+    {
+      "name": "Mass: NB5",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-Nb6T06.cnf",
+      "optimizer": "cmaes"
+    },
+    {
+      "name": "Mass: MP1 PS 5000 0",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-ps_5000_21250_3_0_0.8_0_1.50_0.cnf",
+      "optimizer": "cmaes"
+    },
+    {
+      "name": "Mass: MP1 PS 5000 60",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-ps_5000_21250_3_0_0.8_0_1.50_6.cnf",
+      "optimizer": "cmaes"
+    },
+    {
+      "name": "Mass: MP1 abio",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-tri_ali_s11_c35_abio_UNS.cnff",
+      "optimizer": "cmaes"
+    },
+    {
+      "name": "Mass: MP1 sinz",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-tri_ali_s11_c35_sinz_UNS.cnf",
+      "optimizer": "cmaes"
+    },
+    {
+      "name": "Mass: Dubois 20",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/dubois/dubois20.cnf",
+      "optimizer": "cmaes"
+    },
+    {
+      "name": "Mass: Dubois 30",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/dubois/dubois30.cnf",
+      "optimizer": "cmaes"
+    },
+    {
+      "name": "Mass: Dubois 50",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/dubois/dubois50.cnf",
+      "optimizer": "cmaes"
+    },
+    {
+      "name": "Mass: Dubois 100",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/dubois/dubois100.cnf",
+      "optimizer": "cmaes"
+    }
+  ]
+}

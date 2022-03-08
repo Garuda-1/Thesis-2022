@@ -2,7 +2,7 @@ CREATE TABLE experiments
 (
     id         BIGSERIAL PRIMARY KEY,
     name       VARCHAR NOT NULL,
-    start_time TIMESTAMP NOT NULL DEFAULT NOW(),
+    start_time TIMESTAMP DEFAULT NOW(),
     end_time   TIMESTAMP
 );
 
