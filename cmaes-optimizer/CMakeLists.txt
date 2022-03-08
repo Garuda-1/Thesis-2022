@@ -24,7 +24,8 @@ add_executable(optimizer
 
 target_link_libraries(optimizer
         libcmaes::cmaes
-        ${Boost_LIBRARIES})
+        ${Boost_LIBRARIES}
+        PostgreSQL::PostgreSQL)
 
 # Build experiments runner
 add_executable(runner

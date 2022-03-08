@@ -38,7 +38,7 @@ struct solver {
 
     explicit solver(std::string path) : path(std::move(path)) {}
 
-    size_t unsat_proof_size(const cnf &cnf, const std::string &path_to_storage,
+    [[nodiscard]] size_t unsat_proof_size(const cnf &cnf, const std::string &path_to_storage,
                             const std::optional<std::vector<double>> &activity) const;
 };
 

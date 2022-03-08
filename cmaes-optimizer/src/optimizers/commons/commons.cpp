@@ -82,5 +82,5 @@ common::sample::sample(const double *a, size_t var_count) : activity(var_count) 
 
 void common::sample::evaluate(const cnf &cnf, const std::string &path_to_solver, const std::string &path_to_storage) {
     common::solver s(path_to_solver);
-    fitness = s.unsat_proof_size(cnf, path_to_storage);
+    fitness = s.unsat_proof_size(cnf, path_to_storage, std::make_optional(activity));
 }
