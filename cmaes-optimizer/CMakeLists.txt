@@ -37,8 +37,8 @@ add_executable(runner
 
 target_link_libraries(runner
         libcmaes::cmaes
-        ${Boost_LIBRARIES}       )
-#        /*PostgreSQL::PostgreSQL*/)
+        ${Boost_LIBRARIES}
+        PostgreSQL::PostgreSQL)
 
 # Build SAT solver
 add_executable(glucose
