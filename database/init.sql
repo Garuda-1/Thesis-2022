@@ -15,10 +15,13 @@ CREATE TABLE runs
 );
 
 CREATE OR REPLACE VIEW experiments_bands AS
-SELECT E.id, E.name, E.start_time, E.end_time, R.min_proof_size, R.max_proof_size
+SELECT E.id, E.name, E.start_time, E.end_time, R.min_proof_size, R.max_proof_size, R.runs_count
 FROM experiments E
- INNER JOIN (
-    SELECT RS.experiment_id, MIN(RS.proof_size) as min_proof_size, MAX(rs.proof_size) as max_proof_size
+         INNER JOIN (
+    SELECT RS.experiment_id,
+           MIN(RS.proof_size) as min_proof_size,
+           MAX(rs.proof_size) as max_proof_size,
+           COUNT(*)           as runs_count
     FROM runs RS
     GROUP BY RS.experiment_id
 ) R ON E.id = R.experiment_id;

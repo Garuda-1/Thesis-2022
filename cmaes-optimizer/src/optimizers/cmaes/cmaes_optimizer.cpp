@@ -9,7 +9,7 @@ cmaes_optimizer::cmaes_optimizer(std::string path_to_solver, const std::string &
         benchmark(path_to_dimacs), pg_conn(pg_conn), experiment_id(experiment_id) {
     std::vector<double> activity(benchmark.var_count, base_value);
     cmaparams = libcmaes::CMAParameters<>(activity, sigma, lambda);
-    cmaparams.set_max_iter(1000);
+    cmaparams.set_max_iter(100);
 }
 
 size_t cmaes_optimizer::fit() {
