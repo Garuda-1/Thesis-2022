@@ -1,4 +1,6 @@
 #include "sample.h"
+
+#include <utility>
 #include "solver.h"
 
 common::sample::sample(const double *a, size_t var_count) : activity(var_count) {

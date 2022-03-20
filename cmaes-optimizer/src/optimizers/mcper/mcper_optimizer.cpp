@@ -7,7 +7,7 @@ mcper_optimizer::mcper_optimizer(std::string path_to_solver, std::string path_to
                                  std::string path_to_dimacs, PGconn *pgConn, int64_t experimentId) :
         optimizer(std::move(path_to_solver), std::move(path_to_storage), common::cnf(std::move(path_to_dimacs)),
                   pgConn, experimentId) {
-    activity.resize(benchmark.var_count);
+    activity.resize(benchmark.var_count, 1.0);
 }
 
 struct hash_pair {
@@ -21,6 +21,7 @@ ssize_t mcper_optimizer::fit() {
     for (size_t iteration = 0; iteration < MAX_ITERATIONS; ++iteration) {
         std::string proof_file_path;
         common::sample sample(activity);
+        evaluate_and_record(sample, proof_file_path);
 
         std::ifstream proof_stream(proof_file_path);
         std::unordered_map<std::pair<size_t, size_t>, size_t, hash_pair> pairs_count;
@@ -79,6 +80,16 @@ ssize_t mcper_optimizer::fit() {
             benchmark.clauses.push_back({lit_x, -lit_a, -lit_b});
             benchmark.clauses.push_back({-lit_x, lit_a});
             benchmark.clauses.push_back({-lit_x, lit_b});
+
+            activity[var_a] += BUMP_FACTOR;
+            activity[var_b] += BUMP_FACTOR;
+            activity.push_back((activity[var_a] + activity[var_b]) / 2);
+
+            if (std::max(activity[var_a], activity[var_b]) >= RESCALE_LIMIT) {
+                for (auto &a : activity) {
+                    a /= RESCALE_LIMIT;
+                }
+            }
         }
     }
 
