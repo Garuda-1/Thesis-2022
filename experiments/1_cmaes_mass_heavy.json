@@ -4,13 +4,13 @@
       "name": "Mass: Steiner",
       "path_to_solver": "./glucose",
       "path_to_dimacs": "/Thesis/sat/simpler_g3/Steiner-45-16-bce.cnf",
-      "optimizer": "cmaes"
+      "optimizer_name": "cmaes"
     },
     {
       "name": "Mass: Blockpuzzle",
       "path_to_solver": "./glucose",
       "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-blockpuzzle_7x10_s9_free6.cnf",
-      "optimizer": "cmaes"
+      "optimizer_name": "cmaes"
     }
   ]
 }

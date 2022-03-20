@@ -4,7 +4,7 @@
       "name": "Test experiment",
       "path_to_solver": "./glucose",
       "path_to_dimacs": "/Thesis/sat/php/php-3.cnf",
-      "optimizer": "mcper"
+      "optimizer_name": "mcper"
     }
   ]
 }
