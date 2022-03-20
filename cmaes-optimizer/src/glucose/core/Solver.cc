@@ -1065,13 +1065,13 @@ lbool Solver::search(int nof_conflicts) {
             lbdQueue.push(nblevels);
             sumLBD += nblevels;
 
-//            if (certifiedUNSAT) {
-//                fprintf(certifiedOutput, "conflict ");
-//                for (int i = 0; i < trail.size(); i++) {
-//                    fprintf(certifiedOutput, "%i ", var(trail[i]) + 1);
-//                }
-//                fprintf(certifiedOutput, "\n");
-//            }
+            if (certifiedUNSAT) {
+                fprintf(certifiedOutput, "t ");
+                for (int i = 0; i < trail.size(); i++) {
+                    fprintf(certifiedOutput, "%i ", var(trail[i]) + 1);
+                }
+                fprintf(certifiedOutput, "0\n");
+            }
 
             cancelUntil(backtrack_level);
 

@@ -2,18 +2,20 @@
 
 #include "experiment.h"
 #include "../optimizers/cmaes/cmaes_optimizer.h"
-#include "../optimizers/commons/commons.h"
+#include "../optimizers/mcper/mcper_optimizer.h"
 
+#include <memory>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <libpq-fe.h>
 
-int64_t create_experiment(const std::string& name, pg_conn *pg_conn) {
+int64_t create_experiment(const std::string &name, pg_conn *pg_conn) {
     std::string query = "INSERT INTO experiments (name) VALUES ('" + name + "') RETURNING id";
 
     PGresult *result;
     result = PQexec(pg_conn, query.c_str());
-    int64_t experiment_id = atoll(PQgetvalue(result, 0, 0));
+    std::string result_string = std::string(PQgetvalue(result, 0, 0));
+    int64_t experiment_id = std::stoll(result_string);
     PQclear(result);
 
     return experiment_id;
@@ -33,15 +35,15 @@ int main(int argc, char *argv[]) {
     }
 
     std::string config(argv[1]);
-    
+
     boost::property_tree::ptree pt;
     boost::property_tree::read_json(config, pt);
 
-    for (const auto &experiment : pt.get_child("experiments")) {
+    for (const auto &experiment: pt.get_child("experiments")) {
         auto name = experiment.second.get_child("name").get_value<std::string>();
         auto path_to_solver = experiment.second.get_child("path_to_solver").get_value<std::string>();
         auto path_to_dimacs = experiment.second.get_child("path_to_dimacs").get_value<std::string>();
-        auto optimizer = experiment.second.get_child("optimizer").get_value<std::string>();
+        auto optimizer_name = experiment.second.get_child("optimizer_name").get_value<std::string>();
         int64_t experiment_id;
 
         PGconn *pg_conn = PQconnectdb("host=postgres port=5432 dbname=postgres user=postgres password=postgres");
@@ -50,12 +52,21 @@ int main(int argc, char *argv[]) {
         experiment_id = create_experiment(name, pg_conn);
         std::cout << "Experiment id: " << experiment_id << std::endl;
 
-        std::string path_to_storage = boost::filesystem::temp_directory_path().string() + "/experiments/" + std::to_string(experiment_id);
+        std::string path_to_storage =
+                boost::filesystem::temp_directory_path().string() + "/experiments/" + std::to_string(experiment_id);
         boost::filesystem::create_directories(path_to_storage);
         std::cout << "Temp files directory: " << path_to_storage << std::endl;
 
-        cmaes_optimizer opt(path_to_solver, path_to_dimacs, path_to_storage, 1, 0.2, -1, pg_conn, experiment_id);
-        opt.fit();
+        std::unique_ptr<optimizer> optimizer;
+
+        if (optimizer_name == "cmaes") {
+            optimizer = std::make_unique<cmaes_optimizer>(path_to_solver, path_to_dimacs, path_to_storage, 1, 0.2,
+                                                          -1, pg_conn, experiment_id);
+        } else if (optimizer_name == "mcper") {
+            optimizer = std::make_unique<mcper_optimizer>(path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+        }
+
+        optimizer->fit();
 
         finish_experiment(experiment_id, pg_conn);
         PQfinish(pg_conn);

@@ -19,8 +19,13 @@ add_executable(optimizer
         src/optimizers/cmaes/main.cpp
         src/optimizers/cmaes/cmaes_optimizer.h
         src/optimizers/cmaes/cmaes_optimizer.cpp
-        src/optimizers/commons/commons.h
-        src/optimizers/commons/commons.cpp)
+        src/optimizers/commons/cnf.h
+        src/optimizers/commons/cnf.cpp
+        src/optimizers/commons/sample.h
+        src/optimizers/commons/sample.cpp
+        src/optimizers/commons/solver.h
+        src/optimizers/commons/solver.cpp
+        src/optimizers/commons/commons.h)
 
 target_link_libraries(optimizer
         libcmaes::cmaes
@@ -33,8 +38,17 @@ add_executable(runner
         src/runner/runner.cpp
         src/optimizers/cmaes/cmaes_optimizer.h
         src/optimizers/cmaes/cmaes_optimizer.cpp
-        src/optimizers/commons/commons.h
-        src/optimizers/commons/commons.cpp)
+        src/optimizers/mcper/mcper_optimizer.h
+        src/optimizers/mcper/mcper_optimizer.cpp
+        src/optimizers/commons/optimizer.h
+        src/optimizers/commons/optimizer.cpp
+        src/optimizers/commons/cnf.h
+        src/optimizers/commons/cnf.cpp
+        src/optimizers/commons/sample.h
+        src/optimizers/commons/sample.cpp
+        src/optimizers/commons/solver.h
+        src/optimizers/commons/solver.cpp
+        src/optimizers/commons/commons.h)
 
 target_link_libraries(runner
         libcmaes::cmaes
