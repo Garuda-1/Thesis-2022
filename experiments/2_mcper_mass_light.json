@@ -1,0 +1,64 @@
+{
+  "experiments": [
+    {
+      "name": "[MCP ER] Mass: Dubois 20",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/dubois/dubois20.cnf",
+      "optimizer_name": "cmaes"
+    },
+    {
+      "name": "[MCP ER] Mass: Dubois 30",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/dubois/dubois30.cnf",
+      "optimizer_name": "cmaes"
+    },
+    {
+      "name": "[MCP ER] Mass: Dubois 50",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/dubois/dubois50.cnf",
+      "optimizer_name": "cmaes"
+    },
+    {
+      "name": "[MCP ER] Mass: Dubois 100",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/dubois/dubois100.cnf",
+      "optimizer_name": "cmaes"
+    },
+    {
+      "name": "[MCP ER] Mass: Bsat",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-bsat180-648.cnf",
+      "optimizer_name": "cmaes"
+    },
+    {
+      "name": "[MCP ER] Mass: NB5",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-Nb6T06.cnf",
+      "optimizer_name": "cmaes"
+    },
+    {
+      "name": "[MCP ER] Mass: MP1 PS 5000 0",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-ps_5000_21250_3_0_0.8_0_1.50_0.cnf",
+      "optimizer_name": "cmaes"
+    },
+    {
+      "name": "[MCP ER] Mass: MP1 PS 5000 60",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-ps_5000_21250_3_0_0.8_0_1.50_6.cnf",
+      "optimizer_name": "cmaes"
+    },
+    {
+      "name": "[MCP ER] Mass: MP1 abio",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-tri_ali_s11_c35_abio_UNS.cnff",
+      "optimizer_name": "cmaes"
+    },
+    {
+      "name": "[MCP ER] Mass: MP1 sinz",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-tri_ali_s11_c35_sinz_UNS.cnf",
+      "optimizer_name": "cmaes"
+    }
+  ]
+}
