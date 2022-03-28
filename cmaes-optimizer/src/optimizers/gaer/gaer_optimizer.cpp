@@ -10,19 +10,26 @@ gaer_optimizer::gaer_optimizer(std::string path_to_solver, std::string path_to_s
 }
 
 void gaer_optimizer::init_genes(common::cnf_er &cnf, const std::function<double(void)> &rnd) {
-    auto new_pairs_count = static_cast<size_t>(rnd() * cnf.var_count);
+    cnf = common::cnf_er(this->benchmark);
+    auto new_pairs_count = static_cast<size_t>(rnd() * cnf.var_count * 0.1);
     common::log("Initializing genes with " + std::to_string(new_pairs_count) + " pairs");
 
     for (size_t i = 0; i < new_pairs_count; ++i) {
-        auto a = static_cast<int64_t>(rnd() * (cnf.var_count + 0.9)) * (rnd() < 0.5 ? -1 : 1);
-        auto b = static_cast<int64_t>(rnd() * (cnf.var_count + 0.9)) * (rnd() < 0.5 ? -1 : 1);
+        auto a = static_cast<int64_t>(rnd() * cnf.var_count) * (rnd() < 0.5 ? -1 : 1) + 1;
+        auto b = static_cast<int64_t>(rnd() * cnf.var_count) * (rnd() < 0.5 ? -1 : 1) + 1;
+        if (a > b) {
+            std::swap(a, b);
+        }
+        if (a == 0 || b == 0) {
+            throw std::runtime_error("BAN");
+        }
         cnf.add_er_pair({a, b});
     }
 }
 
 bool gaer_optimizer::eval_solution(const common::cnf_er &cnf, common::sample &sample) {
     std::string proof_file_path;
-    evaluate_and_record(sample, proof_file_path);
+    evaluate_and_record(cnf, sample, proof_file_path);
     return true;
 }
 
@@ -47,6 +54,12 @@ common::cnf_er gaer_optimizer::mutate(const common::cnf_er &cnf,
     }
 
     return mutated;
+}
+
+void gaer_optimizer::report_generation(int generation_number,
+                                       const EA::GenerationType<common::cnf_er, common::sample> &last_generation,
+                                       const common::cnf_er &best_genes) {
+    common::log("Best genes pairs size: " + std::to_string(best_genes.er_pairs.size()));
 }
 
 common::cnf_er gaer_optimizer::crossover(const common::cnf_er &a,
@@ -81,6 +94,7 @@ ssize_t gaer_optimizer::fit() {
     ga.eval_solution = std::bind(&gaer_optimizer::eval_solution, this, std::placeholders::_1, std::placeholders::_2);
     ga.mutate = std::bind(&gaer_optimizer::mutate, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
     ga.crossover = std::bind(&gaer_optimizer::crossover, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+    ga.SO_report_generation = std::bind(&gaer_optimizer::report_generation, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
     ga.best_stall_max = 10;
     ga.elite_count = 10;
     ga.crossover_fraction = 0.7;

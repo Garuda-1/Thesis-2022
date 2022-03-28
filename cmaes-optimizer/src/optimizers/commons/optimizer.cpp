@@ -3,7 +3,11 @@
 #include "commons.h"
 
 ssize_t optimizer::evaluate_and_record(common::sample &sample, std::string &proof_file_path) {
-    sample.evaluate(benchmark, path_to_solver, path_to_storage, proof_file_path);
+    return evaluate_and_record(this->benchmark, sample, proof_file_path);
+}
+
+ssize_t optimizer::evaluate_and_record(const common::cnf &cnf, common::sample &sample, std::string &proof_file_path) {
+    sample.evaluate(cnf, path_to_solver, path_to_storage, proof_file_path);
     if (best_fitness < 0 || sample.fitness < best_fitness) {
         best_fitness = sample.fitness;
     }

@@ -24,6 +24,9 @@ struct gaer_optimizer : optimizer {
 
     double calculate(const EA::Genetic<common::cnf_er, common::sample>::thisChromosomeType &x);
 
+    void report_generation(int generation_number, const EA::GenerationType<common::cnf_er,
+                           common::sample> &last_generation, const common::cnf_er &best_genes);
+
     ssize_t fit() override;
 };
 

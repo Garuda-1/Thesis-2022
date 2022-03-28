@@ -31,6 +31,8 @@ struct optimizer {
 
     ssize_t evaluate_and_record(common::sample &sample, std::string &proof_file_path);
 
+    ssize_t evaluate_and_record(const common::cnf &cnf, common::sample &sample, std::string &proof_file_path);
+
     void log_optimization_result() const;
 };
 
