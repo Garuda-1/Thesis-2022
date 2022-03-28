@@ -11,7 +11,7 @@ gaer_optimizer::gaer_optimizer(std::string path_to_solver, std::string path_to_s
 
 void gaer_optimizer::init_genes(common::cnf_er &cnf, const std::function<double(void)> &rnd) {
     cnf = common::cnf_er(this->benchmark);
-    auto new_pairs_count = static_cast<size_t>(rnd() * cnf.var_count * 0.1);
+    auto new_pairs_count = static_cast<size_t>(rnd() * cnf.var_count/* * 0.1*/);
     common::log("Initializing genes with " + std::to_string(new_pairs_count) + " pairs");
 
     for (size_t i = 0; i < new_pairs_count; ++i) {
@@ -35,8 +35,8 @@ common::cnf_er gaer_optimizer::mutate(const common::cnf_er &cnf,
                                       double shrink_scale) {
     common::cnf_er mutated = cnf;
 
-    auto new_pairs_count = static_cast<size_t>(shrink_scale * mutated.er_pairs.size() * rnd() * 0.1);
-    auto deleted_pairs_count = static_cast<size_t>(shrink_scale * mutated.er_pairs.size() * rnd() * 0.1);
+    auto new_pairs_count = static_cast<size_t>(shrink_scale * mutated.er_pairs.size() * rnd()/* * 0.1*/);
+    auto deleted_pairs_count = static_cast<size_t>(shrink_scale * mutated.er_pairs.size() * rnd()/* * 0.1*/);
 
     for (size_t i = 0; i < new_pairs_count; ++i) {
         auto a = (static_cast<int64_t>(rnd() * mutated.var_count) + 1) * (rnd() < 0.5 ? -1 : 1);
@@ -47,7 +47,7 @@ common::cnf_er gaer_optimizer::mutate(const common::cnf_er &cnf,
         mutated.er_pairs.insert({a, b});
     }
 
-    for (size_t i = 0; i < deleted_pairs_count && !cnf.er_pairs.empty(); ++i) {
+    for (size_t i = 0; i < deleted_pairs_count && !mutated.er_pairs.empty(); ++i) {
         std::pair<int64_t, int64_t> sample_pair;
         std::sample(mutated.er_pairs.begin(), mutated.er_pairs.end(), &sample_pair, 1, gen);
         mutated.er_pairs.erase(mutated.er_pairs.find(sample_pair));
@@ -67,12 +67,13 @@ common::cnf_er gaer_optimizer::crossover(const common::cnf_er &a,
                                          const std::function<double(void)> &rnd) {
     common::cnf_er offspring = a;
     offspring.er_pairs.clear();
+    double offset = rnd();
 
-    std::vector<std::pair<int64_t, int64_t>> a_sample(a.er_pairs.size() / 2);
+    std::vector<std::pair<int64_t, int64_t>> a_sample(a.er_pairs.size() * offset);
     std::sample(a.er_pairs.begin(), a.er_pairs.end(), a_sample.begin(), a_sample.size(), gen);
     offspring.er_pairs.insert(a_sample.begin(), a_sample.end());
 
-    std::vector<std::pair<int64_t, int64_t>> b_sample(b.er_pairs.size() / 2);
+    std::vector<std::pair<int64_t, int64_t>> b_sample(b.er_pairs.size() * (1 - offset));
     std::sample(b.er_pairs.begin(), b.er_pairs.end(), b_sample.begin(), b_sample.size(), gen);
     offspring.er_pairs.insert(b_sample.begin(), b_sample.end());
 
@@ -90,17 +91,18 @@ ssize_t gaer_optimizer::fit() {
 //    ga.N_threads = 4;
     ga.verbose = true;
     ga.population = 20;
-    ga.generation_max = 500;
+    ga.generation_max = 10000;
     ga.calculate_SO_total_fitness = std::bind(&gaer_optimizer::calculate, this, std::placeholders::_1);
     ga.init_genes = std::bind(&gaer_optimizer::init_genes, this, std::placeholders::_1, std::placeholders::_2);
     ga.eval_solution = std::bind(&gaer_optimizer::eval_solution, this, std::placeholders::_1, std::placeholders::_2);
     ga.mutate = std::bind(&gaer_optimizer::mutate, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
     ga.crossover = std::bind(&gaer_optimizer::crossover, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
     ga.SO_report_generation = std::bind(&gaer_optimizer::report_generation, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-    ga.best_stall_max = 10;
-    ga.elite_count = 10;
-    ga.crossover_fraction = 0.7;
-    ga.mutation_rate = 0.4;
+    ga.best_stall_max = 1000;
+    ga.average_stall_max = 1000;
+    ga.elite_count = 4;
+    ga.crossover_fraction = 0.6;
+    ga.mutation_rate = 0.01;
 
     ga.solve();
 
