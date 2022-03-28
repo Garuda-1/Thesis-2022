@@ -6,7 +6,6 @@
 #include <algorithm>
 #include <utility>
 
-#include "cnf.h"
 #include "sample.h"
 #include "solver.h"
 
@@ -24,13 +23,12 @@ inline void log() {
     std::cout << "x \n";
 }
 
-//bool operator<(const sample &a, const sample &b) {
-//    return a.fitness < b.fitness;
-//}
-//
-//bool operator==(const sample &a, const sample &b) {
-//    return a.fitness == b.fitness;
-//}
+struct hash_pair {
+    template<class T1, class T2>
+    size_t operator()(const std::pair<T1, T2> &p) const {
+        return std::hash<T1>{}(p.first) ^ std::hash<T1>{}(p.second);
+    }
+};
 
 }
 

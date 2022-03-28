@@ -52,13 +52,11 @@ void common::cnf::write_cnf_activity(bp::opstream &solver_input, const std::vect
     solver_input << '\n';
 }
 
-void common::cnf::write_cnf_clauses_and_close(bp::opstream &solver_input) const {
+void common::cnf::write_cnf_clauses(bp::opstream &solver_input) const {
     for (const auto &lits : clauses) {
         for (const auto &lit : lits) {
             solver_input << lit << ' ';
         }
         solver_input << "0\n";
     }
-    solver_input.close();
-    solver_input.pipe().close();
 }

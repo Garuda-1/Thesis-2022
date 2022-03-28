@@ -10,13 +10,6 @@ mcper_optimizer::mcper_optimizer(std::string path_to_solver, std::string path_to
     activity.resize(benchmark.var_count, 1.0);
 }
 
-struct hash_pair {
-    template<class T1, class T2>
-    size_t operator()(const std::pair<T1, T2> &p) const {
-        return std::hash<T1>{}(p.first) ^ std::hash<T1>{}(p.second);
-    }
-};
-
 ssize_t mcper_optimizer::fit() {
     for (size_t iteration = 0; iteration < MAX_ITERATIONS; ++iteration) {
         std::string proof_file_path;
@@ -24,7 +17,7 @@ ssize_t mcper_optimizer::fit() {
         evaluate_and_record(sample, proof_file_path);
 
         std::ifstream proof_stream(proof_file_path);
-        std::unordered_map<std::pair<size_t, size_t>, size_t, hash_pair> pairs_count;
+        std::unordered_map<std::pair<size_t, size_t>, size_t, common::hash_pair> pairs_count;
         std::string line;
         while (std::getline(proof_stream, line)) {
             if (line[0] == 't') {

@@ -26,6 +26,7 @@ RUN apt-get update \
       build-essential \
       gcc \
       g++ \
+      g++8 \
       gdb \
       clang \
       make \
@@ -48,6 +49,10 @@ RUN apt-get update \
       libgflags-dev \
       libeigen3-dev \
       libpq-dev \
+      libopenmpi-dev \
+      doxygen \
+      graphviz \
+      libgnuplot-iostream-dev \
       postgresql-server-dev-all \
   && apt-get clean
 
@@ -64,6 +69,13 @@ RUN wget http://pqxx.org/download/software/libpqxx/libpqxx-4.0.tar.gz \
   && cd libpqxx-4.0 \
   && ./configure \
   && make \
+  && make install \
+  && cd -
+
+RUN git clone https://github.com/nojhan/paradiseo.git \
+  && mkdir paradiseo/build \
+  && cd paradiseo/build \
+  && cmake -DEDO=ON .. \
   && make install \
   && cd -
 

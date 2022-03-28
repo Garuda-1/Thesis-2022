@@ -7,11 +7,15 @@
 
 namespace common {
 
+    struct cnf;
+
     struct sample {
-        std::vector<double> activity;
+        std::optional<std::vector<double>> activity;
         ssize_t fitness = -1;
 
-        explicit sample(const double *a, size_t var_count);
+        sample() = default;
+
+        sample(const double *a, size_t var_count);
 
         explicit sample(std::vector<double> a);
 

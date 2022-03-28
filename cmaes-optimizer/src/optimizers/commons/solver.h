@@ -5,6 +5,8 @@
 
 namespace common {
 
+struct cnf;
+
 struct solver {
     std::string path;
 

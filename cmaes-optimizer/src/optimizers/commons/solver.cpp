@@ -14,7 +14,9 @@ ssize_t common::solver::unsat_proof_size(const cnf &cnf, const std::string &path
     if (activity) {
         cnf.write_cnf_activity(in, *activity);
     }
-    cnf.write_cnf_clauses_and_close(in);
+    cnf.write_cnf_clauses(in);
+    in.close();
+    in.pipe().close();
     c.wait();
 
     std::ifstream proof_stream(proof_file_path);
