@@ -27,10 +27,6 @@ struct cnf_er : cnf {
     cnf_er(size_t var_count, size_t cla_count, std::vector<std::vector<int64_t>> clauses)
         : cnf(var_count, cla_count, std::move(clauses)) {}
 
-    bool add_er_pair(const std::pair<int64_t, int64_t> &p);
-
-    bool remove_er_pair(const std::pair<int64_t, int64_t> &p);
-
     void write_cnf_header(bp::opstream &solver_input) const override;
 
     void write_cnf_clauses(bp::opstream &solver_input) const override;

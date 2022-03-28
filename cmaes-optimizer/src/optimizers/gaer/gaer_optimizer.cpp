@@ -15,15 +15,12 @@ void gaer_optimizer::init_genes(common::cnf_er &cnf, const std::function<double(
     common::log("Initializing genes with " + std::to_string(new_pairs_count) + " pairs");
 
     for (size_t i = 0; i < new_pairs_count; ++i) {
-        auto a = static_cast<int64_t>(rnd() * cnf.var_count) * (rnd() < 0.5 ? -1 : 1) + 1;
-        auto b = static_cast<int64_t>(rnd() * cnf.var_count) * (rnd() < 0.5 ? -1 : 1) + 1;
+        auto a = (static_cast<int64_t>(rnd() * cnf.var_count) + 1) * (rnd() < 0.5 ? -1 : 1);
+        auto b = (static_cast<int64_t>(rnd() * cnf.var_count) + 1) * (rnd() < 0.5 ? -1 : 1);
         if (a > b) {
             std::swap(a, b);
         }
-        if (a == 0 || b == 0) {
-            throw std::runtime_error("BAN");
-        }
-        cnf.add_er_pair({a, b});
+        cnf.er_pairs.insert({a, b});
     }
 }
 
@@ -38,19 +35,22 @@ common::cnf_er gaer_optimizer::mutate(const common::cnf_er &cnf,
                                       double shrink_scale) {
     common::cnf_er mutated = cnf;
 
-    auto new_pairs_count = static_cast<size_t>(shrink_scale * cnf.var_count * rnd());
-    auto deleted_pairs_count = static_cast<size_t>(shrink_scale * cnf.var_count * rnd());
+    auto new_pairs_count = static_cast<size_t>(shrink_scale * mutated.er_pairs.size() * rnd() * 0.1);
+    auto deleted_pairs_count = static_cast<size_t>(shrink_scale * mutated.er_pairs.size() * rnd() * 0.1);
 
     for (size_t i = 0; i < new_pairs_count; ++i) {
-        auto a = static_cast<int64_t>(rnd() * (cnf.var_count + 0.9)) * (rnd() < 0.5 ? -1 : 1);
-        auto b = static_cast<int64_t>(rnd() * (cnf.var_count + 0.9)) * (rnd() < 0.5 ? -1 : 1);
-        mutated.add_er_pair({a, b});
+        auto a = (static_cast<int64_t>(rnd() * mutated.var_count) + 1) * (rnd() < 0.5 ? -1 : 1);
+        auto b = (static_cast<int64_t>(rnd() * mutated.var_count) + 1) * (rnd() < 0.5 ? -1 : 1);
+        if (a > b) {
+            std::swap(a, b);
+        }
+        mutated.er_pairs.insert({a, b});
     }
 
     for (size_t i = 0; i < deleted_pairs_count && !cnf.er_pairs.empty(); ++i) {
         std::pair<int64_t, int64_t> sample_pair;
-        std::sample(cnf.er_pairs.begin(), cnf.er_pairs.end(), &sample_pair, 1, gen);
-        mutated.remove_er_pair(sample_pair);
+        std::sample(mutated.er_pairs.begin(), mutated.er_pairs.end(), &sample_pair, 1, gen);
+        mutated.er_pairs.erase(mutated.er_pairs.find(sample_pair));
     }
 
     return mutated;
@@ -65,17 +65,18 @@ void gaer_optimizer::report_generation(int generation_number,
 common::cnf_er gaer_optimizer::crossover(const common::cnf_er &a,
                                          const common::cnf_er &b,
                                          const std::function<double(void)> &rnd) {
-    common::cnf_er crossed(a.var_count, a.cla_count, a.clauses);
+    common::cnf_er offspring = a;
+    offspring.er_pairs.clear();
 
     std::vector<std::pair<int64_t, int64_t>> a_sample(a.er_pairs.size() / 2);
     std::sample(a.er_pairs.begin(), a.er_pairs.end(), a_sample.begin(), a_sample.size(), gen);
-    crossed.er_pairs.insert(a_sample.begin(), a_sample.end());
+    offspring.er_pairs.insert(a_sample.begin(), a_sample.end());
 
     std::vector<std::pair<int64_t, int64_t>> b_sample(b.er_pairs.size() / 2);
     std::sample(b.er_pairs.begin(), b.er_pairs.end(), b_sample.begin(), b_sample.size(), gen);
-    crossed.er_pairs.insert(b_sample.begin(), b_sample.end());
+    offspring.er_pairs.insert(b_sample.begin(), b_sample.end());
 
-    return crossed;
+    return offspring;
 }
 
 double gaer_optimizer::calculate(const EA::Genetic<common::cnf_er, common::sample>::thisChromosomeType &x) {
