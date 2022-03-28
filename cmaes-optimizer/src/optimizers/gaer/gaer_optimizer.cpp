@@ -87,6 +87,7 @@ ssize_t gaer_optimizer::fit() {
     ga_type ga;
     ga.problem_mode = EA::GA_MODE::SOGA;
     ga.multi_threading = false;
+//    ga.N_threads = 4;
     ga.verbose = true;
     ga.population = 20;
     ga.generation_max = 500;

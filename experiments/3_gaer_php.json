@@ -1,0 +1,28 @@
+{
+  "experiments": [
+    {
+      "name": "GAER PHP 6",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/php/php6.cnf",
+      "optimizer_name": "gaer"
+    },
+    {
+      "name": "GAER PHP 9",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/php/php9.cnf",
+      "optimizer_name": "gaer"
+    },
+    {
+      "name": "GAER PHP 10",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/php/php10.cnf",
+      "optimizer_name": "gaer"
+    },
+    {
+      "name": "GAER PHP 12",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/php/php12.cnf",
+      "optimizer_name": "gaer"
+    }
+  ]
+}
