@@ -26,7 +26,7 @@ void gaer_optimizer::init_genes(common::cnf_er &cnf, const std::function<double(
 
 bool gaer_optimizer::eval_solution(const common::cnf_er &cnf, common::sample &sample) {
     std::string proof_file_path;
-    evaluate_and_record(cnf, sample, proof_file_path);
+    evaluate_and_record(cnf, sample, proof_file_path, false);
     return true;
 }
 
@@ -60,6 +60,7 @@ void gaer_optimizer::report_generation(int generation_number,
                                        const EA::GenerationType<common::cnf_er, common::sample> &last_generation,
                                        const common::cnf_er &best_genes) {
     common::log("Best genes pairs size: " + std::to_string(best_genes.er_pairs.size()));
+    common::record_run_to_db(pg_conn, experiment_id, static_cast<int64_t>(last_generation.best_total_cost));
 }
 
 common::cnf_er gaer_optimizer::crossover(const common::cnf_er &a,
@@ -88,10 +89,9 @@ ssize_t gaer_optimizer::fit() {
     ga_type ga;
     ga.problem_mode = EA::GA_MODE::SOGA;
     ga.multi_threading = false;
-//    ga.N_threads = 4;
     ga.verbose = true;
-    ga.population = 20;
-    ga.generation_max = 10000;
+    ga.population = 50;
+    ga.generation_max = 200;
     ga.calculate_SO_total_fitness = std::bind(&gaer_optimizer::calculate, this, std::placeholders::_1);
     ga.init_genes = std::bind(&gaer_optimizer::init_genes, this, std::placeholders::_1, std::placeholders::_2);
     ga.eval_solution = std::bind(&gaer_optimizer::eval_solution, this, std::placeholders::_1, std::placeholders::_2);
@@ -100,9 +100,9 @@ ssize_t gaer_optimizer::fit() {
     ga.SO_report_generation = std::bind(&gaer_optimizer::report_generation, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
     ga.best_stall_max = 1000;
     ga.average_stall_max = 1000;
-    ga.elite_count = 4;
-    ga.crossover_fraction = 0.6;
-    ga.mutation_rate = 0.01;
+    ga.elite_count = 10;
+    ga.crossover_fraction = 0.5;
+    ga.mutation_rate = 0.05;
 
     ga.solve();
 

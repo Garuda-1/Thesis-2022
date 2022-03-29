@@ -10,6 +10,7 @@
 #include "solver.h"
 
 #include <boost/process.hpp>
+#include <libpq-fe.h>
 
 namespace bp = boost::process;
 
@@ -29,6 +30,21 @@ struct hash_pair {
         return std::hash<T1>{}(p.first) ^ std::hash<T1>{}(p.second);
     }
 };
+
+inline void record_run_to_db(PGconn *pg_conn, int64_t experiment_id, int64_t value) {
+    PGresult *result;
+    std::string query =
+            "INSERT INTO runs (experiment_id, proof_size) VALUES (" + std::to_string(experiment_id) + ", " +
+            std::to_string(value) + ")";
+    result = PQexec(pg_conn, query.c_str());
+    ExecStatusType requestStatus = PQresultStatus(result);
+    if (requestStatus == PGRES_COMMAND_OK) {
+        common::log("Result recorded");
+    } else {
+        common::log("Failed to record_run_to_db result, status: " + std::to_string(requestStatus));
+    }
+    PQclear(result);
+}
 
 }
 

@@ -5,6 +5,7 @@
 #include "experiment.h"
 #include "../optimizers/cmaes/cmaes_optimizer.h"
 #include "../optimizers/mcper/mcper_optimizer.h"
+#include "../optimizers/gaa/gaa_optimizer.h"
 #include "../optimizers/gaer/gaer_optimizer.h"
 
 #include <memory>
@@ -69,6 +70,10 @@ int main(int argc, char *argv[]) {
             optimizer = std::make_unique<mcper_optimizer>(path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
         } else if (optimizer_name == "gaer") {
             optimizer = std::make_unique<gaer_optimizer>(path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+        } else if (optimizer_name == "gaa") {
+            optimizer = std::make_unique<gaa_optimizer>(path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+        } else {
+            throw std::runtime_error("Unknown optimizer: " + optimizer_name);
         }
 
         optimizer->fit();

@@ -42,12 +42,16 @@ add_executable(runner
         src/runner/runner.cpp
         src/optimizers/cmaes/cmaes_optimizer.h
         src/optimizers/cmaes/cmaes_optimizer.cpp
+        src/optimizers/gaa/gaa_optimizer.h
+        src/optimizers/gaa/gaa_optimizer.cpp
         src/optimizers/gaer/gaer_optimizer.h
         src/optimizers/gaer/gaer_optimizer.cpp
         src/optimizers/mcper/mcper_optimizer.h
         src/optimizers/mcper/mcper_optimizer.cpp
         src/optimizers/commons/cnf.h
         src/optimizers/commons/cnf.cpp
+        src/optimizers/commons/cnf_a.cpp
+        src/optimizers/commons/cnf_a.h
         src/optimizers/commons/cnf_er.h
         src/optimizers/commons/cnf_er.cpp
         src/optimizers/commons/optimizer.h
