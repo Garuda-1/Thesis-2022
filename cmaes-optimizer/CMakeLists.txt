@@ -60,7 +60,7 @@ add_executable(runner
         src/optimizers/commons/sample.cpp
         src/optimizers/commons/solver.h
         src/optimizers/commons/solver.cpp
-        src/optimizers/commons/commons.h)
+        src/optimizers/commons/commons.h src/optimizers/null/null_optimizer.cpp src/optimizers/null/null_optimizer.h)
 
 target_link_libraries(runner
         libcmaes::cmaes

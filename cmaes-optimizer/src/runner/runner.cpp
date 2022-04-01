@@ -7,6 +7,7 @@
 #include "../optimizers/mcper/mcper_optimizer.h"
 #include "../optimizers/gaa/gaa_optimizer.h"
 #include "../optimizers/gaer/gaer_optimizer.h"
+#include "../optimizers/null/null_optimizer.h"
 
 #include <memory>
 #include <boost/property_tree/ptree.hpp>
@@ -72,6 +73,8 @@ int main(int argc, char *argv[]) {
             optimizer = std::make_unique<gaer_optimizer>(path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
         } else if (optimizer_name == "gaa") {
             optimizer = std::make_unique<gaa_optimizer>(path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+        } else if (optimizer_name == "null") {
+            optimizer = std::make_unique<null_optimizer>(path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
         } else {
             throw std::runtime_error("Unknown optimizer: " + optimizer_name);
         }
