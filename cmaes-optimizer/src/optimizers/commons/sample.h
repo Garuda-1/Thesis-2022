@@ -20,7 +20,7 @@ namespace common {
         explicit sample(std::vector<double> a);
 
         void evaluate(const cnf &cnf, const std::string &path_to_solver, const std::string &path_to_storage,
-                      std::string &path_to_proof);
+                      std::string &path_to_proof, bool rnd_init = false);
     };
 
 }

@@ -3,6 +3,8 @@
 
 #include "cnf.h"
 
+#include <random>
+
 namespace common {
 
 struct cnf;
@@ -14,7 +16,7 @@ struct solver {
 
     [[nodiscard]] ssize_t unsat_proof_size(const cnf &cnf, const std::string &path_to_storage,
                                            const std::optional<std::vector<double>> &activity,
-                                           std::string &proof_file_path) const;
+                                           std::string &proof_file_path, bool rnd_init = false) const;
 };
 
 }

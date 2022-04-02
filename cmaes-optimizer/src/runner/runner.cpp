@@ -49,6 +49,7 @@ int main(int argc, char *argv[]) {
         auto path_to_solver = experiment.second.get_child("path_to_solver").get_value<std::string>();
         auto path_to_dimacs = experiment.second.get_child("path_to_dimacs").get_value<std::string>();
         auto optimizer_name = experiment.second.get_child("optimizer_name").get_value<std::string>();
+        auto clear_logs = experiment.second.get_child_optional("clear_logs")->get_value_optional<bool>().get_value_or(false);
         int64_t experiment_id;
 
         PGconn *pg_conn = PQconnectdb("host=postgres port=5432 dbname=postgres user=postgres password=postgres");
@@ -83,5 +84,8 @@ int main(int argc, char *argv[]) {
 
         finish_experiment(experiment_id, pg_conn);
         PQfinish(pg_conn);
+        if (clear_logs) {
+            optimizer->clear_logs();
+        }
     }
 }

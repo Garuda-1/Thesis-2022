@@ -48,6 +48,8 @@ add_executable(runner
         src/optimizers/gaer/gaer_optimizer.cpp
         src/optimizers/mcper/mcper_optimizer.h
         src/optimizers/mcper/mcper_optimizer.cpp
+        src/optimizers/null/null_optimizer.h
+        src/optimizers/null/null_optimizer.cpp
         src/optimizers/commons/cnf.h
         src/optimizers/commons/cnf.cpp
         src/optimizers/commons/cnf_a.cpp
@@ -60,7 +62,7 @@ add_executable(runner
         src/optimizers/commons/sample.cpp
         src/optimizers/commons/solver.h
         src/optimizers/commons/solver.cpp
-        src/optimizers/commons/commons.h src/optimizers/null/null_optimizer.cpp src/optimizers/null/null_optimizer.h)
+        src/optimizers/commons/commons.h)
 
 target_link_libraries(runner
         libcmaes::cmaes
