@@ -79,17 +79,25 @@ RUN wget http://pqxx.org/download/software/libpqxx/libpqxx-4.0.tar.gz \
 #  && make install \
 #  && cd -
 
-RUN ( \
-    echo 'LogLevel DEBUG2'; \
-    echo 'PermitRootLogin yes'; \
-    echo 'PasswordAuthentication yes'; \
-    echo 'Subsystem sftp /usr/lib/openssh/sftp-server'; \
-  ) > /etc/ssh/sshd_config_test_clion \
-  && mkdir /run/sshd
+#RUN ( \
+#    echo 'LogLevel DEBUG2'; \
+#    echo 'PermitRootLogin yes'; \
+#    echo 'PasswordAuthentication yes'; \
+#    echo 'Subsystem sftp /usr/lib/openssh/sftp-server'; \
+#  ) > /etc/ssh/sshd_config_test_clion \
+#  && mkdir /run/sshd
 
-RUN useradd -m user \
-  && yes password | passwd user
+RUN git clone https://github.com/Garuda-1/Thesis-2022.git \
+    && mkdir Thesis-2020/build \
+    && cd Thesis-2020/build \
+    && cmake .. \
+    && make \
+    && cd -
 
-RUN usermod -s /bin/bash user
+#RUN useradd -m user \
+#  && yes password | passwd user
+#
+#RUN usermod -s /bin/bash user
+#
+#CMD ["/usr/sbin/sshd", "-D", "-e", "-f", "/etc/ssh/sshd_config_test_clion"]
 
-CMD ["/usr/sbin/sshd", "-D", "-e", "-f", "/etc/ssh/sshd_config_test_clion"]

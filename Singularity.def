@@ -23,8 +23,7 @@ Stage: spython-base
 #   user@password
 
 
-export DEBIAN_FRONTEND=noninteractive
-apt-get update && apt-get -y install tzdata
+DEBIAN_FRONTEND="noninteractive" apt-get update && apt-get -y install tzdata
 
 apt-get update \
 && apt-get install -y ssh \
@@ -84,20 +83,29 @@ wget http://pqxx.org/download/software/libpqxx/libpqxx-4.0.tar.gz \
 #  && make install \
 #  && cd -
 
-( \
-echo 'LogLevel DEBUG2'; \
-echo 'PermitRootLogin yes'; \
-echo 'PasswordAuthentication yes'; \
-echo 'Subsystem sftp /usr/lib/openssh/sftp-server'; \
-) > /etc/ssh/sshd_config_test_clion \
-&& mkdir /run/sshd
+#RUN ( \
+#    echo 'LogLevel DEBUG2'; \
+#    echo 'PermitRootLogin yes'; \
+#    echo 'PasswordAuthentication yes'; \
+#    echo 'Subsystem sftp /usr/lib/openssh/sftp-server'; \
+#  ) > /etc/ssh/sshd_config_test_clion \
+#  && mkdir /run/sshd
 
-useradd -m user \
-&& yes password | passwd user
+git clone https://github.com/Garuda-1/Thesis-2022.git \
+&& mkdir Thesis-2020/build \
+&& cd Thesis-2020/build \
+&& cmake .. \
+&& make \
+&& cd -
 
-usermod -s /bin/bash user
+#RUN useradd -m user \
+#  && yes password | passwd user
+#
+#RUN usermod -s /bin/bash user
+#
+#CMD ["/usr/sbin/sshd", "-D", "-e", "-f", "/etc/ssh/sshd_config_test_clion"]
 
 %runscript
-exec /bin/bash /usr/sbin/sshd -D -e -f /etc/ssh/sshd_config_test_clion "$@"
+exec /bin/bash "$@"
 %startscript
-exec /bin/bash /usr/sbin/sshd -D -e -f /etc/ssh/sshd_config_test_clion "$@"
+exec /bin/bash "$@"
