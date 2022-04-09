@@ -6,9 +6,6 @@
 #include <algorithm>
 #include <utility>
 
-#include "sample.h"
-#include "solver.h"
-
 #include <boost/process.hpp>
 #include <libpq-fe.h>
 
@@ -45,6 +42,19 @@ inline void record_run_to_db(PGconn *pg_conn, int64_t experiment_id, int64_t val
     }
     PQclear(result);
 }
+
+struct optimizer_options {
+    bool record_result_to_db = false;
+    bool rnd_init = false;
+    bool cleanup = false;
+    bool print_solver_output = false;
+};
+
+struct solver_output {
+    ssize_t proof_size;
+    std::unordered_map<std::pair<int64_t, int64_t>, size_t, hash_pair> trail_frequencies;
+    std::unordered_map<std::pair<int64_t, int64_t>, size_t, hash_pair> conflict_frequencies;
+};
 
 }
 

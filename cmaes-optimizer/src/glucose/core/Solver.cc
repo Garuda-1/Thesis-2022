@@ -1065,10 +1065,21 @@ lbool Solver::search(int nof_conflicts) {
             lbdQueue.push(nblevels);
             sumLBD += nblevels;
 
+            for (int i = 0; i < trail.size() - 1; ++i) {
+                for (int j = i + 1; j < trail.size(); ++j) {
+                    Lit a = trail[i];
+                    Lit b = trail[j];
+                    if (var(a) > var(b)) {
+                        std::swap(a, b);
+                    }
+                    ++trailFrequencies[a.x * 2 * nVars() + b.x];
+                }
+            }
+
             if (certifiedUNSAT) {
                 fprintf(certifiedOutput, "t ");
                 for (int i = 0; i < trail.size(); i++) {
-                    fprintf(certifiedOutput, "%i ", var(trail[i]) + 1);
+                    fprintf(certifiedOutput, "%i ", (var(trail[i]) + 1) * (-2 * sign(trail[i]) + 1));
                 }
                 fprintf(certifiedOutput, "0\n");
             }
@@ -1076,10 +1087,22 @@ lbool Solver::search(int nof_conflicts) {
             cancelUntil(backtrack_level);
 
             if (certifiedUNSAT) {
-                for (int i = 0; i < learnt_clause.size(); i++)
+                for (int i = 0; i < learnt_clause.size(); i++) {
                     fprintf(certifiedOutput, "%i ", (var(learnt_clause[i]) + 1) *
                                                     (-2 * sign(learnt_clause[i]) + 1));
+                }
                 fprintf(certifiedOutput, "0\n");
+            }
+
+            for (int i = 0; i < learnt_clause.size() - 1; ++i) {
+                for (int j = i + 1; j < learnt_clause.size(); ++j) {
+                    Lit a = learnt_clause[i];
+                    Lit b = learnt_clause[j];
+                    if (var(a) > var(b)) {
+                        std::swap(a, b);
+                    }
+                    ++conflictFrequencies[a.x * 2 * nVars() + b.x];
+                }
             }
 
             if (learnt_clause.size() == 1) {

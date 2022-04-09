@@ -94,6 +94,8 @@ namespace Glucose {
         if (cnt != clauses)
             fprintf(stderr,
                     "WARNING! DIMACS header mismatch: wrong number of clauses.\n");
+        S.trailFrequencies.growTo(2 * vars * 2 * vars, 0);
+        S.conflictFrequencies.growTo(2 * vars * 2 * vars, 0);
     }
 
 // Inserts problem into solver.

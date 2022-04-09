@@ -25,8 +25,8 @@ void gaer_optimizer::init_genes(common::cnf_er &cnf, const std::function<double(
 }
 
 bool gaer_optimizer::eval_solution(const common::cnf_er &cnf, common::sample &sample) {
-    std::string proof_file_path;
-    evaluate_and_record(cnf, sample, proof_file_path, false);
+    common::optimizer_options options = {false, false, true, false};
+    evaluate_and_record(cnf, sample, options);
     return true;
 }
 
@@ -82,7 +82,7 @@ common::cnf_er gaer_optimizer::crossover(const common::cnf_er &a,
 }
 
 double gaer_optimizer::calculate(const EA::Genetic<common::cnf_er, common::sample>::thisChromosomeType &x) {
-    return x.middle_costs.fitness;
+    return x.middle_costs.solver_output.proof_size;
 }
 
 ssize_t gaer_optimizer::fit() {

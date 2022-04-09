@@ -1,23 +1,21 @@
 #include "solver.h"
 
-ssize_t common::solver::unsat_proof_size(const cnf &cnf, const std::string &path_to_storage,
-                                         const std::optional<std::vector<double>> &activity,
-                                         std::string &proof_file_path,
-                                         bool rnd_init) const {
-    std::string unique_tag = boost::filesystem::unique_path().string();
-    proof_file_path = path_to_storage + "/" + unique_tag + "-proof.dimacs";
-    std::string log_file_path = path_to_storage + "/" + unique_tag + "-log.log";
-
+common::solver_output common::solver::run_unsat(const cnf &cnf, const std::string &path_to_storage,
+                                                const std::optional<std::vector<double>> &activity,
+                                                common::optimizer_options &options) const {
     std::random_device random_device;
     std::mt19937 random_gen(random_device());
-    std::uniform_int_distribution distribution(0, 10000);
+    std::uniform_int_distribution distribution(1, 10000);
 
     bp::opstream in;
-    std::string command = path + " -certified -certified-output=" + proof_file_path;
-    if (rnd_init) {
+    boost::asio::io_service ios;
+    std::future<std::string> data;
+    std::string command = path + " -certified -verb=0";
+
+    if (options.rnd_init) {
         command += " -rnd-init -rnd-seed=" + std::to_string(distribution(random_gen));
     }
-    bp::child c(command, bp::std_in < in, bp::std_out > log_file_path);
+    bp::child c(command, bp::std_in < in, bp::std_out > data, ios);
     cnf.write_cnf_header(in);
     if (activity) {
         cnf.write_cnf_activity(in, *activity);
@@ -25,16 +23,52 @@ ssize_t common::solver::unsat_proof_size(const cnf &cnf, const std::string &path
     cnf.write_cnf_clauses(in);
     in.close();
     in.pipe().close();
-    c.wait();
 
-    std::ifstream proof_stream(proof_file_path);
-    ssize_t proof_size = 0;
+    ios.run();
+    c.wait();
+    data.wait();
+
+    common::solver_output output;
     std::string line;
-    while (std::getline(proof_stream, line)) {
-        if (line[0] != 't') {
-            ++proof_size;
+    std::stringstream child_out(data.get());
+    int64_t ft_lc = 0;
+    int64_t fc_lc = 0;
+    while (std::getline(child_out, line)) {
+        std::stringstream line_stream(line);
+        std::string line_start;
+        line_stream >> line_start;
+        if (line_start == "ps") {
+            line_stream >> output.proof_size;
+        } else if (line_start == "ft") {
+            for (int64_t i = 0; i < 2 * cnf.var_count; ++i) {
+                size_t f;
+                line_stream >> f;
+                if (f == 0) {
+                    continue;
+                }
+                int64_t a = ((ft_lc >> 1) + 1) * (-2 * (ft_lc & 1) + 1);
+                int64_t b = ((i >> 1) + 1) * (-2 * (i & 1) + 1);
+                output.trail_frequencies[{a, b}] = f;
+            }
+            ++ft_lc;
+        } else if (line_start == "fc") {
+            for (int64_t i = 0; i < 2 * cnf.var_count; ++i) {
+                size_t f;
+                line_stream >> f;
+                if (f == 0) {
+                    continue;
+                }
+                int64_t a = ((fc_lc >> 1) + 1) * (-2 * (fc_lc & 1) + 1);
+                int64_t b = ((i >> 1) + 1) * (-2 * (i & 1) + 1);
+                output.conflict_frequencies[{a, b}] = f;
+            }
+            ++fc_lc;
+        }
+
+        if (options.print_solver_output) {
+            common::log(line);
         }
     }
 
-    return proof_size;
+    return output;
 }

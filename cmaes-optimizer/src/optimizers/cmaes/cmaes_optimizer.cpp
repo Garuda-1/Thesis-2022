@@ -19,7 +19,7 @@ ssize_t cmaes_optimizer::fit() {
 }
 
 double cmaes_optimizer::evaluate(const double *a, [[maybe_unused]] size_t n) {
-    std::string proof_file_path;
     common::sample sample(a, benchmark.var_count);
-    return static_cast<double>(evaluate_and_record(sample, proof_file_path));
+    common::optimizer_options options = {true, false, true};
+    return static_cast<double>(evaluate_and_record(sample, options).proof_size);
 }

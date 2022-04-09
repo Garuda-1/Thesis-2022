@@ -210,6 +210,25 @@ int main(int argc, char** argv)
 	//-------------- Want certified output
     } else {
 	  printf(ret == l_True ? "s SATISFIABLE\n" : ret == l_False ? "s UNSATISFIABLE\n" : "s INDETERMINATE\n");
+
+      printf("ps %lu\n", S.conflicts);
+
+      for (int i = 0; i < S.nVars() * 2; ++i) {
+          printf("ft ");
+          for (int j = 0; j < S.nVars() * 2; ++j) {
+              printf("%lu ", S.trailFrequencies[i * S.nVars() * 2 + j]);
+          }
+          printf("\n");
+      }
+
+      for (int i = 0; i < S.nVars() * 2; ++i) {
+          printf("fc ");
+          for (int j = 0; j < S.nVars() * 2; ++j) {
+              printf("%lu ", S.conflictFrequencies[i * S.nVars() * 2 + j]);
+          }
+          printf("\n");
+      }
+
 	  if(S.showModel && ret==l_True) {
 	    printf("v ");
 	    for (int i = 0; i < S.nVars(); i++)

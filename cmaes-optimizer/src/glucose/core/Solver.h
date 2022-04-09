@@ -172,6 +172,10 @@ public:
     uint64_t nbRemovedClauses,nbReducedClauses,nbDL2,nbBin,nbUn,nbReduceDB,solves, starts, decisions, rnd_decisions, propagations, conflicts,conflictsRestarts,nbstopsrestarts,nbstopsrestartssame,lastblockatrestart;
     uint64_t dec_vars, clauses_literals, learnts_literals, max_literals, tot_literals;
 
+    // Frequencies
+    vec<uint64_t> trailFrequencies;
+    vec<uint64_t> conflictFrequencies;
+
 protected:
     long curRestart;
     // Helper structures:

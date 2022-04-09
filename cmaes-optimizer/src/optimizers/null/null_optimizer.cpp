@@ -11,7 +11,8 @@ ssize_t null_optimizer::fit() {
         for (size_t j = 0; j < BATCH_SIZE; ++j) {
             std::string proof_file_path;
             common::sample sample;
-            batch_best = std::min(batch_best, evaluate_and_record(sample, proof_file_path, false, true));
+            common::optimizer_options options = {false, true, true, false};
+            batch_best = std::min(batch_best, evaluate_and_record(sample, options).proof_size);
         }
         
         best = std::min(best, batch_best);

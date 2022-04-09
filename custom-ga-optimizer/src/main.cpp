@@ -79,7 +79,7 @@ struct sample {
 //        proof_file_path << static_cast<const void*>(this);
         proof_file_path << "proof.dimacs";
 
-        boost::process::child c("./glucose -certified -certified-output=" + proof_file_path.str(), bp::std_in < in, bp::std_out > bp::null);
+        boost::process::child c("./glucose-modified -certified -certified-output=" + proof_file_path.str(), bp::std_in < in, bp::std_out > bp::null);
         cnf.send_cnf(in, activity);
         c.wait();
 

@@ -2,16 +2,15 @@
 #define OPTIMIZER_SAMPLE_H
 
 #include "cnf.h"
+#include "commons.h"
 
 #include <vector>
 
 namespace common {
 
-    struct cnf;
-
     struct sample {
         std::optional<std::vector<double>> activity;
-        ssize_t fitness = -1;
+        common::solver_output solver_output;
 
         sample() = default;
 
@@ -20,7 +19,7 @@ namespace common {
         explicit sample(std::vector<double> a);
 
         void evaluate(const cnf &cnf, const std::string &path_to_solver, const std::string &path_to_storage,
-                      std::string &path_to_proof, bool rnd_init = false);
+                      optimizer_options &options);
     };
 
 }

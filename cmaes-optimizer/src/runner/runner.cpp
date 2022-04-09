@@ -49,10 +49,15 @@ int main(int argc, char *argv[]) {
         auto path_to_solver = experiment.second.get_child("path_to_solver").get_value<std::string>();
         auto path_to_dimacs = experiment.second.get_child("path_to_dimacs").get_value<std::string>();
         auto optimizer_name = experiment.second.get_child("optimizer_name").get_value<std::string>();
-        auto clear_logs = experiment.second.get_child_optional("clear_logs")->get_value_optional<bool>().get_value_or(false);
+
         int64_t experiment_id;
 
-        PGconn *pg_conn = PQconnectdb("host=postgres port=5432 dbname=postgres user=postgres password=postgres");
+        std::string connection_string = std::string("sslmode=verify-full host=") + std::getenv("DB_HOST") +
+                " port=" + std::getenv("DB_PORT") +
+                " dbname=" + std::getenv("DB_NAME") +
+                " user=" + std::getenv("DB_USER") +
+                " password=" + std::getenv("DB_PWD");
+        PGconn *pg_conn = PQconnectdb(connection_string.c_str());
 
         std::cout << "Starting experiment '" << name << "'." << std::endl;
         experiment_id = create_experiment(name, pg_conn);
@@ -84,8 +89,6 @@ int main(int argc, char *argv[]) {
 
         finish_experiment(experiment_id, pg_conn);
         PQfinish(pg_conn);
-        if (clear_logs) {
-            optimizer->clear_logs();
-        }
+        optimizer->clear_logs();
     }
 }

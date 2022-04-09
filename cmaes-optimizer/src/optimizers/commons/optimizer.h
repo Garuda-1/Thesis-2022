@@ -29,9 +29,9 @@ struct optimizer {
 
     virtual ssize_t fit() = 0;
 
-    ssize_t evaluate_and_record(common::sample &sample, std::string &proof_file_path, bool record_result_to_db = true, bool rnd_init = false);
+    common::solver_output evaluate_and_record(common::sample &sample, common::optimizer_options &options);
 
-    ssize_t evaluate_and_record(const common::cnf &cnf, common::sample &sample, std::string &proof_file_path, bool record_result_to_db = true, bool rnd_init = false);
+    common::solver_output evaluate_and_record(const common::cnf &cnf, common::sample &sample, common::optimizer_options &options);
 
     void log_optimization_result() const;
 
