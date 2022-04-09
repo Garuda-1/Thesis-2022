@@ -23,7 +23,7 @@ Stage: spython-base
 #   user@password
 
 
-export DEBIAN_FRONTEND=noninteractive
+DEBIAN_FRONTEND=noninteractive
 
 apt-get update && apt-get -y install tzdata
 
@@ -94,8 +94,8 @@ wget http://pqxx.org/download/software/libpqxx/libpqxx-4.0.tar.gz \
 #  && mkdir /run/sshd
 
 git clone https://github.com/Garuda-1/Thesis-2022.git \
-&& mkdir Thesis-2020/build \
-&& cd Thesis-2020/build \
+&& mkdir Thesis-2022/build \
+&& cd Thesis-2022/build \
 && cmake .. \
 && make \
 && cd -
@@ -107,6 +107,8 @@ git clone https://github.com/Garuda-1/Thesis-2022.git \
 #
 #CMD ["/usr/sbin/sshd", "-D", "-e", "-f", "/etc/ssh/sshd_config_test_clion"]
 
+%environment
+export DEBIAN_FRONTEND=noninteractive
 %runscript
 exec /bin/bash "$@"
 %startscript

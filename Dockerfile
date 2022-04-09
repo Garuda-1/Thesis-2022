@@ -19,7 +19,9 @@
 
 FROM ubuntu:20.04
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -y install tzdata
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get -y install tzdata
 
 RUN apt-get update \
   && apt-get install -y ssh \
@@ -88,8 +90,8 @@ RUN wget http://pqxx.org/download/software/libpqxx/libpqxx-4.0.tar.gz \
 #  && mkdir /run/sshd
 
 RUN git clone https://github.com/Garuda-1/Thesis-2022.git \
-    && mkdir Thesis-2020/build \
-    && cd Thesis-2020/build \
+    && mkdir Thesis-2022/build \
+    && cd Thesis-2022/build \
     && cmake .. \
     && make \
     && cd -
