@@ -90,8 +90,8 @@ RUN wget http://pqxx.org/download/software/libpqxx/libpqxx-4.0.tar.gz \
 #  && mkdir /run/sshd
 
 RUN git clone https://github.com/Garuda-1/Thesis-2022.git \
-    && mkdir Thesis-2022/build \
-    && cd Thesis-2022/build \
+    && mkdir Thesis-2022/cmaes-optimizer/build \
+    && cd Thesis-2022/cmaes-optimizer/build \
     && cmake .. \
     && make \
     && cd -
