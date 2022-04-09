@@ -72,12 +72,12 @@ RUN wget http://pqxx.org/download/software/libpqxx/libpqxx-4.0.tar.gz \
   && make install \
   && cd -
 
-RUN git clone https://github.com/nojhan/paradiseo.git \
-  && mkdir paradiseo/build \
-  && cd paradiseo/build \
-  && cmake -DEDO=ON .. \
-  && make install \
-  && cd -
+#RUN git clone https://github.com/nojhan/paradiseo.git \
+#  && mkdir paradiseo/build \
+#  && cd paradiseo/build \
+#  && cmake -DEDO=ON .. \
+#  && make install \
+#  && cd -
 
 RUN ( \
     echo 'LogLevel DEBUG2'; \
