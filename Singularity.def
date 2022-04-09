@@ -23,7 +23,7 @@ Stage: spython-base
 #   user@password
 
 
-DEBIAN_FRONTEND=noninteractive
+export DEBIAN_FRONTEND=noninteractive
 
 apt-get update && apt-get -y install tzdata
 
