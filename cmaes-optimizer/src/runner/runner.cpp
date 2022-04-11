@@ -93,7 +93,7 @@ int main(int argc, char *argv[]) {
         auto path_to_solver = experiment.second.get_child("path_to_solver").get_value<std::string>();
         auto path_to_dimacs = experiment.second.get_child("path_to_dimacs").get_value<std::string>();
         auto optimizer_name = experiment.second.get_child("optimizer_name").get_value<std::string>();
-        auto threads_count = experiment.second.get_child("threads_count").get_value<size_t>();
+        auto threads_count = experiment.second.get_child("threads").get_value<size_t>();
 
         std::vector<std::thread> solver_threads;
         solver_threads.reserve(threads_count);
