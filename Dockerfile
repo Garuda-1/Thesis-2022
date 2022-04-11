@@ -96,12 +96,12 @@ RUN wget http://pqxx.org/download/software/libpqxx/libpqxx-4.0.tar.gz \
 #
 #CMD ["/usr/sbin/sshd", "-D", "-e", "-f", "/etc/ssh/sshd_config_test_clion"]
 
-RUN git clone https://github.com/Garuda-1/Thesis-2022.git \
-    && mkdir Thesis-2022/cmaes-optimizer/build \
-    && cd Thesis-2022/cmaes-optimizer/build \
-    && cmake .. \
-    && make \
-    && cd -
+#RUN git clone https://github.com/Garuda-1/Thesis-2022.git \
+#    && mkdir Thesis-2022/cmaes-optimizer/build \
+#    && cd Thesis-2022/cmaes-optimizer/build \
+#    && cmake .. \
+#    && make \
+#    && cd -
 
 #CMD ["/usr/sbin/sshd", "-D", "-e", "-f", "/etc/ssh/sshd_config_test_clion"]
 
