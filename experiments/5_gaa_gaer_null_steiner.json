@@ -1,0 +1,25 @@
+{
+  "experiments": [
+    {
+      "name": "[5] Null Steiner",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/simpler_g3/Steiner-45-16-bce.cnf",
+      "optimizer_name": "null",
+      "threads": 20
+    },
+    {
+      "name": "[5] GAA Steiner",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/simpler_g3/Steiner-45-16-bce.cnf",
+      "optimizer_name": "gaa",
+      "threads": 20
+    },
+    {
+      "name": "[5] GAER Steiner",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/simpler_g3/Steiner-45-16-bce.cnf",
+      "optimizer_name": "gaer",
+      "threads": 20
+    }
+  ]
+}

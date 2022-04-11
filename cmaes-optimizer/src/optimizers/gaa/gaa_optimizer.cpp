@@ -19,7 +19,7 @@ void gaa_optimizer::init_genes(common::cnf_a &cnf, const std::function<double(vo
 }
 
 bool gaa_optimizer::eval_solution(const common::cnf_a &cnf, common::sample &sample) {
-    common::optimizer_options options = {false, false, true, true};
+    common::optimizer_options options = {false, false, true, false};
     evaluate_and_record(cnf, sample, options);
     return true;
 }

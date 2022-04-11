@@ -1,0 +1,25 @@
+{
+  "experiments": [
+    {
+      "name": "[5] Null PHP6",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/php/php-6.cnf",
+      "optimizer_name": "null",
+      "threads": 20
+    },
+    {
+      "name": "[5] GAA PHP6",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/php/php-6.cnf",
+      "optimizer_name": "gaa",
+      "threads": 20
+    },
+    {
+      "name": "[5] GAER PHP6",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/php/php-6.cnf",
+      "optimizer_name": "gaer",
+      "threads": 20
+    }
+  ]
+}
