@@ -51,6 +51,7 @@ RUN apt-get update \
       libgflags-dev \
       libeigen3-dev \
       libpq-dev \
+      libpqxx-dev \
       libopenmpi-dev \
       doxygen \
       graphviz \
@@ -62,17 +63,17 @@ RUN git clone https://github.com/CMA-ES/libcmaes.git \
   && mkdir libcmaes/build \
   && cd libcmaes/build \
   && cmake .. \
-  && make -j2 \
+  && make -j10 \
   && make install \
   && cd -
 
-RUN wget http://pqxx.org/download/software/libpqxx/libpqxx-4.0.tar.gz \
-  && tar xvfz libpqxx-4.0.tar.gz \
-  && cd libpqxx-4.0 \
-  && ./configure \
-  && make \
-  && make install \
-  && cd -
+#RUN wget http://pqxx.org/download/software/libpqxx/libpqxx-4.0.tar.gz \
+#  && tar xvfz libpqxx-4.0.tar.gz \
+#  && cd libpqxx-4.0 \
+#  && ./configure \
+#  && make -j10 \
+#  && make install \
+#  && cd -
 
 #RUN git clone https://github.com/nojhan/paradiseo.git \
 #  && mkdir paradiseo/build \
