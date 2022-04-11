@@ -89,6 +89,13 @@ RUN wget http://pqxx.org/download/software/libpqxx/libpqxx-4.0.tar.gz \
 #  ) > /etc/ssh/sshd_config_test_clion \
 #  && mkdir /run/sshd
 
+RUN useradd -m user \
+  && yes password | passwd user
+
+RUN usermod -s /bin/bash user
+
+CMD ["/usr/sbin/sshd", "-D", "-e", "-f", "/etc/ssh/sshd_config_test_clion"]
+
 RUN git clone https://github.com/Garuda-1/Thesis-2022.git \
     && mkdir Thesis-2022/cmaes-optimizer/build \
     && cd Thesis-2022/cmaes-optimizer/build \
@@ -96,10 +103,6 @@ RUN git clone https://github.com/Garuda-1/Thesis-2022.git \
     && make \
     && cd -
 
-#RUN useradd -m user \
-#  && yes password | passwd user
-#
-#RUN usermod -s /bin/bash user
 #
 #CMD ["/usr/sbin/sshd", "-D", "-e", "-f", "/etc/ssh/sshd_config_test_clion"]
 
