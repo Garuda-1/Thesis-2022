@@ -31,7 +31,7 @@ chmod 0600 ~/.postgresql/root.crt
 echo "Starting runner with arguments $*"
 mkdir /Thesis/cmaes-optimizer/build || true
 cd /Thesis/cmaes-optimizer/build
-cmake ..
+cmake -DCMAKE_BUILD_TYPE=Release ..
 make glucose runner
 
 for i in {1..20}
