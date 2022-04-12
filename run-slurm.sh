@@ -2,13 +2,13 @@
 set -eu
 
 srun \
-  --job-name "B11 Single Thread" \
+  --job-name "[5] x20" \
   --mail-type=END,FAIL \
   --mail-user=yan.dolzhanskiy@gmail.com \
   --ntasks=1 \
-  --nodelist=meduza-1 \
-  --mem=16G \
-  --cpus-per-task=1 \
+  --nodelist=orthus-2 \
+  --mem=128G \
+  --cpus-per-task=20 \
   --time=100:00:00 \
   --output="output.log" \
   ./run-singularity.sh "$@"
