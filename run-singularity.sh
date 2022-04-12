@@ -11,6 +11,4 @@ srun \
   --cpus-per-task=32 \
   --time=100:00:00 \
   --output="output.log" \
-  "singularity exec experiments-env --bind /nfs/home/ydolzhanskiy/Thesis-2022:/Thesis /nfs/home/ydolzhanskiy/Thesis-2022/run.sh $*" \
-  && { sleep 1 ; kill -9 "$PID"; } \
-  || { sleep 1 ; kill -9 "$PID"; }
+  "singularity exec --bind /nfs/home/ydolzhanskiy/Thesis-2022:/Thesis /nfs/home/ydolzhanskiy/Thesis-2022/experiments-env /nfs/home/ydolzhanskiy/Thesis-2022/run.sh $*"

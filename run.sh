@@ -23,6 +23,7 @@ set -eux
 #
 #wait
 
+echo "Starting runner with arguments $*"
 mkdir /Thesis/cmaes-optimizer/build
 cd /Thesis/cmaes-optimizer/build
 cmake ..
