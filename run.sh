@@ -29,7 +29,7 @@ wget "https://storage.yandexcloud.net/cloud-certs/CA.pem" -O ~/.postgresql/root.
 chmod 0600 ~/.postgresql/root.crt
 
 echo "Starting runner with arguments $*"
-mkdir /Thesis/cmaes-optimizer/build
+mkdir /Thesis/cmaes-optimizer/build || true
 cd /Thesis/cmaes-optimizer/build
 cmake ..
 make glucose runner
