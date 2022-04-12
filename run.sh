@@ -23,6 +23,11 @@ set -eux
 #
 #wait
 
+echo "Downloading YC certificate..."
+mkdir -p ~/.postgresql && \
+wget "https://storage.yandexcloud.net/cloud-certs/CA.pem" -O ~/.postgresql/root.crt && \
+chmod 0600 ~/.postgresql/root.crt
+
 echo "Starting runner with arguments $*"
 mkdir /Thesis/cmaes-optimizer/build
 cd /Thesis/cmaes-optimizer/build
