@@ -6,7 +6,7 @@ srun \
   --mail-type=END,FAIL \
   --mail-user=yan.dolzhanskiy@gmail.com \
   --ntasks=1 \
-  --nodelist=orthus-2 \
+  --nodelist=orthrus-2 \
   --mem=128G \
   --cpus-per-task=20 \
   --time=100:00:00 \
