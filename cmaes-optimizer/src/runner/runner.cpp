@@ -10,7 +10,6 @@
 #include "../optimizers/null/null_optimizer.h"
 
 #include <memory>
-#include <thread>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <libpq-fe.h>
@@ -96,19 +95,7 @@ int main(int argc, char* argv[]) {
     auto path_to_solver = experiment.second.get_child("path_to_solver").get_value<std::string>();
     auto path_to_dimacs = experiment.second.get_child("path_to_dimacs").get_value<std::string>();
     auto optimizer_name = experiment.second.get_child("optimizer_name").get_value<std::string>();
-    auto threads_count = experiment.second.get_child("threads").get_value<size_t>();
 
-    std::vector<std::thread> solver_threads;
-    solver_threads.reserve(threads_count);
-
-    for (size_t i = 0; i < threads_count; ++i) {
-      solver_threads.emplace_back([name, path_to_solver, path_to_dimacs, optimizer_name] {
-        run_thread(name, path_to_solver, path_to_dimacs, optimizer_name);
-      });
-    }
-
-    for (size_t i = 0; i < threads_count; ++i) {
-      solver_threads[i].join();
-    }
+    run_thread(name, path_to_solver, path_to_dimacs, optimizer_name);
   }
 }
