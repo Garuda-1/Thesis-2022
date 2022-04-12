@@ -33,4 +33,10 @@ mkdir /Thesis/cmaes-optimizer/build || true
 cd /Thesis/cmaes-optimizer/build
 cmake ..
 make glucose runner
-./runner "$@"
+
+for i in {1..20}
+do
+  ./runner "$@" &
+done
+
+wait
