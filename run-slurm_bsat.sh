@@ -6,7 +6,7 @@ srun \
   --mail-type=ALL \
   --mail-user=yan.dolzhanskiy@gmail.com \
   --ntasks=1 \
-  --nodelist=orthrus-[1,2] \
+  --nodelist={orthrus,meduza}-[1,2] \
   --mem=32G \
   --cpus-per-task=20 \
   --time=24:00:00 \
