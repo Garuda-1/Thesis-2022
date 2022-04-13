@@ -17,6 +17,10 @@ ssize_t null_optimizer::fit() {
         
         best = std::min(best, batch_best);
         common::record_run_to_db(pg_conn, experiment_id, best);
+
+        if (!optimizer::within_time_resources()) {
+            break;
+        }
     }
 
     return best;

@@ -61,6 +61,9 @@ void gaer_optimizer::report_generation(int generation_number,
                                        const common::cnf_er &best_genes) {
     common::log("Best genes pairs size: " + std::to_string(best_genes.er_pairs.size()));
     common::record_run_to_db(pg_conn, experiment_id, static_cast<int64_t>(last_generation.best_total_cost));
+    if (!optimizer::within_time_resources()) {
+        ga.user_request_stop = true;
+    }
 }
 
 common::cnf_er gaer_optimizer::crossover(const common::cnf_er &a,
@@ -86,7 +89,6 @@ double gaer_optimizer::calculate(const EA::Genetic<common::cnf_er, common::sampl
 }
 
 ssize_t gaer_optimizer::fit() {
-    ga_type ga;
     ga.problem_mode = EA::GA_MODE::SOGA;
     ga.multi_threading = false;
     ga.verbose = true;

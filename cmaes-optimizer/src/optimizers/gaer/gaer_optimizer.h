@@ -10,6 +10,7 @@
 struct gaer_optimizer : optimizer {
 
     std::mt19937 gen;
+    EA::Genetic<common::cnf_er, common::sample> ga;
 
     gaer_optimizer(std::string path_to_solver, std::string path_to_storage, std::string path_to_dimacs,
                    PGconn *pg_conn, int64_t experiment_id);

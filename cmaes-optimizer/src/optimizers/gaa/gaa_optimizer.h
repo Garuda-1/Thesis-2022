@@ -11,6 +11,8 @@
 
 struct gaa_optimizer : optimizer {
 
+    EA::Genetic<common::cnf_a, common::sample> ga;
+
     std::mt19937 gen;
 
     gaa_optimizer(std::string path_to_solver, std::string path_to_storage, std::string path_to_dimacs,

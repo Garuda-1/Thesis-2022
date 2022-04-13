@@ -41,6 +41,9 @@ void gaa_optimizer::report_generation(int generation_number,
                                       const EA::GenerationType<common::cnf_a, common::sample> &last_generation,
                                       const common::cnf_a &best_genes) {
     common::record_run_to_db(pg_conn, experiment_id, static_cast<int64_t>(last_generation.best_total_cost));
+    if (!optimizer::within_time_resources()) {
+        ga.user_request_stop = true;
+    }
 }
 
 common::cnf_a gaa_optimizer::crossover(const common::cnf_a &a,
@@ -59,7 +62,6 @@ double gaa_optimizer::calculate(const EA::Genetic<common::cnf_a, common::sample>
 }
 
 ssize_t gaa_optimizer::fit() {
-    ga_type ga;
     ga.problem_mode = EA::GA_MODE::SOGA;
     ga.multi_threading = false;
     ga.verbose = true;

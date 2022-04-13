@@ -6,9 +6,14 @@
 
 #include <libpq-fe.h>
 
+#include <chrono>
 #include <utility>
 
 struct optimizer {
+    const size_t MAX_HOURS = 8;
+
+    std::chrono::time_point<std::chrono::high_resolution_clock> start = std::chrono::high_resolution_clock::now();
+
     common::cnf benchmark;
 
     ssize_t best_fitness = -1;
@@ -36,6 +41,8 @@ struct optimizer {
     void log_optimization_result() const;
 
     void clear_logs() const;
+
+    bool within_time_resources() const;
 };
 
 #endif

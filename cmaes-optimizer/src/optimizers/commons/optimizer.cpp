@@ -31,3 +31,10 @@ void optimizer::log_optimization_result() const {
 void optimizer::clear_logs() const {
     boost::filesystem::remove_all(path_to_storage);
 }
+
+bool optimizer::within_time_resources() const {
+    auto time_hours = std::chrono::duration_cast<std::chrono::hours>(std::chrono::high_resolution_clock::now() - start);
+    return time_hours.count() < MAX_HOURS;
+//    auto time_seconds = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - start);
+//    return time_seconds.count() < 10;
+}
