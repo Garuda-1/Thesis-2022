@@ -1,12 +1,6 @@
 {
   "experiments": [
     {
-      "name": "[5] Null Bsat",
-      "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-bsat180-648.cnf",
-      "optimizer_name": "null"
-    },
-    {
       "name": "[5] GAA Bsat",
       "path_to_solver": "./glucose",
       "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-bsat180-648.cnf",
@@ -17,6 +11,12 @@
       "path_to_solver": "./glucose",
       "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-bsat180-648.cnf",
       "optimizer_name": "gaer"
+    },
+    {
+      "name": "[5] Null Bsat",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-bsat180-648.cnf",
+      "optimizer_name": "null"
     }
   ]
 }

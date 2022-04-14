@@ -36,7 +36,7 @@ make glucose runner
 
 for i in {1..20}
 do
-  ./runner "$@" &
+  ./runner "$@" > "sub-log-$i.txt" &
 done
 
 wait
