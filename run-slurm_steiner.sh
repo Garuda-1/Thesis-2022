@@ -7,7 +7,7 @@ srun \
   --mail-user=yan.dolzhanskiy@gmail.com \
   --ntasks=1 \
   --nodelist={orthrus,meduza}-[1,2] \
-  --mem=32G \
+  --mem=128G \
   --cpus-per-task=20 \
   --time=24:00:00 \
   --output="output-steiner.log" \
