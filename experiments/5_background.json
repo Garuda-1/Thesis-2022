@@ -1,0 +1,60 @@
+{
+  "experiments": [
+    {
+      "name": "[5] GAA PHP6",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/php/php-6.cnf",
+      "optimizer_name": "gaa"
+    },
+    {
+      "name": "[5] GAER PHP6",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/php/php-6.cnf",
+      "optimizer_name": "gaer"
+    },
+    {
+      "name": "[5] Null PHP6",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/php/php-6.cnf",
+      "optimizer_name": "null"
+    },
+
+    {
+      "name": "[5] GAA PHP7",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/php/php-7.cnf",
+      "optimizer_name": "gaa"
+    },
+    {
+      "name": "[5] GAER PHP7",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/php/php-7.cnf",
+      "optimizer_name": "gaer"
+    },
+    {
+      "name": "[5] Null PHP7",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/php/php-7.cnf",
+      "optimizer_name": "null"
+    },
+
+    {
+      "name": "[5] GAA Dubois100",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/dubois/dubois100.cnf",
+      "optimizer_name": "gaa"
+    },
+    {
+      "name": "[5] GAER Dubois100",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/dubois/dubois100.cnf",
+      "optimizer_name": "gaer"
+    },
+    {
+      "name": "[5] Null Dubois100",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/dubois/dubois100.cnf",
+      "optimizer_name": "null"
+    }
+  ]
+}

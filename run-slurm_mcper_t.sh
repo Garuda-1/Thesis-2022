@@ -2,7 +2,7 @@
 set -eu
 
 srun \
-  --job-name "[5] EAER x20" \
+  --job-name "[5] MCPER-T x20" \
   --mail-type=ALL \
   --mail-user=yan.dolzhanskiy@gmail.com \
   --ntasks=1 \
