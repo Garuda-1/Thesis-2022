@@ -33,7 +33,7 @@ ssize_t mcper_optimizer::fit() {
       size_t frequency = top_pair.second;
       size_t var_x = benchmark.var_count + 1;
       common::log(
-          "Extending resolution with variables " + std::to_string(lit_a) + " and " + std::to_string(lit_a) +
+          "Extending resolution with variables " + std::to_string(lit_a) + " and " + std::to_string(lit_b) +
           " , frequency: " + std::to_string(frequency) + " , new variable name: " + std::to_string(var_x));
 
       auto var_a = static_cast<size_t>(std::abs(lit_a));
@@ -45,9 +45,10 @@ ssize_t mcper_optimizer::fit() {
       benchmark.clauses.push_back({-lit_x, lit_a});
       benchmark.clauses.push_back({-lit_x, lit_b});
 
-      activity[var_a] += BUMP_FACTOR;
-      activity[var_b] += BUMP_FACTOR;
+      activity[var_a] += bump_factor;
+      activity[var_b] += bump_factor;
       activity.push_back((activity[var_a] + activity[var_b]) / 2);
+      bump_factor *= 1.1;
 
       if (std::max(activity[var_a], activity[var_b]) >= RESCALE_LIMIT) {
         for (auto& a : activity) {

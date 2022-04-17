@@ -42,13 +42,10 @@ void run_thread(
   //  std::string connection_string = std::string("sslmode=verify-full host=") + std::getenv("DB_HOST") +
   //                                  " port=" + std::getenv("DB_PORT") + " dbname=" + std::getenv("DB_NAME") +
   //                                  " user=" + std::getenv("DB_USER") + " password=" + std::getenv("DB_PWD");
-#ifdef NDEBUG
   std::string connection_string =
       "host=rc1b-ag3968dopeajgku9.mdb.yandexcloud.net port=6432 sslmode=verify-full dbname=thesis-experiments-db "
       "user=Garuda_1 password=thesis-experiments target_session_attrs=read-write";
-#else
-  std::string connection_string = "host=postgres port=5432 dbname=postgres user=postgres password=postgres";
-#endif
+//  std::string connection_string = "host=postgres port=5432 dbname=postgres user=postgres password=postgres";
   PGconn* pg_conn = PQconnectdb(connection_string.c_str());
 
   std::cout << "Starting experiment '" << name << "'." << std::endl;
@@ -65,10 +62,10 @@ void run_thread(
   if (optimizer_name == "cmaes") {
     optimizer = std::make_unique<cmaes_optimizer>(
         path_to_solver, path_to_dimacs, path_to_storage, 1, 0.2, -1, pg_conn, experiment_id);
-  } else if (optimizer_name == "mcper_t") {
+  } else if (optimizer_name == "mcper-t") {
     optimizer = std::make_unique<mcper_optimizer>(
         TRAIL_FREQUENCIES, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
-  } else if (optimizer_name == "mcper_c") {
+  } else if (optimizer_name == "mcper-c") {
     optimizer = std::make_unique<mcper_optimizer>(
         CONFLICT_FREQUENCIES, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
   } else if (optimizer_name == "gaer") {

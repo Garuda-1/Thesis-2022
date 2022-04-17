@@ -1,14 +1,14 @@
 #include "eaer_optimizer.h"
 
 eaer_optimizer::eaer_optimizer(
-    std::string path_to_solver, std::string path_to_storage, std::string path_to_dimacs, PGconn* pg_conn,
+    std::string path_to_solver, std::string path_to_storage, const std::string &path_to_dimacs, PGconn* pg_conn,
     int64_t experiment_id)
-    : cnf(common::cnf(std::move(path_to_dimacs)))
+    : cnf(common::cnf(path_to_dimacs))
     , optimizer(
-          std::move(path_to_solver), std::move(path_to_storage), common::cnf(std::move(path_to_dimacs)), pg_conn,
+          std::move(path_to_solver), std::move(path_to_storage), common::cnf(path_to_dimacs), pg_conn,
           experiment_id) {
   genome.resize(cnf.var_count, std::vector<bool>(cnf.var_count));
-  flip = std::bernoulli_distribution(pow(static_cast<double>(cnf.var_count), -2));
+  flip = std::bernoulli_distribution(pow(static_cast<double>(cnf.var_count), -2) * 10);
   gen = std::mt19937(random_device());
 }
 
@@ -17,7 +17,7 @@ void eaer_optimizer::init_genome() {
     for (size_t j = i + 1; j < genome.size(); ++j) {
       genome[i][j] = flip(gen);
       if (genome[i][j]) {
-        cnf.er_pairs.insert({i, j});
+        cnf.er_pairs.insert({i + 1, j + 1});
       }
     }
   }
@@ -27,24 +27,25 @@ void eaer_optimizer::init_genome() {
 }
 
 void eaer_optimizer::mutate() {
-  std::unordered_set<std::pair<int64_t, int64_t>, common::hash_pair> er_pairs_delta_plus;
-  std::unordered_set<std::pair<int64_t, int64_t>, common::hash_pair> er_pairs_delta_minus;
+  std::unordered_set<std::pair<int64_t, int64_t>, common::hash_pair> er_pairs_delta_plus, er_pairs_delta_minus;
   for (size_t i = 0; i < genome.size() - 1; ++i) {
     for (size_t j = i + 1; j < genome.size(); ++j) {
       if (flip(gen)) {
         if (genome[i][j]) {
-          er_pairs_delta_minus.insert({i, j});
-          cnf.er_pairs.erase(cnf.er_pairs.find({i, j}));
+          er_pairs_delta_minus.insert({i + 1, j + 1});
+          cnf.er_pairs.erase(cnf.er_pairs.find({i + 1, j + 1}));
+          genome[i][j] = false;
         } else {
-          er_pairs_delta_plus.insert({i, j});
-          cnf.er_pairs.insert({i, j});
+          er_pairs_delta_plus.insert({i + 1, j + 1});
+          cnf.er_pairs.insert({i + 1, j + 1});
+          genome[i][j] = true;
         }
-        genome[i][j] = !genome[i][j];
       }
     }
   }
   common::log(
       "Mutated: +" + std::to_string(er_pairs_delta_plus.size()) + " -" + std::to_string(er_pairs_delta_minus.size()));
+  common::log("Total pairs now: " + std::to_string(cnf.er_pairs.size()));
   common::sample sample;
   common::optimizer_options options = {false, false, true, false};
 
@@ -55,11 +56,11 @@ void eaer_optimizer::mutate() {
   } else {
     for (const auto &p : er_pairs_delta_minus) {
       cnf.er_pairs.insert(p);
-      genome[p.first][p.second] = !genome[p.first][p.second];
+      genome[p.first - 1][p.second - 1] = true;
     }
-    for (const auto &p : er_pairs_delta_minus) {
+    for (const auto &p : er_pairs_delta_plus) {
       cnf.er_pairs.erase(cnf.er_pairs.find(p));
-      genome[p.first][p.second] = !genome[p.first][p.second];
+      genome[p.first - 1][p.second - 1] = false;
     }
   }
 }

@@ -21,7 +21,7 @@ struct eaer_optimizer : optimizer {
 
 
   eaer_optimizer(
-      std::string path_to_solver, std::string path_to_storage, std::string path_to_dimacs, PGconn* pg_conn,
+      std::string path_to_solver, std::string path_to_storage, const std::string &path_to_dimacs, PGconn* pg_conn,
       int64_t experiment_id);
 
   void init_genome();
