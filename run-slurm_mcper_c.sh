@@ -10,5 +10,5 @@ srun \
   --mem=64G \
   --cpus-per-task=20 \
   --time=24:00:00 \
-  --output="output-eaer.log" \
-  ./run-singularity.sh /Thesis/experiments/5_eaer_bsat_php8_steiner.json
+  --output="output-mcper-c.log" \
+  ./run-singularity.sh /Thesis/experiments/5_mcper-c_bsat_php8_steiner.json
