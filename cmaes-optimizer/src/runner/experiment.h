@@ -4,9 +4,9 @@
 #include <string>
 
 struct experiment {
-    std::string name;
-    std::string path_to_solver;
-    std::string path_to_dimacs;
+  std::string name;
+  std::string path_to_solver;
+  std::string path_to_dimacs;
 };
 
 #endif

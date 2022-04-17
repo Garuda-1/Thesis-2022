@@ -43,6 +43,8 @@ add_executable(runner
         src/runner/runner.cpp
         src/optimizers/cmaes/cmaes_optimizer.h
         src/optimizers/cmaes/cmaes_optimizer.cpp
+        src/optimizers/eaer/eaer_optimizer.h
+        src/optimizers/eaer/eaer_optimizer.cpp
         src/optimizers/gaa/gaa_optimizer.h
         src/optimizers/gaa/gaa_optimizer.cpp
         src/optimizers/gaer/gaer_optimizer.h
@@ -68,7 +70,7 @@ add_executable(runner
 target_link_libraries(runner
         libcmaes::cmaes
         OpenGA
-#        ${PARADISEO_LIBRARIES}
+        #        ${PARADISEO_LIBRARIES}
         ${Boost_LIBRARIES}
         PostgreSQL::PostgreSQL)
 

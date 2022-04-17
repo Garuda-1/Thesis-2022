@@ -8,20 +8,21 @@
 
 namespace common {
 
-    struct sample {
-        std::optional<std::vector<double>> activity;
-        common::solver_output solver_output;
+struct sample {
+  std::optional<std::vector<double>> activity;
+  common::solver_output solver_output;
 
-        sample() = default;
+  sample() = default;
 
-        sample(const double *a, size_t var_count);
+  sample(const double* a, size_t var_count);
 
-        explicit sample(std::vector<double> a);
+  explicit sample(std::vector<double> a);
 
-        void evaluate(const cnf &cnf, const std::string &path_to_solver, const std::string &path_to_storage,
-                      optimizer_options &options);
-    };
+  void evaluate(
+      const cnf& cnf, const std::string& path_to_solver, const std::string& path_to_storage,
+      const optimizer_options& options);
+};
 
-}
+}  // namespace common
 
 #endif

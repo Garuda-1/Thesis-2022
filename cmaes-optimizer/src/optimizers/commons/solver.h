@@ -10,20 +10,20 @@
 
 namespace common {
 
-    struct cnf;
-    struct optimizer_options;
-    struct solver_output;
+struct cnf;
+struct optimizer_options;
+struct solver_output;
 
-    struct solver {
-        std::string path;
+struct solver {
+  std::string path;
 
-        explicit solver(std::string path) : path(std::move(path)) {}
+  explicit solver(std::string path) : path(std::move(path)) {}
 
-        [[nodiscard]] common::solver_output run_unsat(const cnf &cnf, const std::string &path_to_storage,
-                                                      const std::optional<std::vector<double>> &activity,
-                                                      common::optimizer_options &options) const;
-    };
+  [[nodiscard]] common::solver_output run_unsat(
+      const cnf& cnf, const std::string& path_to_storage, const std::optional<std::vector<double>>& activity,
+      const common::optimizer_options& options) const;
+};
 
-}
+}  // namespace common
 
 #endif

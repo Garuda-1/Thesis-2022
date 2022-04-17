@@ -4,17 +4,21 @@
 #include "commons/commons.h"
 #include "commons/optimizer.h"
 
+enum mcper_mode { TRAIL_FREQUENCIES, CONFLICT_FREQUENCIES };
+
 struct mcper_optimizer : optimizer {
-    const size_t MAX_ITERATIONS = 100;
-    const double BUMP_FACTOR = 1.25;
-    const double RESCALE_LIMIT = 1e100;
-    const size_t TOP_PAIRS_COUNT = 1;
-    std::vector<double> activity;
+  const size_t MAX_ITERATIONS = 100;
+  const double BUMP_FACTOR = 1.25;
+  const double RESCALE_LIMIT = 1e100;
+  const size_t TOP_PAIRS_COUNT = 1;
+  std::vector<double> activity;
+  mcper_mode mode;
 
-    mcper_optimizer(std::string path_to_solver, std::string path_to_storage, std::string path_to_dimacs,
-                    PGconn *pg_conn, int64_t experiment_id);
+  mcper_optimizer(
+      mcper_mode mode, std::string path_to_solver, std::string path_to_storage, std::string path_to_dimacs,
+      PGconn* pg_conn, int64_t experiment_id);
 
-    ssize_t fit() override;
+  ssize_t fit() override;
 };
 
 #endif

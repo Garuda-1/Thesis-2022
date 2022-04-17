@@ -8,28 +8,28 @@
 #include <openGA.hpp>
 
 struct gaer_optimizer : optimizer {
+  std::mt19937 gen;
+  EA::Genetic<common::cnf_er, common::sample> ga;
 
-    std::mt19937 gen;
-    EA::Genetic<common::cnf_er, common::sample> ga;
+  gaer_optimizer(
+      std::string path_to_solver, std::string path_to_storage, std::string path_to_dimacs, PGconn* pg_conn,
+      int64_t experiment_id);
 
-    gaer_optimizer(std::string path_to_solver, std::string path_to_storage, std::string path_to_dimacs,
-                   PGconn *pg_conn, int64_t experiment_id);
+  void init_genes(common::cnf_er& cnf, const std::function<double(void)>& rnd);
 
-    void init_genes(common::cnf_er &cnf, const std::function<double(void)> &rnd);
+  bool eval_solution(const common::cnf_er& cnf, common::sample& sample);
 
-    bool eval_solution(const common::cnf_er &cnf, common::sample &sample);
+  common::cnf_er mutate(const common::cnf_er& base, const std::function<double(void)>& rnd, double shrink_scale);
 
-    common::cnf_er mutate(const common::cnf_er &base, const std::function<double(void)> &rnd, double shrink_scale);
+  common::cnf_er crossover(const common::cnf_er& a, const common::cnf_er& b, const std::function<double(void)>& rnd);
 
-    common::cnf_er crossover(const common::cnf_er &a, const common::cnf_er &b, const std::function<double(void)> &rnd);
+  double calculate(const EA::Genetic<common::cnf_er, common::sample>::thisChromosomeType& x);
 
-    double calculate(const EA::Genetic<common::cnf_er, common::sample>::thisChromosomeType &x);
+  void report_generation(
+      int generation_number, const EA::GenerationType<common::cnf_er, common::sample>& last_generation,
+      const common::cnf_er& best_genes);
 
-    void report_generation(int generation_number, const EA::GenerationType<common::cnf_er,
-                           common::sample> &last_generation, const common::cnf_er &best_genes);
-
-    ssize_t fit() override;
+  ssize_t fit() override;
 };
-
 
 #endif
