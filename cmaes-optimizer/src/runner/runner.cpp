@@ -3,6 +3,7 @@
 #define OPENGA_EXTERN_LOCAL_VARS
 
 #include "experiment.h"
+#include "../optimizers/baseline/baseline.h"
 #include "../optimizers/cmaes/cmaes_optimizer.h"
 #include "../optimizers/eaer/eaer_optimizer.h"
 #include "../optimizers/mcper/mcper_optimizer.h"
@@ -39,9 +40,6 @@ void run_thread(
     const std::string& name, const std::string& path_to_solver, const std::string& path_to_dimacs,
     const std::string& optimizer_name) {
   int64_t experiment_id;
-  //  std::string connection_string = std::string("sslmode=verify-full host=") + std::getenv("DB_HOST") +
-  //                                  " port=" + std::getenv("DB_PORT") + " dbname=" + std::getenv("DB_NAME") +
-  //                                  " user=" + std::getenv("DB_USER") + " password=" + std::getenv("DB_PWD");
   std::string connection_string =
       "host=rc1b-ag3968dopeajgku9.mdb.yandexcloud.net port=6432 sslmode=verify-full dbname=thesis-experiments-db "
       "user=Garuda_1 password=thesis-experiments target_session_attrs=read-write";
@@ -78,8 +76,9 @@ void run_thread(
     optimizer =
         std::make_unique<gaa_optimizer>(path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
   } else if (optimizer_name == "null") {
-    optimizer =
-        std::make_unique<null_optimizer>(path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+    optimizer = std::make_unique<null_optimizer>(path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+  } else if (optimizer_name == "baseline") {
+    optimizer = std::make_unique<baseline>(path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
   } else {
     throw std::runtime_error("Unknown optimizer: " + optimizer_name);
   }

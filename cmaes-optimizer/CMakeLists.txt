@@ -41,6 +41,8 @@ include_directories(src/glucose)
 add_executable(runner
         src/runner/experiment.h
         src/runner/runner.cpp
+        src/optimizers/baseline/baseline.h
+        src/optimizers/baseline/baseline.cpp
         src/optimizers/cmaes/cmaes_optimizer.h
         src/optimizers/cmaes/cmaes_optimizer.cpp
         src/optimizers/eaer/eaer_optimizer.h

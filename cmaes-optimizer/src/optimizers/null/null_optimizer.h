@@ -7,7 +7,6 @@ struct null_optimizer : optimizer {
   const size_t MAX_ITERATIONS = 201;
   const size_t BATCH_SIZE = 20;
   ssize_t best = std::numeric_limits<ssize_t>::max();
-  ;
 
   null_optimizer(
       std::string path_to_solver, std::string path_to_storage, std::string path_to_dimacs, PGconn* pg_conn,
