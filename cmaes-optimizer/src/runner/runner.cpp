@@ -43,7 +43,7 @@ void run_thread(
   std::string connection_string =
       "host=rc1b-ag3968dopeajgku9.mdb.yandexcloud.net port=6432 sslmode=verify-full dbname=thesis-experiments-db "
       "user=Garuda_1 password=thesis-experiments target_session_attrs=read-write";
-//  std::string connection_string = "host=postgres port=5432 dbname=postgres user=postgres password=postgres";
+  //  std::string connection_string = "host=postgres port=5432 dbname=postgres user=postgres password=postgres";
   PGconn* pg_conn = PQconnectdb(connection_string.c_str());
 
   std::cout << "Starting experiment '" << name << "'." << std::endl;
@@ -62,16 +62,28 @@ void run_thread(
         path_to_solver, path_to_dimacs, path_to_storage, 1, 0.2, -1, pg_conn, experiment_id);
   } else if (optimizer_name == "mcper-t") {
     optimizer = std::make_unique<mcper_optimizer>(
-        TRAIL_FREQUENCIES, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+        100, TRAIL_FREQUENCIES, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
   } else if (optimizer_name == "mcper-t-plus") {
     optimizer = std::make_unique<mcper_optimizer>(
-        TRAIL_FREQUENCIES_PLUS, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+        100, TRAIL_FREQUENCIES_PLUS, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
   } else if (optimizer_name == "mcper-c") {
     optimizer = std::make_unique<mcper_optimizer>(
-        CONFLICT_FREQUENCIES, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+        100, CONFLICT_FREQUENCIES, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
   } else if (optimizer_name == "mcper-c-plus") {
     optimizer = std::make_unique<mcper_optimizer>(
-        CONFLICT_FREQUENCIES_PLUS, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+        100, CONFLICT_FREQUENCIES_PLUS, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+  } else if (optimizer_name == "mcper-t-xl") {
+    optimizer = std::make_unique<mcper_optimizer>(
+        1000, TRAIL_FREQUENCIES, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+  } else if (optimizer_name == "mcper-t-plus-xl") {
+    optimizer = std::make_unique<mcper_optimizer>(
+        1000, TRAIL_FREQUENCIES_PLUS, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+  } else if (optimizer_name == "mcper-c-xl") {
+    optimizer = std::make_unique<mcper_optimizer>(
+        1000, CONFLICT_FREQUENCIES, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+  } else if (optimizer_name == "mcper-c-plus-xl") {
+    optimizer = std::make_unique<mcper_optimizer>(
+        1000, CONFLICT_FREQUENCIES_PLUS, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
   } else if (optimizer_name == "gaer") {
     optimizer =
         std::make_unique<gaer_optimizer>(path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
@@ -82,7 +94,8 @@ void run_thread(
     optimizer =
         std::make_unique<gaa_optimizer>(path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
   } else if (optimizer_name == "null") {
-    optimizer = std::make_unique<null_optimizer>(path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+    optimizer =
+        std::make_unique<null_optimizer>(path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
   } else if (optimizer_name == "baseline") {
     optimizer = std::make_unique<baseline>(path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
   } else {

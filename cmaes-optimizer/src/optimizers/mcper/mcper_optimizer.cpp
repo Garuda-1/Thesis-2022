@@ -4,9 +4,10 @@
 #include <utility>
 
 mcper_optimizer::mcper_optimizer(
-    mcper_mode mode, std::string path_to_solver, std::string path_to_storage, std::string path_to_dimacs,
-    PGconn* pgConn, int64_t experimentId)
+    size_t max_iterations, mcper_mode mode, std::string path_to_solver, std::string path_to_storage,
+    std::string path_to_dimacs, PGconn* pgConn, int64_t experimentId)
     : mode(mode)
+    , max_iterations(max_iterations)
     , optimizer(
           std::move(path_to_solver), std::move(path_to_storage), common::cnf(std::move(path_to_dimacs)), pgConn,
           experimentId) {
@@ -14,7 +15,7 @@ mcper_optimizer::mcper_optimizer(
 }
 
 ssize_t mcper_optimizer::fit() {
-  for (size_t iteration = 0; iteration < MAX_ITERATIONS && optimizer::within_time_resources(); ++iteration) {
+  for (size_t iteration = 0; iteration < max_iterations && optimizer::within_time_resources(); ++iteration) {
     common::sample sample(activity);
     common::optimizer_options options = {true, false, false, false};
     if (mode == TRAIL_FREQUENCIES_PLUS || mode == CONFLICT_FREQUENCIES_PLUS) {
@@ -24,7 +25,8 @@ ssize_t mcper_optimizer::fit() {
 
     std::vector<std::pair<std::pair<int64_t, int64_t>, size_t>> top_pairs(TOP_PAIRS_COUNT);
     const std::unordered_map<std::pair<int64_t, int64_t>, size_t, common::hash_pair>& frequencies =
-        (mode == TRAIL_FREQUENCIES || mode == TRAIL_FREQUENCIES_PLUS) ? output.trail_frequencies : output.conflict_frequencies;
+        (mode == TRAIL_FREQUENCIES || mode == TRAIL_FREQUENCIES_PLUS) ? output.trail_frequencies
+                                                                      : output.conflict_frequencies;
     std::partial_sort_copy(
         output.trail_frequencies.begin(), output.trail_frequencies.end(), top_pairs.begin(), top_pairs.end(),
         [](std::pair<std::pair<size_t, size_t>, size_t> const& l,
