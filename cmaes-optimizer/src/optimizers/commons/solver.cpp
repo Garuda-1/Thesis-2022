@@ -10,7 +10,7 @@ common::solver_output common::solver::run_unsat(
   bp::opstream in;
   boost::asio::io_service ios;
   std::future<std::string> data;
-  std::string command = path + " -verb=0";
+  std::string command = path + " -verb=0 -freq-lbd-limit=" + std::to_string(options.freq_lbd_lim);
 
   if (options.rnd_init) {
     command += " -rnd-init -rnd-seed=" + std::to_string(distribution(random_gen));
