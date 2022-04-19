@@ -165,6 +165,7 @@ public:
     // Certified UNSAT ( Thanks to Marijn Heule)
     FILE*               certifiedOutput;
     bool                certifiedUNSAT;
+    int                 freq_lbd_limit;
 
     
     // Statistics: (read-only member variable)

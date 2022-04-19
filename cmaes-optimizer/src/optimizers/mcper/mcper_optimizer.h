@@ -4,7 +4,12 @@
 #include "commons/commons.h"
 #include "commons/optimizer.h"
 
-enum mcper_mode { TRAIL_FREQUENCIES, CONFLICT_FREQUENCIES };
+enum mcper_mode {
+  TRAIL_FREQUENCIES,
+  TRAIL_FREQUENCIES_PLUS,
+  CONFLICT_FREQUENCIES,
+  CONFLICT_FREQUENCIES_PLUS
+};
 
 struct mcper_optimizer : optimizer {
   const size_t MAX_ITERATIONS = 100;

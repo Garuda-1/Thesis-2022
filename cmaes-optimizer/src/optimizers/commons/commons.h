@@ -47,6 +47,7 @@ struct optimizer_options {
   bool rnd_init = false;
   bool cleanup = false;
   bool print_solver_output = false;
+  int32_t freq_lbd_lim = INT_MAX;
 };
 
 struct solver_output {

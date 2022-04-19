@@ -94,6 +94,7 @@ static DoubleOption opt_garbage_frac(_cat, "gc-frac",
 
 BoolOption opt_certified(_certified, "certified", "Certified UNSAT using DRUP format", false);
 StringOption opt_certified_file(_certified, "certified-output", "Certified UNSAT output file", "NULL");
+IntOption opt_freq_lbd_limit(_certified, "freq-lbd-limit", "Variables LBD limit to count frequencies", INT32_MAX, IntRange(2, INT32_MAX));
 
 
 //=================================================================================================
@@ -111,7 +112,7 @@ Solver::Solver() :
         var_decay(opt_var_decay), clause_decay(opt_clause_decay), random_var_freq(opt_random_var_freq),
         random_seed(opt_random_seed), ccmin_mode(opt_ccmin_mode), phase_saving(opt_phase_saving), rnd_pol(false),
         rnd_init_act(opt_rnd_init_act), garbage_frac(opt_garbage_frac), certifiedOutput(NULL),
-        certifiedUNSAT(opt_certified)
+        certifiedUNSAT(opt_certified), freq_lbd_limit(opt_freq_lbd_limit)
         // Statistics: (formerly in 'SolverStats')
         //
         , nbRemovedClauses(0), nbReducedClauses(0), nbDL2(0), nbBin(0), nbUn(0), nbReduceDB(0), solves(0), starts(0),
@@ -1065,15 +1066,17 @@ lbool Solver::search(int nof_conflicts) {
             lbdQueue.push(nblevels);
             sumLBD += nblevels;
 
-            for (int i = 0; i < trail.size() - 1; ++i) {
+            if (computeLBD(learnt_clause) <= freq_lbd_limit) {
+              for (int i = 0; i < trail.size() - 1; ++i) {
                 for (int j = i + 1; j < trail.size(); ++j) {
-                    Lit a = trail[i];
-                    Lit b = trail[j];
-                    if (var(a) > var(b)) {
-                        std::swap(a, b);
-                    }
-                    ++trailFrequencies[a.x * 2 * nVars() + b.x];
+                  Lit a = trail[i];
+                  Lit b = trail[j];
+                  if (var(a) > var(b)) {
+                    std::swap(a, b);
+                  }
+                  ++trailFrequencies[a.x * 2 * nVars() + b.x];
                 }
+              }
             }
 
             if (certifiedUNSAT) {
@@ -1094,15 +1097,17 @@ lbool Solver::search(int nof_conflicts) {
                 fprintf(certifiedOutput, "0\n");
             }
 
-            for (int i = 0; i < learnt_clause.size() - 1; ++i) {
+            if (computeLBD(learnt_clause) <= freq_lbd_limit) {
+              for (int i = 0; i < learnt_clause.size() - 1; ++i) {
                 for (int j = i + 1; j < learnt_clause.size(); ++j) {
-                    Lit a = learnt_clause[i];
-                    Lit b = learnt_clause[j];
-                    if (var(a) > var(b)) {
-                        std::swap(a, b);
-                    }
-                    ++conflictFrequencies[a.x * 2 * nVars() + b.x];
+                  Lit a = learnt_clause[i];
+                  Lit b = learnt_clause[j];
+                  if (var(a) > var(b)) {
+                    std::swap(a, b);
+                  }
+                  ++conflictFrequencies[a.x * 2 * nVars() + b.x];
                 }
+              }
             }
 
             if (learnt_clause.size() == 1) {

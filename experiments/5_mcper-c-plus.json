@@ -1,0 +1,40 @@
+{
+  "experiments": [
+    {
+      "name": "[5] MCPER-C-PLUS Dubois100",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/dubois/dubois100.cnf",
+      "optimizer_name": "mcper-c-plus"
+    },
+    {
+      "name": "[5] MCPER-C-PLUS Bsat",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-bsat180-648.cnf",
+      "optimizer_name": "mcper-c-plus"
+    },
+    {
+      "name": "[5] MCPER-C-PLUS PHP6",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/php/php-6.cnf",
+      "optimizer_name": "mcper-c-plus"
+    },
+    {
+      "name": "[5] MCPER-C-PLUS PHP7",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/php/php-7.cnf",
+      "optimizer_name": "mcper-c-plus"
+    },
+    {
+      "name": "[5] MCPER-C-PLUS PHP8",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/php/php-8.cnf",
+      "optimizer_name": "mcper-c-plus"
+    },
+    {
+      "name": "[5] MCPER-C-PLUS Steiner",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/simpler_g3/Steiner-45-16-bce.cnf",
+      "optimizer_name": "mcper-c-plus"
+    }
+  ]
+}

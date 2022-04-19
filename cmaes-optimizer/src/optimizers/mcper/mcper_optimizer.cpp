@@ -17,11 +17,14 @@ ssize_t mcper_optimizer::fit() {
   for (size_t iteration = 0; iteration < MAX_ITERATIONS && optimizer::within_time_resources(); ++iteration) {
     common::sample sample(activity);
     common::optimizer_options options = {true, false, false, false};
+    if (mode == TRAIL_FREQUENCIES_PLUS || mode == CONFLICT_FREQUENCIES_PLUS) {
+      options.freq_lbd_lim = 2;
+    }
     common::solver_output output = evaluate_and_record(sample, options);
 
     std::vector<std::pair<std::pair<int64_t, int64_t>, size_t>> top_pairs(TOP_PAIRS_COUNT);
     const std::unordered_map<std::pair<int64_t, int64_t>, size_t, common::hash_pair>& frequencies =
-        (mode == TRAIL_FREQUENCIES) ? output.trail_frequencies : output.conflict_frequencies;
+        (mode == TRAIL_FREQUENCIES || mode == TRAIL_FREQUENCIES_PLUS) ? output.trail_frequencies : output.conflict_frequencies;
     std::partial_sort_copy(
         output.trail_frequencies.begin(), output.trail_frequencies.end(), top_pairs.begin(), top_pairs.end(),
         [](std::pair<std::pair<size_t, size_t>, size_t> const& l,

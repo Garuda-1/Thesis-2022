@@ -63,9 +63,15 @@ void run_thread(
   } else if (optimizer_name == "mcper-t") {
     optimizer = std::make_unique<mcper_optimizer>(
         TRAIL_FREQUENCIES, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+  } else if (optimizer_name == "mcper-t-plus") {
+    optimizer = std::make_unique<mcper_optimizer>(
+        TRAIL_FREQUENCIES_PLUS, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
   } else if (optimizer_name == "mcper-c") {
     optimizer = std::make_unique<mcper_optimizer>(
         CONFLICT_FREQUENCIES, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+  } else if (optimizer_name == "mcper-c-plus") {
+    optimizer = std::make_unique<mcper_optimizer>(
+        CONFLICT_FREQUENCIES_PLUS, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
   } else if (optimizer_name == "gaer") {
     optimizer =
         std::make_unique<gaer_optimizer>(path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);

@@ -53,6 +53,8 @@ add_executable(runner
         src/optimizers/gaer/gaer_optimizer.cpp
         src/optimizers/mcper/mcper_optimizer.h
         src/optimizers/mcper/mcper_optimizer.cpp
+        src/optimizers/mcper-plus/mcper_plus_optimizer.h
+        src/optimizers/mcper-plus/mcper_plus_optimizer.cpp
         src/optimizers/null/null_optimizer.h
         src/optimizers/null/null_optimizer.cpp
         src/optimizers/commons/cnf.h
