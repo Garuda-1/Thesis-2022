@@ -1,0 +1,28 @@
+{
+  "experiments": [
+    {
+      "name": "[5] Baseline PHP6",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/php/php-6.cnf",
+      "optimizer_name": "baseline"
+    },
+    {
+      "name": "[5] EAER PHP6",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/php/php-6.cnf",
+      "optimizer_name": "eaer"
+    },
+    {
+      "name": "[5] MCPER-C PHP6",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/php/php-6.cnf",
+      "optimizer_name": "mcper-c"
+    },
+    {
+      "name": "[5] MCPER-T PHP6",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/php/php-6.cnf",
+      "optimizer_name": "mcper-t"
+    }
+  ]
+}

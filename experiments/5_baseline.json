@@ -15,7 +15,7 @@
     {
       "name": "[5] Baseline PHP6",
       "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/php/php-8.cnf",
+      "path_to_dimacs": "/Thesis/sat/php/php-6.cnf",
       "optimizer_name": "baseline"
     },
     {
