@@ -8,7 +8,6 @@
 #include <random>
 
 struct eaer_optimizer : optimizer {
-
   const size_t MAX_ITERATIONS = 201;
   const size_t BATCH_SIZE = 20;
   const common::optimizer_options OPTIONS = {false, false, true, false};
@@ -19,9 +18,8 @@ struct eaer_optimizer : optimizer {
   std::random_device random_device;
   std::mt19937 gen;
 
-
   eaer_optimizer(
-      std::string path_to_solver, std::string path_to_storage, const std::string &path_to_dimacs, PGconn* pg_conn,
+      std::string path_to_solver, std::string path_to_storage, const std::string& path_to_dimacs, PGconn* pg_conn,
       int64_t experiment_id);
 
   void init_genome();

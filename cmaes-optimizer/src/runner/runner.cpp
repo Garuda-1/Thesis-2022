@@ -60,30 +60,63 @@ void run_thread(
   if (optimizer_name == "cmaes") {
     optimizer = std::make_unique<cmaes_optimizer>(
         path_to_solver, path_to_dimacs, path_to_storage, 1, 0.2, -1, pg_conn, experiment_id);
-  } else if (optimizer_name == "mcper-t") {
+    //  } else if (optimizer_name == "mcper-t") {
+    //    optimizer = std::make_unique<mcper_optimizer>(
+    //        100, TRAIL_FREQUENCIES, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+    //  } else if (optimizer_name == "mcper-t-plus") {
+    //    optimizer = std::make_unique<mcper_optimizer>(
+    //        100, TRAIL_FREQUENCIES_PLUS, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+    //  } else if (optimizer_name == "mcper-c") {
+    //    optimizer = std::make_unique<mcper_optimizer>(
+    //        100, CONFLICT_FREQUENCIES, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+    //  } else if (optimizer_name == "mcper-c-plus") {
+    //    optimizer = std::make_unique<mcper_optimizer>(
+    //        100, CONFLICT_FREQUENCIES_PLUS, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+    //  } else if (optimizer_name == "mcper-t-xl") {
+    //    optimizer = std::make_unique<mcper_optimizer>(
+    //        1000, TRAIL_FREQUENCIES, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+    //  } else if (optimizer_name == "mcper-t-plus-xl") {
+    //    optimizer = std::make_unique<mcper_optimizer>(
+    //        1000, TRAIL_FREQUENCIES_PLUS, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+    //  } else if (optimizer_name == "mcper-c-xl") {
+    //    optimizer = std::make_unique<mcper_optimizer>(
+    //        1000, CONFLICT_FREQUENCIES, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+    //  } else if (optimizer_name == "mcper-c-plus-xl") {
+    //    optimizer = std::make_unique<mcper_optimizer>(
+    //        1000, CONFLICT_FREQUENCIES_PLUS, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+  } else if (boost::algorithm::starts_with(optimizer_name, "mcper-")) {
+    mcper_mode mode;
+    if (optimizer_name[6] == 'c' && optimizer_name[8] == 'n') {
+      mode = CONFLICT_FREQUENCIES;
+    } else if (optimizer_name[6] == 'c' && optimizer_name[8] == 'p') {
+      mode = CONFLICT_FREQUENCIES_PLUS;
+    } else if (optimizer_name[6] == 't' && optimizer_name[8] == 'n') {
+      mode = TRAIL_FREQUENCIES;
+    } else if (optimizer_name[6] == 't' && optimizer_name[8] == 'n') {
+      mode = TRAIL_FREQUENCIES_PLUS;
+    } else {
+      throw std::runtime_error("Unknown MCPER configuration");
+    }
+    int new_pairs_count;
+    switch (optimizer_name[10]) {
+      case 'O':
+        new_pairs_count = 1;
+        break;
+      case 'S':
+        new_pairs_count = 5;
+        break;
+      case 'M':
+        new_pairs_count = 10;
+        break;
+      case 'L':
+        new_pairs_count = 25;
+        break;
+      case 'X':
+        new_pairs_count = 100;
+        break;
+    }
     optimizer = std::make_unique<mcper_optimizer>(
-        100, TRAIL_FREQUENCIES, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
-  } else if (optimizer_name == "mcper-t-plus") {
-    optimizer = std::make_unique<mcper_optimizer>(
-        100, TRAIL_FREQUENCIES_PLUS, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
-  } else if (optimizer_name == "mcper-c") {
-    optimizer = std::make_unique<mcper_optimizer>(
-        100, CONFLICT_FREQUENCIES, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
-  } else if (optimizer_name == "mcper-c-plus") {
-    optimizer = std::make_unique<mcper_optimizer>(
-        100, CONFLICT_FREQUENCIES_PLUS, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
-  } else if (optimizer_name == "mcper-t-xl") {
-    optimizer = std::make_unique<mcper_optimizer>(
-        1000, TRAIL_FREQUENCIES, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
-  } else if (optimizer_name == "mcper-t-plus-xl") {
-    optimizer = std::make_unique<mcper_optimizer>(
-        1000, TRAIL_FREQUENCIES_PLUS, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
-  } else if (optimizer_name == "mcper-c-xl") {
-    optimizer = std::make_unique<mcper_optimizer>(
-        1000, CONFLICT_FREQUENCIES, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
-  } else if (optimizer_name == "mcper-c-plus-xl") {
-    optimizer = std::make_unique<mcper_optimizer>(
-        1000, CONFLICT_FREQUENCIES_PLUS, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+        new_pairs_count, mode, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
   } else if (optimizer_name == "gaer") {
     optimizer =
         std::make_unique<gaer_optimizer>(path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
