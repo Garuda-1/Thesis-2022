@@ -66,7 +66,7 @@ void eaer_optimizer::mutate() {
 
 ssize_t eaer_optimizer::fit() {
   init_genome();
-  for (size_t i = 0; i < MAX_ITERATIONS * BATCH_SIZE && optimizer::within_time_resources(); ++i) {
+  for (size_t i = 0; optimizer::within_time_resources(); ++i) {
     mutate();
     if (i % BATCH_SIZE == 0) {
       common::record_run_to_db(pg_conn, experiment_id, best);

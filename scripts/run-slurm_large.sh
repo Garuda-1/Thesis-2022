@@ -6,9 +6,9 @@ srun \
   --mail-type=ALL \
   --mail-user=yan.dolzhanskiy@gmail.com \
   --ntasks=1 \
-  --nodelist=meduza-[1,2],orthrus-[1,2] \
+  --nodelist=meduza-1 \
   --mem=128G \
   --cpus-per-task=20 \
   --time=180:00:00 \
-  --output="output-bsat.log" \
+  --output="output-large.log" \
   ./run-singularity.sh /Thesis/experiments/6/6_large.json

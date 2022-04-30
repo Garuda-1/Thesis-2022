@@ -92,7 +92,7 @@ ssize_t gaer_optimizer::fit() {
   ga.multi_threading = false;
   ga.verbose = true;
   ga.population = 50;
-  ga.generation_max = 200;
+  ga.generation_max = std::numeric_limits<int>::max();
   ga.calculate_SO_total_fitness = std::bind(&gaer_optimizer::calculate, this, std::placeholders::_1);
   ga.init_genes = std::bind(&gaer_optimizer::init_genes, this, std::placeholders::_1, std::placeholders::_2);
   ga.eval_solution = std::bind(&gaer_optimizer::eval_solution, this, std::placeholders::_1, std::placeholders::_2);
@@ -102,8 +102,8 @@ ssize_t gaer_optimizer::fit() {
       std::bind(&gaer_optimizer::crossover, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
   ga.SO_report_generation = std::bind(
       &gaer_optimizer::report_generation, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-  ga.best_stall_max = 1000;
-  ga.average_stall_max = 1000;
+  ga.best_stall_max = std::numeric_limits<int>::max();
+  ga.average_stall_max = std::numeric_limits<int>::max();
   ga.elite_count = 10;
   ga.crossover_fraction = 0.5;
   ga.mutation_rate = 0.05;

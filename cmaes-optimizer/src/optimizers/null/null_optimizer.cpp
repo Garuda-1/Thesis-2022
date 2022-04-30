@@ -8,7 +8,7 @@ null_optimizer::null_optimizer(
           experiment_id) {}
 
 ssize_t null_optimizer::fit() {
-  for (size_t i = 0; i < MAX_ITERATIONS && optimizer::within_time_resources(); ++i) {
+  for (size_t i = 0; optimizer::within_time_resources(); ++i) {
     ssize_t batch_best = std::numeric_limits<ssize_t>::max();
     for (size_t j = 0; j < BATCH_SIZE; ++j) {
       common::sample sample;

@@ -7,19 +7,19 @@
       "optimizer_name": "gaa"
     },
     {
-      "name": "[5] MC-A Dubois100",
+      "name": "[6] MC-A Dubois100",
       "path_to_solver": "./glucose",
       "path_to_dimacs": "/Thesis/sat/dubois/dubois100.cnf",
       "optimizer_name": "null"
     },
     {
-      "name": "[5] EA-ER Dubois100",
+      "name": "[6] EA-ER Dubois100",
       "path_to_solver": "./glucose",
       "path_to_dimacs": "/Thesis/sat/dubois/dubois100.cnf",
       "optimizer_name": "eaer"
     },
     {
-      "name": "[5] GA-ER Dubois100",
+      "name": "[6] GA-ER Dubois100",
       "path_to_solver": "./glucose",
       "path_to_dimacs": "/Thesis/sat/dubois/dubois100.cnf",
       "optimizer_name": "gaer"
@@ -32,19 +32,19 @@
       "optimizer_name": "gaa"
     },
     {
-      "name": "[5] MC-A PHP8",
+      "name": "[6] MC-A PHP8",
       "path_to_solver": "./glucose",
       "path_to_dimacs": "/Thesis/sat/php/php-8.cnf",
       "optimizer_name": "null"
     },
     {
-      "name": "[5] EA-ER PHP8",
+      "name": "[6] EA-ER PHP8",
       "path_to_solver": "./glucose",
       "path_to_dimacs": "/Thesis/sat/php/php-8.cnf",
       "optimizer_name": "eaer"
     },
     {
-      "name": "[5] GA-ER PHP8",
+      "name": "[6] GA-ER PHP8",
       "path_to_solver": "./glucose",
       "path_to_dimacs": "/Thesis/sat/php/php-8.cnf",
       "optimizer_name": "gaer"
@@ -57,19 +57,19 @@
       "optimizer_name": "gaa"
     },
     {
-      "name": "[5] MC-A Bsat",
+      "name": "[6] MC-A Bsat",
       "path_to_solver": "./glucose",
       "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-bsat180-648.cnf",
       "optimizer_name": "null"
     },
     {
-      "name": "[5] EA-ER Bsat",
+      "name": "[6] EA-ER Bsat",
       "path_to_solver": "./glucose",
       "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-bsat180-648.cnf",
       "optimizer_name": "eaer"
     },
     {
-      "name": "[5] GA-ER Bsat",
+      "name": "[6] GA-ER Bsat",
       "path_to_solver": "./glucose",
       "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-bsat180-648.cnf",
       "optimizer_name": "gaer"
@@ -82,19 +82,19 @@
       "optimizer_name": "gaa"
     },
     {
-      "name": "[5] MC-A Steiner",
+      "name": "[6] MC-A Steiner",
       "path_to_solver": "./glucose",
       "path_to_dimacs": "/Thesis/sat/simpler_g3/Steiner-45-16-bce.cnf",
       "optimizer_name": "null"
     },
     {
-      "name": "[5] EA-ER Steiner",
+      "name": "[6] EA-ER Steiner",
       "path_to_solver": "./glucose",
       "path_to_dimacs": "/Thesis/sat/simpler_g3/Steiner-45-16-bce.cnf",
       "optimizer_name": "eaer"
     },
     {
-      "name": "[5] GA-ER Steiner",
+      "name": "[6] GA-ER Steiner",
       "path_to_solver": "./glucose",
       "path_to_dimacs": "/Thesis/sat/simpler_g3/Steiner-45-16-bce.cnf",
       "optimizer_name": "gaer"
