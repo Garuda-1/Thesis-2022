@@ -54,12 +54,13 @@ ssize_t mcper_optimizer::fit() {
       activity[var_a] += bump_factor;
       activity[var_b] += bump_factor;
       activity.push_back((activity[var_a] + activity[var_b]) / 2);
-      bump_factor *= 1.1;
+//      bump_factor *= 1.1;
 
       if (std::max(activity[var_a], activity[var_b]) >= RESCALE_LIMIT) {
         for (auto& a : activity) {
           a /= RESCALE_LIMIT;
         }
+//        bump_factor /= RESCALE_LIMIT;
       }
     }
   }
