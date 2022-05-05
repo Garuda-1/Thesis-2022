@@ -12,7 +12,12 @@ cd /Thesis/cmaes-optimizer/build
 cmake -DCMAKE_BUILD_TYPE=Release ..
 make glucose runner
 
-for experiment in /Thesis/experiments/6/6_mcper_{1,10,100,1000}.json,/Thesis/experiments/6/6_mcper_p_{1,10,100,1000}.json
+for experiment in /Thesis/experiments/6/6_mcper_{1,10,100,1000}.json
+do
+  ./runner $experiment > "sub-log-$experiment.txt" &
+done
+
+for experiment in /Thesis/experiments/6/6_mcper_p_{1,10,100,1000}.json
 do
   ./runner $experiment > "sub-log-$experiment.txt" &
 done

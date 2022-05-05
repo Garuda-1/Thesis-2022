@@ -10,5 +10,5 @@ srun \
   --mem=128G \
   --cpus-per-task=8 \
   --time=180:00:00 \
-  --output="output-large.log" \
+  --output="output-mcper.log" \
   ./run-singularity_mcper.sh
