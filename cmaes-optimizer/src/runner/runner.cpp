@@ -99,20 +99,17 @@ void run_thread(
     }
     int new_pairs_count;
     switch (optimizer_name[10]) {
-      case 'O':
-        new_pairs_count = 1;
-        break;
       case 'S':
-        new_pairs_count = 5;
+        new_pairs_count = 1;
         break;
       case 'M':
         new_pairs_count = 10;
         break;
       case 'L':
-        new_pairs_count = 25;
+        new_pairs_count = 100;
         break;
       case 'X':
-        new_pairs_count = 100;
+        new_pairs_count = 1000;
         break;
     }
     optimizer = std::make_unique<mcper_optimizer>(

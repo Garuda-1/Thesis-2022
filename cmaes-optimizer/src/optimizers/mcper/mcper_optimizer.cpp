@@ -26,7 +26,8 @@ ssize_t mcper_optimizer::fit() {
     const std::unordered_map<std::pair<int64_t, int64_t>, size_t, common::hash_pair>& frequencies =
         (mode == TRAIL_FREQUENCIES || mode == TRAIL_FREQUENCIES_PLUS) ? output.trail_frequencies
                                                                       : output.conflict_frequencies;
-    std::vector<std::pair<std::pair<int64_t, int64_t>, size_t>> top_pairs(std::min(new_pairs_count, frequencies.size()));
+    std::vector<std::pair<std::pair<int64_t, int64_t>, size_t>> top_pairs(
+        std::min(new_pairs_count, frequencies.size()));
     std::partial_sort_copy(
         frequencies.begin(), frequencies.end(), top_pairs.begin(), top_pairs.end(),
         [](std::pair<std::pair<size_t, size_t>, size_t> const& l,
