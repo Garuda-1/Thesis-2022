@@ -14,12 +14,12 @@ make glucose runner
 
 for experiment in /Thesis/experiments/6/6_mcper_{1,10,100,1000}.json
 do
-  ./runner $experiment > "sub-log-$experiment.txt" &
+  ./runner $experiment &
 done
 
 for experiment in /Thesis/experiments/6/6_mcper_p_{1,10,100,1000}.json
 do
-  ./runner $experiment > "sub-log-$experiment.txt" &
+  ./runner $experiment &
 done
 
 wait
