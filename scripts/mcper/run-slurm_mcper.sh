@@ -7,7 +7,7 @@ srun \
   --mail-user=yan.dolzhanskiy@gmail.com \
   --ntasks=1 \
   --nodelist=meduza-1 \
-  --mem=128G \
+  --mem=64G \
   --cpus-per-task=8 \
   --time=180:00:00 \
   --output="output-mcper.log" \

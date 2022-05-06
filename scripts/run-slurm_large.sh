@@ -7,7 +7,7 @@ srun \
   --mail-user=yan.dolzhanskiy@gmail.com \
   --ntasks=1 \
   --nodelist=meduza-1 \
-  --mem=256G \
+  --mem=192G \
   --cpus-per-task=24 \
   --time=180:00:00 \
   --output="output-large-2.log" \

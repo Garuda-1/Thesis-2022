@@ -1,18 +1,6 @@
 {
   "experiments": [
     {
-      "name": "[6] MCP-ER+ 1000 Dubois100",
-      "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/dubois/dubois100.cnf",
-      "optimizer_name": "mcper-c-p-X"
-    },
-    {
-      "name": "[6] MCP-ER+ 1000 PHP8",
-      "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/php/php-8.cnf",
-      "optimizer_name": "mcper-c-p-X"
-    },
-    {
       "name": "[6] MCP-ER+ 1000 Bsat",
       "path_to_solver": "./glucose",
       "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-bsat180-648.cnf",
@@ -22,6 +10,18 @@
       "name": "[6] MCP-ER+ 1000 Steiner",
       "path_to_solver": "./glucose",
       "path_to_dimacs": "/Thesis/sat/simpler_g3/Steiner-45-16-bce.cnf",
+      "optimizer_name": "mcper-c-p-X"
+    },
+    {
+      "name": "[6] MCP-ER 1000 BVSS",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/vs/bubble_vs_selection_6_6.cnf",
+      "optimizer_name": "mcper-c-p-X"
+    },
+    {
+      "name": "[6] MCP-ER 1000 BVSP",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/vs/bubble_vs_pancake_7_3.cnf",
       "optimizer_name": "mcper-c-p-X"
     }
   ]
