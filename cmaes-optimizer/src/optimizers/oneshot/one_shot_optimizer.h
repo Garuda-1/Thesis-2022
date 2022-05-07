@@ -20,7 +20,7 @@ struct one_shot_optimizer : optimizer {
       const std::vector<std::unordered_set<size_t>>& var_clauses_p,
       const std::vector<std::unordered_set<size_t>>& var_clauses_n);
 
-  void add_er(int64_t lit_a, int64_t lit_b);
+  void add_er(int64_t lit_a, int64_t lit_b, common::cnf &cnf);
 };
 
 #endif  // OPTIMIZER_ONE_SHOT_OPTIMIZER_H

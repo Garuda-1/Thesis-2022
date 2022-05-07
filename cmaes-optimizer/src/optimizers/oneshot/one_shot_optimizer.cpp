@@ -41,17 +41,19 @@ ssize_t one_shot_optimizer::fit_p(
     const std::vector<std::unordered_set<size_t>>& var_clauses_n) {
   std::bernoulli_distribution dist(sample_rate);
 
-  size_t base_var_count = benchmark.var_count;
+  common::cnf cnf = benchmark;
+
+  size_t base_var_count = cnf.var_count;
   size_t new_pairs_count = 0;
   for (size_t var_a = 1; var_a <= base_var_count; ++var_a) {
     for (size_t var_b = 1; var_b <= base_var_count; ++var_b) {
       for (const auto& c : var_clauses_p[var_a]) {
         if (var_clauses_p[var_b].find(c) != var_clauses_p[var_b].end() && dist(gen)) {
-          add_er(static_cast<int64_t>(var_a), static_cast<int64_t>(var_b));
+          add_er(static_cast<int64_t>(var_a), static_cast<int64_t>(var_b), cnf);
           ++new_pairs_count;
         }
         if (var_clauses_n[var_b].find(c) != var_clauses_n[var_b].end() && dist(gen)) {
-          add_er(static_cast<int64_t>(var_a), -static_cast<int64_t>(var_b));
+          add_er(static_cast<int64_t>(var_a), -static_cast<int64_t>(var_b), cnf);
           ++new_pairs_count;
         }
       }
@@ -61,11 +63,11 @@ ssize_t one_shot_optimizer::fit_p(
     for (size_t var_b = 1; var_b <= base_var_count; ++var_b) {
       for (const auto& c : var_clauses_n[var_a]) {
         if (var_clauses_p[var_b].find(c) != var_clauses_p[var_b].end() && dist(gen)) {
-          add_er(-static_cast<int64_t>(var_a), static_cast<int64_t>(var_b));
+          add_er(-static_cast<int64_t>(var_a), static_cast<int64_t>(var_b), cnf);
           ++new_pairs_count;
         }
         if (var_clauses_n[var_b].find(c) != var_clauses_n[var_b].end() && dist(gen)) {
-          add_er(-static_cast<int64_t>(var_a), -static_cast<int64_t>(var_b));
+          add_er(-static_cast<int64_t>(var_a), -static_cast<int64_t>(var_b), cnf);
           ++new_pairs_count;
         }
       }
@@ -74,16 +76,16 @@ ssize_t one_shot_optimizer::fit_p(
 
   common::log("Added " + std::to_string(new_pairs_count) + " pairs");
 
-  ssize_t result = evaluate_and_record(sample, options).proof_size;
+  ssize_t result = evaluate_and_record(cnf, sample, options).proof_size;
 
   return result;
 }
 
-void one_shot_optimizer::add_er(int64_t lit_a, int64_t lit_b) {
-  auto lit_x = static_cast<int64_t>(benchmark.var_count + 1);
-  ++benchmark.var_count;
-  benchmark.cla_count += 3;
-  benchmark.clauses.push_back({lit_x, -lit_a, -lit_b});
-  benchmark.clauses.push_back({-lit_x, lit_a});
-  benchmark.clauses.push_back({-lit_x, lit_b});
+void one_shot_optimizer::add_er(int64_t lit_a, int64_t lit_b, common::cnf &cnf) {
+  auto lit_x = static_cast<int64_t>(cnf.var_count + 1);
+  ++cnf.var_count;
+  cnf.cla_count += 3;
+  cnf.clauses.push_back({lit_x, -lit_a, -lit_b});
+  cnf.clauses.push_back({-lit_x, lit_a});
+  cnf.clauses.push_back({-lit_x, lit_b});
 }
