@@ -4,6 +4,7 @@
 #include "commons/optimizer.h"
 
 #include <unordered_set>
+#include <random>
 
 struct one_shot_optimizer : optimizer {
   one_shot_optimizer(

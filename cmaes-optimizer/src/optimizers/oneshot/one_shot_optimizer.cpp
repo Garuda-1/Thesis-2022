@@ -25,16 +25,19 @@ ssize_t one_shot_optimizer::fit() {
     }
   }
 
+  std::mt19937 gen;
+  std::bernoulli_distribution dist(0.03);
+
   size_t base_var_count = benchmark.var_count;
   size_t new_pairs_count = 0;
   for (size_t var_a = 1; var_a <= base_var_count; ++var_a) {
     for (size_t var_b = 1; var_b <= base_var_count; ++var_b) {
       for (const auto &c : var_clauses_p[var_a]) {
-        if (var_clauses_p[var_b].find(c) != var_clauses_p[var_b].end()) {
+        if (var_clauses_p[var_b].find(c) != var_clauses_p[var_b].end() && dist(gen)) {
           add_er(static_cast<int64_t>(var_a), static_cast<int64_t>(var_b));
           ++new_pairs_count;
         }
-        if (var_clauses_n[var_b].find(c) != var_clauses_n[var_b].end()) {
+        if (var_clauses_n[var_b].find(c) != var_clauses_n[var_b].end() && dist(gen)) {
           add_er(static_cast<int64_t>(var_a), -static_cast<int64_t>(var_b));
           ++new_pairs_count;
         }
@@ -44,11 +47,11 @@ ssize_t one_shot_optimizer::fit() {
   for (size_t var_a = 1; var_a <= base_var_count; ++var_a) {
     for (size_t var_b = 1; var_b <= base_var_count; ++var_b) {
       for (const auto &c : var_clauses_n[var_a]) {
-        if (var_clauses_p[var_b].find(c) != var_clauses_p[var_b].end()) {
+        if (var_clauses_p[var_b].find(c) != var_clauses_p[var_b].end() && dist(gen)) {
           add_er(-static_cast<int64_t>(var_a), static_cast<int64_t>(var_b));
           ++new_pairs_count;
         }
-        if (var_clauses_n[var_b].find(c) != var_clauses_n[var_b].end()) {
+        if (var_clauses_n[var_b].find(c) != var_clauses_n[var_b].end() && dist(gen)) {
           add_er(-static_cast<int64_t>(var_a), -static_cast<int64_t>(var_b));
           ++new_pairs_count;
         }
