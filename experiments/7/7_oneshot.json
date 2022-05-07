@@ -1,6 +1,12 @@
 {
   "experiments": [
     {
+      "name": "[7] One-Shot PHP8",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/php/php-8.cnf",
+      "optimizer_name": "one-shot"
+    },
+    {
       "name": "[7] One-Shot Dubois100",
       "path_to_solver": "./glucose",
       "path_to_dimacs": "/Thesis/sat/dubois/dubois100.cnf",
