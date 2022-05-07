@@ -31,6 +31,8 @@ ssize_t one_shot_optimizer::fit() {
   for (double rate : sample_rates) {
     result = std::min(result, fit_p(rate, sample, options, var_clauses_p, var_clauses_n));
   }
+
+  return result;
 }
 
 ssize_t one_shot_optimizer::fit_p(
