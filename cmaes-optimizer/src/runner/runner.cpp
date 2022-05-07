@@ -10,6 +10,7 @@
 #include "../optimizers/gaa/gaa_optimizer.h"
 #include "../optimizers/gaer/gaer_optimizer.h"
 #include "../optimizers/null/null_optimizer.h"
+#include "../optimizers/oneshot/one_shot_optimizer.h"
 
 #include <memory>
 #include <boost/property_tree/ptree.hpp>
@@ -128,6 +129,8 @@ void run_thread(
         std::make_unique<null_optimizer>(path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
   } else if (optimizer_name == "baseline") {
     optimizer = std::make_unique<baseline>(path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+  } else if (optimizer_name == "one-shot") {
+    optimizer = std::make_unique<one_shot_optimizer>(path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
   } else {
     throw std::runtime_error("Unknown optimizer: " + optimizer_name);
   }

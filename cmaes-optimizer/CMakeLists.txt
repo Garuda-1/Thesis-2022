@@ -55,6 +55,8 @@ add_executable(runner
         src/optimizers/mcper/mcper_optimizer.cpp
         src/optimizers/null/null_optimizer.h
         src/optimizers/null/null_optimizer.cpp
+        src/optimizers/oneshot/one_shot_optimizer.h
+        src/optimizers/oneshot/one_shot_optimizer.cpp
         src/optimizers/commons/cnf.h
         src/optimizers/commons/cnf.cpp
         src/optimizers/commons/cnf_a.cpp
