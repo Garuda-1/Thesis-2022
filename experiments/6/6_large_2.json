@@ -1,6 +1,31 @@
 {
   "experiments": [
     {
+      "name": "[6] GA-A CB6",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/cb/cb6.cnf",
+      "optimizer_name": "gaa"
+    },
+    {
+      "name": "[6] MC-A CB6",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/cb/cb6.cnf",
+      "optimizer_name": "null"
+    },
+    {
+      "name": "[6] EA-ER CB6",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/cb/cb6.cnf",
+      "optimizer_name": "eaer"
+    },
+    {
+      "name": "[6] GA-ER CB6",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/cb/cb6.cnf",
+      "optimizer_name": "gaer"
+    },
+
+    {
       "name": "[6] GA-A URQ",
       "path_to_solver": "./glucose",
       "path_to_dimacs": "/Thesis/sat/DAC02Bench/Urq3_5.cnf",
