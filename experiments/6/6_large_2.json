@@ -1,102 +1,52 @@
 {
   "experiments": [
     {
-      "name": "[6] GA-A BVSS",
+      "name": "[6] GA-A URQ",
       "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/vs/bubble_vs_selection_6_6.cnf",
+      "path_to_dimacs": "/Thesis/sat/DAC02Bench/Urq3_5.cnf",
       "optimizer_name": "gaa"
     },
     {
-      "name": "[6] MC-A BVSS",
+      "name": "[6] MC-A URQ",
       "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/vs/bubble_vs_selection_6_6.cnf",
+      "path_to_dimacs": "/Thesis/sat/DAC02Bench/Urq3_5.cnf",
       "optimizer_name": "null"
     },
     {
-      "name": "[6] EA-ER BVSS",
+      "name": "[6] EA-ER URQ",
       "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/vs/bubble_vs_selection_6_6.cnf",
+      "path_to_dimacs": "/Thesis/sat/DAC02Bench/Urq3_5.cnf",
       "optimizer_name": "eaer"
     },
     {
-      "name": "[6] GA-ER BVSS",
+      "name": "[6] GA-ER URQ",
       "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/vs/bubble_vs_selection_6_6.cnf",
+      "path_to_dimacs": "/Thesis/sat/DAC02Bench/Urq3_5.cnf",
       "optimizer_name": "gaer"
     },
 
     {
-      "name": "[6] GA-A BVSP",
+      "name": "[6] GA-A CHNL",
       "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/vs/bubble_vs_pancake_7_3.cnf",
+      "path_to_dimacs": "/Thesis/sat/DAC02Bench/chnl10_11.cnf",
       "optimizer_name": "gaa"
     },
     {
-      "name": "[6] MC-A BVSP",
+      "name": "[6] MC-A CHNL",
       "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/vs/bubble_vs_pancake_7_3.cnf",
+      "path_to_dimacs": "/Thesis/sat/DAC02Bench/chnl10_11.cnf",
       "optimizer_name": "null"
     },
     {
-      "name": "[6] EA-ER BVSP",
+      "name": "[6] EA-ER CHNL",
       "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/vs/bubble_vs_pancake_7_3.cnf",
+      "path_to_dimacs": "/Thesis/sat/DAC02Bench/chnl10_11.cnf",
       "optimizer_name": "eaer"
     },
     {
-      "name": "[6] GA-ER BVSP",
+      "name": "[6] GA-ER CHNL",
       "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/vs/bubble_vs_pancake_7_3.cnf",
-      "optimizer_name": "gaer"
-    },
-
-    {
-      "name": "[6] GA-A SIM",
-      "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-ps_5000_21250_3_0_0.8_0_1.50_0.cnf",
-      "optimizer_name": "gaa"
-    },
-    {
-      "name": "[6] MC-A SIM",
-      "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-ps_5000_21250_3_0_0.8_0_1.50_0.cnf",
-      "optimizer_name": "null"
-    },
-    {
-      "name": "[6] EA-ER SIM",
-      "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-ps_5000_21250_3_0_0.8_0_1.50_0.cnf",
-      "optimizer_name": "eaer"
-    },
-    {
-      "name": "[6] GA-ER SIM",
-      "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-ps_5000_21250_3_0_0.8_0_1.50_0.cnf",
-      "optimizer_name": "gaer"
-    },
-
-    {
-      "name": "[6] GA-A ABIO",
-      "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-tri_ali_s11_c35_abio_UNS.cnf",
-      "optimizer_name": "gaa"
-    },
-    {
-      "name": "[6] MC-A ABIO",
-      "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-tri_ali_s11_c35_abio_UNS.cnf",
-      "optimizer_name": "null"
-    },
-    {
-      "name": "[6] EA-ER ABIO",
-      "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-tri_ali_s11_c35_abio_UNS.cnf",
-      "optimizer_name": "eaer"
-    },
-    {
-      "name": "[6] GA-ER ABIO",
-      "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-tri_ali_s11_c35_abio_UNS.cnf",
+      "path_to_dimacs": "/Thesis/sat/DAC02Bench/chnl10_11.cnf",
       "optimizer_name": "gaer"
     }
   ]

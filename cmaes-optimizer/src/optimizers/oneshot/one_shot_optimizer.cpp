@@ -25,7 +25,7 @@ ssize_t one_shot_optimizer::fit() {
     }
   }
 
-  std::vector<double> sample_rates = {0.01, 0.025, 0.05, 0.1};
+  std::vector<double> sample_rates = {0.001, 0.0025, 0.005, 0.0075, 0.01, 0.025, 0.05, 0.075, 0.1};
   ssize_t result = std::numeric_limits<ssize_t>::max();
 
   for (double rate : sample_rates) {
@@ -48,11 +48,13 @@ ssize_t one_shot_optimizer::fit_p(
   for (size_t var_a = 1; var_a <= base_var_count; ++var_a) {
     for (size_t var_b = 1; var_b <= base_var_count; ++var_b) {
       for (const auto& c : var_clauses_p[var_a]) {
-        if (var_clauses_p[var_b].find(c) != var_clauses_p[var_b].end() && dist(gen)) {
+        if (var_clauses_p[var_b].find(c) != var_clauses_p[var_b].end() && dist(gen) &&
+            new_pairs_count < base_var_count) {
           add_er(static_cast<int64_t>(var_a), static_cast<int64_t>(var_b), cnf);
           ++new_pairs_count;
         }
-        if (var_clauses_n[var_b].find(c) != var_clauses_n[var_b].end() && dist(gen)) {
+        if (var_clauses_n[var_b].find(c) != var_clauses_n[var_b].end() && dist(gen) &&
+            new_pairs_count < base_var_count) {
           add_er(static_cast<int64_t>(var_a), -static_cast<int64_t>(var_b), cnf);
           ++new_pairs_count;
         }
@@ -62,11 +64,13 @@ ssize_t one_shot_optimizer::fit_p(
   for (size_t var_a = 1; var_a <= base_var_count; ++var_a) {
     for (size_t var_b = 1; var_b <= base_var_count; ++var_b) {
       for (const auto& c : var_clauses_n[var_a]) {
-        if (var_clauses_p[var_b].find(c) != var_clauses_p[var_b].end() && dist(gen)) {
+        if (var_clauses_p[var_b].find(c) != var_clauses_p[var_b].end() && dist(gen) &&
+            new_pairs_count < base_var_count) {
           add_er(-static_cast<int64_t>(var_a), static_cast<int64_t>(var_b), cnf);
           ++new_pairs_count;
         }
-        if (var_clauses_n[var_b].find(c) != var_clauses_n[var_b].end() && dist(gen)) {
+        if (var_clauses_n[var_b].find(c) != var_clauses_n[var_b].end() && dist(gen) &&
+            new_pairs_count < base_var_count) {
           add_er(-static_cast<int64_t>(var_a), -static_cast<int64_t>(var_b), cnf);
           ++new_pairs_count;
         }
@@ -81,7 +85,7 @@ ssize_t one_shot_optimizer::fit_p(
   return result;
 }
 
-void one_shot_optimizer::add_er(int64_t lit_a, int64_t lit_b, common::cnf &cnf) {
+void one_shot_optimizer::add_er(int64_t lit_a, int64_t lit_b, common::cnf& cnf) {
   auto lit_x = static_cast<int64_t>(cnf.var_count + 1);
   ++cnf.var_count;
   cnf.cla_count += 3;

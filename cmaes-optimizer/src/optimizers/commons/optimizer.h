@@ -10,7 +10,7 @@
 #include <utility>
 
 struct optimizer {
-  const size_t MAX_HOURS = 10;
+  const size_t MAX_HOURS = 8;
 
   std::chrono::time_point<std::chrono::high_resolution_clock> start = std::chrono::high_resolution_clock::now();
 
