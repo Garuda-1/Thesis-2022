@@ -13,24 +13,70 @@ ssize_t one_shot_optimizer::fit() {
 
   evaluate_and_record(sample, options);
 
-  std::vector<std::unordered_set<size_t>> var_clauses_p(benchmark.var_count + 1);
-  std::vector<std::unordered_set<size_t>> var_clauses_n(benchmark.var_count + 1);
-  for (size_t i = 0; i < benchmark.cla_count; ++i) {
-    for (const auto& var : benchmark.clauses[i]) {
-      if (var > 0) {
-        var_clauses_p[var].insert(i);
+//  std::vector<std::unordered_set<size_t>> var_clauses_p(benchmark.var_count + 1);
+//  std::vector<std::unordered_set<size_t>> var_clauses_n(benchmark.var_count + 1);
+//  for (size_t i = 0; i < benchmark.cla_count; ++i) {
+//    for (const auto& var : benchmark.clauses[i]) {
+//      if (var > 0) {
+//        var_clauses_p[var].insert(i);
+//      } else {
+//        var_clauses_n[-var].insert(i);
+//      }
+//    }
+//  }
+//
+//  std::vector<double> sample_rates = {0.001, 0.0025, 0.005, 0.0075, 0.01, 0.025, 0.05, 0.075, 0.1};
+//  ssize_t result = std::numeric_limits<ssize_t>::max();
+//
+//  for (double rate : sample_rates) {
+//    result = std::min(result, fit_p(rate, sample, options, var_clauses_p, var_clauses_n));
+//  }
+  common::dsu dsu(benchmark.var_count);
+  common::cnf_a cnf(benchmark);
+  std::vector<std::pair<size_t, size_t>> disjoint;
+
+  for (size_t cla_i = 0; cla_i < benchmark.cla_count; ++cla_i) {
+    for (size_t cla_j = cla_i + 1; cla_j < benchmark.cla_count; ++cla_j) {
+      bool intersects = false;
+      for (const auto lit_a : benchmark.clauses[cla_i]) {
+        for (const auto lit_b : benchmark.clauses[cla_j]) {
+          if (std::abs(lit_a) == std::abs(lit_b)) {
+            intersects = true;
+          }
+        }
+      }
+      if (intersects) {
+        dsu.union_sets(cla_i, cla_j);
       } else {
-        var_clauses_n[-var].insert(i);
+        disjoint.emplace_back(cla_i, cla_j);
       }
     }
   }
 
-  std::vector<double> sample_rates = {0.001, 0.0025, 0.005, 0.0075, 0.01, 0.025, 0.05, 0.075, 0.1};
-  ssize_t result = std::numeric_limits<ssize_t>::max();
+  size_t new_pairs_cnt = 0;
 
-  for (double rate : sample_rates) {
-    result = std::min(result, fit_p(rate, sample, options, var_clauses_p, var_clauses_n));
+  for (const auto &p : disjoint) {
+    if (dsu.find_set(p.first) == dsu.find_set(p.second)) {
+      continue;
+    }
+
+    auto lit_x = static_cast<int64_t>(cnf.var_count + 1);
+    auto lit_a = cnf.clauses[p.first][0];
+    auto lit_b = cnf.clauses[p.second][0];
+    ++cnf.var_count;
+    cnf.cla_count += 3;
+    cnf.clauses.push_back({lit_x, -lit_a, -lit_b});
+    cnf.clauses.push_back({-lit_x, lit_a});
+    cnf.clauses.push_back({-lit_x, lit_b});
+    cnf.activity.push_back(1);
+
+    dsu.union_sets(p.first, p.second);
+    ++new_pairs_cnt;
   }
+
+  common::log("Added " + std::to_string(new_pairs_cnt) + " pairs");
+
+  ssize_t result = evaluate_and_record(cnf, sample, options).proof_size;
 
   return result;
 }

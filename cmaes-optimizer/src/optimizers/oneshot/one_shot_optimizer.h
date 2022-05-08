@@ -2,6 +2,8 @@
 #define OPTIMIZER_ONE_SHOT_OPTIMIZER_H
 
 #include "commons/optimizer.h"
+#include "commons/dsu.h"
+#include "commons/cnf_a.h"
 
 #include <unordered_set>
 #include <random>

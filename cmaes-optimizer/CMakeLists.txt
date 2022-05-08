@@ -63,6 +63,8 @@ add_executable(runner
         src/optimizers/commons/cnf_a.h
         src/optimizers/commons/cnf_er.h
         src/optimizers/commons/cnf_er.cpp
+        src/optimizers/commons/dsu.h
+        src/optimizers/commons/dsu.cpp
         src/optimizers/commons/optimizer.h
         src/optimizers/commons/optimizer.cpp
         src/optimizers/commons/sample.h
