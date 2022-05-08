@@ -14,8 +14,8 @@ struct mcper_optimizer : optimizer {
   mcper_mode mode;
 
   mcper_optimizer(
-      size_t new_pairs_count, mcper_mode mode, std::string path_to_solver, std::string path_to_storage,
-      std::string path_to_dimacs, PGconn* pg_conn, int64_t experiment_id);
+      size_t new_pairs_count, mcper_mode mode, std::string path_to_solver, std::string path_to_dimacs, PGconn* pg_conn,
+      int64_t experiment_id);
 
   ssize_t fit() override;
 };

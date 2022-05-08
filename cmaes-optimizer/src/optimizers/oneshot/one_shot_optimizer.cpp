@@ -1,10 +1,10 @@
 #include "one_shot_optimizer.h"
 
 one_shot_optimizer::one_shot_optimizer(
-    std::string path_to_solver, std::string path_to_storage, std::string path_to_dimacs, PGconn* pg_conn,
+    std::string path_to_solver, std::string path_to_dimacs, PGconn* pg_conn,
     int64_t experiment_id)
     : optimizer(
-          std::move(path_to_solver), std::move(path_to_storage), common::cnf(std::move(path_to_dimacs)), pg_conn,
+          std::move(path_to_solver), common::cnf(std::move(path_to_dimacs)), pg_conn,
           experiment_id) {}
 
 ssize_t one_shot_optimizer::fit() {

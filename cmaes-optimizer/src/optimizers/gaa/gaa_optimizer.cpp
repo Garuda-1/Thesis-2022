@@ -4,11 +4,8 @@ typedef EA::Genetic<common::cnf_a, common::sample> ga_type;
 typedef EA::GenerationType<common::cnf_a, common::sample> generation_type;
 
 gaa_optimizer::gaa_optimizer(
-    std::string path_to_solver, std::string path_to_storage, std::string path_to_dimacs, PGconn* pg_conn,
-    int64_t experiment_id)
-    : optimizer(
-          std::move(path_to_solver), std::move(path_to_storage), common::cnf(std::move(path_to_dimacs)), pg_conn,
-          experiment_id) {}
+    std::string path_to_solver, std::string path_to_dimacs, PGconn* pg_conn, int64_t experiment_id)
+    : optimizer(std::move(path_to_solver), common::cnf(std::move(path_to_dimacs)), pg_conn, experiment_id) {}
 
 void gaa_optimizer::init_genes(common::cnf_a& cnf, const std::function<double(void)>& rnd) {
   cnf = common::cnf_a(this->benchmark);

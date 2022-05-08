@@ -4,13 +4,11 @@
 #include <utility>
 
 mcper_optimizer::mcper_optimizer(
-    size_t new_pairs_count, mcper_mode mode, std::string path_to_solver, std::string path_to_storage,
-    std::string path_to_dimacs, PGconn* pgConn, int64_t experimentId)
+    size_t new_pairs_count, mcper_mode mode, std::string path_to_solver, std::string path_to_dimacs, PGconn* pgConn,
+    int64_t experimentId)
     : mode(mode)
     , new_pairs_count(new_pairs_count)
-    , optimizer(
-          std::move(path_to_solver), std::move(path_to_storage), common::cnf(std::move(path_to_dimacs)), pgConn,
-          experimentId) {
+    , optimizer(std::move(path_to_solver), common::cnf(std::move(path_to_dimacs)), pgConn, experimentId) {
   activity.resize(benchmark.var_count, 1.0);
 }
 
@@ -54,13 +52,13 @@ ssize_t mcper_optimizer::fit() {
       activity[var_a] += bump_factor;
       activity[var_b] += bump_factor;
       activity.push_back((activity[var_a] + activity[var_b]) / 2);
-//      bump_factor *= 1.1;
+      //      bump_factor *= 1.1;
 
       if (std::max(activity[var_a], activity[var_b]) >= RESCALE_LIMIT) {
         for (auto& a : activity) {
           a /= RESCALE_LIMIT;
         }
-//        bump_factor /= RESCALE_LIMIT;
+        //        bump_factor /= RESCALE_LIMIT;
       }
     }
   }

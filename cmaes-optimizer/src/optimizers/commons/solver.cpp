@@ -1,7 +1,7 @@
 #include "solver.h"
 
 common::solver_output common::solver::run_unsat(
-    const cnf& cnf, const std::string& path_to_storage, const std::optional<std::vector<double>>& activity,
+    const cnf& cnf, const std::optional<std::vector<double>>& activity,
     const common::optimizer_options& options) const {
   std::random_device random_device;
   std::mt19937 random_gen(random_device());

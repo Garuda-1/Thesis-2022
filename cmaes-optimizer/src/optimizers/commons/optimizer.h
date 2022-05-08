@@ -20,16 +20,12 @@ struct optimizer {
   size_t iteration = 0;
 
   const std::string path_to_solver;
-  const std::string path_to_storage;
   const int64_t experiment_id;
 
   PGconn* pg_conn;
 
-  optimizer(
-      std::string path_to_solver, std::string path_to_storage, common::cnf benchmark, PGconn* pg_conn,
-      int64_t experiment_id)
+  optimizer(std::string path_to_solver, common::cnf benchmark, PGconn* pg_conn, int64_t experiment_id)
       : path_to_solver(std::move(path_to_solver))
-      , path_to_storage(std::move(path_to_storage))
       , benchmark(std::move(benchmark))
       , pg_conn(pg_conn)
       , experiment_id(experiment_id) {}

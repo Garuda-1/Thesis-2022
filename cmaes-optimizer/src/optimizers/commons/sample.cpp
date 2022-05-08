@@ -11,8 +11,7 @@ common::sample::sample(const double* a, size_t var_count) : activity(var_count) 
 common::sample::sample(std::vector<double> activity) : activity(std::move(activity)) {}
 
 void common::sample::evaluate(
-    const cnf& cnf, const std::string& path_to_solver, const std::string& path_to_storage,
-    const common::optimizer_options& options) {
+    const cnf& cnf, const std::string& path_to_solver, const common::optimizer_options& options) {
   common::solver s(path_to_solver);
-  solver_output = s.run_unsat(cnf, path_to_storage, activity, options);
+  solver_output = s.run_unsat(cnf, activity, options);
 }

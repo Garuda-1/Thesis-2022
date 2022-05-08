@@ -51,40 +51,40 @@ void run_thread(
   experiment_id = create_experiment(name, pg_conn);
   std::cout << "Experiment id: " << experiment_id << std::endl;
 
-  std::string path_to_storage =
-      boost::filesystem::temp_directory_path().string() + "/experiments/" + std::to_string(experiment_id);
-  boost::filesystem::create_directories(path_to_storage);
-  std::cout << "Temp files directory: " << path_to_storage << std::endl;
+//  std::string path_to_storage =
+//      boost::filesystem::temp_directory_path().string() + "/experiments/" + std::to_string(experiment_id);
+//  boost::filesystem::create_directories(path_to_storage);
+//  std::cout << "Temp files directory: " << path_to_storage << std::endl;
 
   std::unique_ptr<optimizer> optimizer;
 
   if (optimizer_name == "cmaes") {
     optimizer = std::make_unique<cmaes_optimizer>(
-        path_to_solver, path_to_dimacs, path_to_storage, 1, 0.2, -1, pg_conn, experiment_id);
+        path_to_solver, path_to_dimacs, 1, 0.2, -1, pg_conn, experiment_id);
     //  } else if (optimizer_name == "mcper-t") {
     //    optimizer = std::make_unique<mcper_optimizer>(
-    //        100, TRAIL_FREQUENCIES, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+    //        100, TRAIL_FREQUENCIES, path_to_solver, path_to_dimacs, pg_conn, experiment_id);
     //  } else if (optimizer_name == "mcper-t-plus") {
     //    optimizer = std::make_unique<mcper_optimizer>(
-    //        100, TRAIL_FREQUENCIES_PLUS, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+    //        100, TRAIL_FREQUENCIES_PLUS, path_to_solver, path_to_dimacs, pg_conn, experiment_id);
     //  } else if (optimizer_name == "mcper-c") {
     //    optimizer = std::make_unique<mcper_optimizer>(
-    //        100, CONFLICT_FREQUENCIES, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+    //        100, CONFLICT_FREQUENCIES, path_to_solver, path_to_dimacs, pg_conn, experiment_id);
     //  } else if (optimizer_name == "mcper-c-plus") {
     //    optimizer = std::make_unique<mcper_optimizer>(
-    //        100, CONFLICT_FREQUENCIES_PLUS, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+    //        100, CONFLICT_FREQUENCIES_PLUS, path_to_solver, path_to_dimacs, pg_conn, experiment_id);
     //  } else if (optimizer_name == "mcper-t-xl") {
     //    optimizer = std::make_unique<mcper_optimizer>(
-    //        1000, TRAIL_FREQUENCIES, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+    //        1000, TRAIL_FREQUENCIES, path_to_solver, path_to_dimacs, pg_conn, experiment_id);
     //  } else if (optimizer_name == "mcper-t-plus-xl") {
     //    optimizer = std::make_unique<mcper_optimizer>(
-    //        1000, TRAIL_FREQUENCIES_PLUS, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+    //        1000, TRAIL_FREQUENCIES_PLUS, path_to_solver, path_to_dimacs, pg_conn, experiment_id);
     //  } else if (optimizer_name == "mcper-c-xl") {
     //    optimizer = std::make_unique<mcper_optimizer>(
-    //        1000, CONFLICT_FREQUENCIES, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+    //        1000, CONFLICT_FREQUENCIES, path_to_solver, path_to_dimacs, pg_conn, experiment_id);
     //  } else if (optimizer_name == "mcper-c-plus-xl") {
     //    optimizer = std::make_unique<mcper_optimizer>(
-    //        1000, CONFLICT_FREQUENCIES_PLUS, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+    //        1000, CONFLICT_FREQUENCIES_PLUS, path_to_solver, path_to_dimacs, pg_conn, experiment_id);
   } else if (boost::algorithm::starts_with(optimizer_name, "mcper-")) {
     mcper_mode mode;
     if (optimizer_name[6] == 'c' && optimizer_name[8] == 'n') {
@@ -114,23 +114,23 @@ void run_thread(
         break;
     }
     optimizer = std::make_unique<mcper_optimizer>(
-        new_pairs_count, mode, path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+        new_pairs_count, mode, path_to_solver, path_to_dimacs, pg_conn, experiment_id);
   } else if (optimizer_name == "gaer") {
     optimizer =
-        std::make_unique<gaer_optimizer>(path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+        std::make_unique<gaer_optimizer>(path_to_solver, path_to_dimacs, pg_conn, experiment_id);
   } else if (optimizer_name == "eaer") {
     optimizer =
-        std::make_unique<eaer_optimizer>(path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+        std::make_unique<eaer_optimizer>(path_to_solver, path_to_dimacs, pg_conn, experiment_id);
   } else if (optimizer_name == "gaa") {
     optimizer =
-        std::make_unique<gaa_optimizer>(path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+        std::make_unique<gaa_optimizer>(path_to_solver, path_to_dimacs, pg_conn, experiment_id);
   } else if (optimizer_name == "null") {
     optimizer =
-        std::make_unique<null_optimizer>(path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+        std::make_unique<null_optimizer>(path_to_solver, path_to_dimacs, pg_conn, experiment_id);
   } else if (optimizer_name == "baseline") {
-    optimizer = std::make_unique<baseline>(path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+    optimizer = std::make_unique<baseline>(path_to_solver, path_to_dimacs, pg_conn, experiment_id);
   } else if (optimizer_name == "one-shot") {
-    optimizer = std::make_unique<one_shot_optimizer>(path_to_solver, path_to_storage, path_to_dimacs, pg_conn, experiment_id);
+    optimizer = std::make_unique<one_shot_optimizer>(path_to_solver, path_to_dimacs, pg_conn, experiment_id);
   } else {
     throw std::runtime_error("Unknown optimizer: " + optimizer_name);
   }

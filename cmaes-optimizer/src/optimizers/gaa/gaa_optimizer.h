@@ -14,9 +14,7 @@ struct gaa_optimizer : optimizer {
 
   std::mt19937 gen;
 
-  gaa_optimizer(
-      std::string path_to_solver, std::string path_to_storage, std::string path_to_dimacs, PGconn* pg_conn,
-      int64_t experiment_id);
+  gaa_optimizer(std::string path_to_solver, std::string path_to_dimacs, PGconn* pg_conn, int64_t experiment_id);
 
   void init_genes(common::cnf_a& cnf, const std::function<double(void)>& rnd);
 

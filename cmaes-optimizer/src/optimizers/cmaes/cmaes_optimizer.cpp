@@ -3,10 +3,9 @@
 #include <utility>
 
 cmaes_optimizer::cmaes_optimizer(
-    std::string path_to_solver, std::string path_to_storage, const std::string& path_to_dimacs, double base_value,
-    double sigma, int32_t lambda, PGconn* pg_conn, int64_t experiment_id)
-    : optimizer(
-          std::move(path_to_solver), std::move(path_to_storage), common::cnf(path_to_dimacs), pg_conn, experiment_id) {
+    std::string path_to_solver, const std::string& path_to_dimacs, double base_value, double sigma, int32_t lambda,
+    PGconn* pg_conn, int64_t experiment_id)
+    : optimizer(std::move(path_to_solver), common::cnf(path_to_dimacs), pg_conn, experiment_id) {
   std::vector<double> activity(benchmark.var_count, base_value);
   cma_params = libcmaes::CMAParameters<>(activity, sigma, lambda);
   cma_params.set_max_iter(100);

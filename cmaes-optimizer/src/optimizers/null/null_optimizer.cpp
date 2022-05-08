@@ -1,11 +1,8 @@
 #include "null_optimizer.h"
 
 null_optimizer::null_optimizer(
-    std::string path_to_solver, std::string path_to_storage, std::string path_to_dimacs, PGconn* pg_conn,
-    int64_t experiment_id)
-    : optimizer(
-          std::move(path_to_solver), std::move(path_to_storage), common::cnf(std::move(path_to_dimacs)), pg_conn,
-          experiment_id) {}
+    std::string path_to_solver, std::string path_to_dimacs, PGconn* pg_conn, int64_t experiment_id)
+    : optimizer(std::move(path_to_solver), common::cnf(std::move(path_to_dimacs)), pg_conn, experiment_id) {}
 
 ssize_t null_optimizer::fit() {
   for (size_t i = 0; optimizer::within_time_resources(); ++i) {

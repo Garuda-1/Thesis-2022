@@ -1,11 +1,9 @@
 #include "eaer_optimizer.h"
 
 eaer_optimizer::eaer_optimizer(
-    std::string path_to_solver, std::string path_to_storage, const std::string& path_to_dimacs, PGconn* pg_conn,
-    int64_t experiment_id)
+    std::string path_to_solver, const std::string& path_to_dimacs, PGconn* pg_conn, int64_t experiment_id)
     : cnf(common::cnf(path_to_dimacs))
-    , optimizer(
-          std::move(path_to_solver), std::move(path_to_storage), common::cnf(path_to_dimacs), pg_conn, experiment_id) {
+    , optimizer(std::move(path_to_solver), common::cnf(path_to_dimacs), pg_conn, experiment_id) {
   genome.resize(cnf.var_count, std::vector<bool>(cnf.var_count));
   flip = std::bernoulli_distribution(pow(static_cast<double>(cnf.var_count), -2) * 10);
   gen = std::mt19937(random_device());

@@ -18,9 +18,7 @@ struct sample {
 
   explicit sample(std::vector<double> a);
 
-  void evaluate(
-      const cnf& cnf, const std::string& path_to_solver, const std::string& path_to_storage,
-      const optimizer_options& options);
+  void evaluate(const cnf& cnf, const std::string& path_to_solver, const optimizer_options& options);
 };
 
 }  // namespace common

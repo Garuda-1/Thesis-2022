@@ -20,7 +20,7 @@ struct solver {
   explicit solver(std::string path) : path(std::move(path)) {}
 
   [[nodiscard]] common::solver_output run_unsat(
-      const cnf& cnf, const std::string& path_to_storage, const std::optional<std::vector<double>>& activity,
+      const cnf& cnf, const std::optional<std::vector<double>>& activity,
       const common::optimizer_options& options) const;
 };
 

@@ -10,7 +10,7 @@ struct one_shot_optimizer : optimizer {
   std::mt19937 gen;
 
   one_shot_optimizer(
-      std::string path_to_solver, std::string path_to_storage, std::string path_to_dimacs, PGconn* pg_conn,
+      std::string path_to_solver, std::string path_to_dimacs, PGconn* pg_conn,
       int64_t experiment_id);
 
   ssize_t fit() override;

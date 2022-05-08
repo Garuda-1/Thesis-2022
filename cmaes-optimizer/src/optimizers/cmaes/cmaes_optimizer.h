@@ -15,8 +15,8 @@ struct cmaes_optimizer : optimizer {
   libcmaes::FitFunc fit_function = [=](const double* a, const size_t n) { return evaluate(a, n); };
 
   cmaes_optimizer(
-      std::string path_to_solver, std::string path_to_storage, const std::string& path_to_dimacs, double base_value = 1,
-      double sigma = 0.2, int32_t lambda = -1, PGconn* pg_conn = nullptr, int64_t experiment_id = -1);
+      std::string path_to_solver, const std::string& path_to_dimacs, double base_value = 1, double sigma = 0.2,
+      int32_t lambda = -1, PGconn* pg_conn = nullptr, int64_t experiment_id = -1);
 
   ssize_t fit() override;
 

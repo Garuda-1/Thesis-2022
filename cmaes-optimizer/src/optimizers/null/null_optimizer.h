@@ -9,7 +9,7 @@ struct null_optimizer : optimizer {
   ssize_t best = std::numeric_limits<ssize_t>::max();
 
   null_optimizer(
-      std::string path_to_solver, std::string path_to_storage, std::string path_to_dimacs, PGconn* pg_conn,
+      std::string path_to_solver, std::string path_to_dimacs, PGconn* pg_conn,
       int64_t experiment_id);
 
   ssize_t fit() override;

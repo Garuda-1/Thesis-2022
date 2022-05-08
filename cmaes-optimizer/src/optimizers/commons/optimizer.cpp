@@ -8,7 +8,7 @@ common::solver_output optimizer::evaluate_and_record(common::sample& sample, con
 
 common::solver_output optimizer::evaluate_and_record(
     const common::cnf& cnf, common::sample& sample, const common::optimizer_options& options) {
-  sample.evaluate(cnf, path_to_solver, path_to_storage, options);
+  sample.evaluate(cnf, path_to_solver, options);
   ssize_t sample_fitness = sample.solver_output.proof_size;
   if (best_fitness < 0 || sample_fitness < best_fitness) {
     best_fitness = sample_fitness;
@@ -31,12 +31,10 @@ void optimizer::log_optimization_result() const {
 }
 
 void optimizer::clear_logs() const {
-  boost::filesystem::remove_all(path_to_storage);
+//  boost::filesystem::remove_all(path_to_storage);
 }
 
 bool optimizer::within_time_resources() const {
   auto time_hours = std::chrono::duration_cast<std::chrono::hours>(std::chrono::high_resolution_clock::now() - start);
   return time_hours.count() < MAX_HOURS;
-  //    auto time_seconds = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() -
-  //    start); return time_seconds.count() < 10;
 }

@@ -18,9 +18,7 @@ struct eaer_optimizer : optimizer {
   std::random_device random_device;
   std::mt19937 gen;
 
-  eaer_optimizer(
-      std::string path_to_solver, std::string path_to_storage, const std::string& path_to_dimacs, PGconn* pg_conn,
-      int64_t experiment_id);
+  eaer_optimizer(std::string path_to_solver, const std::string& path_to_dimacs, PGconn* pg_conn, int64_t experiment_id);
 
   void init_genome();
 
