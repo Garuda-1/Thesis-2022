@@ -31,8 +31,9 @@ ssize_t one_shot_optimizer::fit() {
 //  for (double rate : sample_rates) {
 //    result = std::min(result, fit_p(rate, sample, options, var_clauses_p, var_clauses_n));
 //  }
-  common::dsu dsu(benchmark.var_count);
+  common::dsu dsu(benchmark.cla_count);
   common::cnf_a cnf(benchmark);
+  cnf.activity.resize(cnf.var_count, 1e-10);
   std::vector<std::pair<size_t, size_t>> disjoint;
 
   for (size_t cla_i = 0; cla_i < benchmark.cla_count; ++cla_i) {
@@ -54,9 +55,10 @@ ssize_t one_shot_optimizer::fit() {
   }
 
   size_t new_pairs_cnt = 0;
+  std::bernoulli_distribution dist(static_cast<double>(cnf.cla_count) / disjoint.size());
 
   for (const auto &p : disjoint) {
-    if (dsu.find_set(p.first) == dsu.find_set(p.second)) {
+    if (!dist(gen)) {
       continue;
     }
 
