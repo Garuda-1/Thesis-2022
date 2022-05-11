@@ -1,0 +1,26 @@
+[
+  {
+    "json_agg": [753354],
+    "name": "[5] Baseline Bsat"
+  },
+  {
+    "json_agg": [3027],
+    "name": "[5] Baseline Dubois100"
+  },
+  {
+    "json_agg": [788],
+    "name": "[5] Baseline PHP6"
+  },
+  {
+    "json_agg": [7643],
+    "name": "[5] Baseline PHP7"
+  },
+  {
+    "json_agg": [41631],
+    "name": "[5] Baseline PHP8"
+  },
+  {
+    "json_agg": [170750],
+    "name": "[5] Baseline Steiner"
+  }
+]

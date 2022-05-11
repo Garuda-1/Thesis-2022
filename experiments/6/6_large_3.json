@@ -1,52 +1,27 @@
 {
   "experiments": [
     {
-      "name": "[6] GA-A Bryant",
+      "name": "[6] GA-A Steiner",
       "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/vs/dlx1c.ucl.sat.chaff.4.1.bryant.cnf",
+      "path_to_dimacs": "/Thesis/sat/simpler_g3/Steiner-45-16-bce.cnf",
       "optimizer_name": "gaa"
     },
     {
-      "name": "[6] MC-A Bryant",
+      "name": "[6] MC-A Steiner",
       "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/vs/dlx1c.ucl.sat.chaff.4.1.bryant.cnf",
+      "path_to_dimacs": "/Thesis/sat/simpler_g3/Steiner-45-16-bce.cnf",
       "optimizer_name": "null"
     },
     {
-      "name": "[6] EA-ER Bryant",
+      "name": "[6] EA-ER Steiner",
       "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/vs/dlx1c.ucl.sat.chaff.4.1.bryant.cnf",
+      "path_to_dimacs": "/Thesis/sat/simpler_g3/Steiner-45-16-bce.cnf",
       "optimizer_name": "eaer"
     },
     {
-      "name": "[6] GA-ER Bryant",
+      "name": "[6] GA-ER Steiner",
       "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/vs/dlx1c.ucl.sat.chaff.4.1.bryant.cnf",
-      "optimizer_name": "gaer"
-    },
-
-    {
-      "name": "[6] GA-A ABIO",
-      "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-tri_ali_s11_c35_abio_UNS.cnf",
-      "optimizer_name": "gaa"
-    },
-    {
-      "name": "[6] MC-A ABIO",
-      "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-tri_ali_s11_c35_abio_UNS.cnf",
-      "optimizer_name": "null"
-    },
-    {
-      "name": "[6] EA-ER ABIO",
-      "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-tri_ali_s11_c35_abio_UNS.cnf",
-      "optimizer_name": "eaer"
-    },
-    {
-      "name": "[6] GA-ER ABIO",
-      "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-tri_ali_s11_c35_abio_UNS.cnf",
+      "path_to_dimacs": "/Thesis/sat/simpler_g3/Steiner-45-16-bce.cnf",
       "optimizer_name": "gaer"
     }
   ]
