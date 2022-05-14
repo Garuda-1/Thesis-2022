@@ -17,7 +17,7 @@ from (
                       select e2.id
                       from experiments e2
                                inner join runs r2 on e2.id = r2.experiment_id
-                      where e2.name = '[6] EA-ER URQ'
+                      where e2.name = '[6] EA-ER Steiner'
                       order by r2.proof_size asc
                       limit 1
                   )
@@ -39,7 +39,7 @@ from (
                  select e2.id
                  from experiments e2
                           inner join runs r2 on e2.id = r2.experiment_id
-                 where e2.name = '[6] MC-A URQ'
+                 where e2.name = '[6] MC-A Steiner'
                  order by r2.proof_size asc
                  limit 1
              )
@@ -60,7 +60,7 @@ from (
              where r2.experiment_id in (
                  select e2.id
                  from experiments e2
-                 where e2.name = '[6] MCP-ER+ 1 URQ'
+                 where e2.name = '[6] MCP-ER+ 1 Steiner'
                  limit 1
              )
              order by r2.timestamp
@@ -80,7 +80,7 @@ from (
              where r2.experiment_id in (
                  select e2.id
                  from experiments e2
-                 where e2.name = '[6] MCP-ER 1 URQ'
+                 where e2.name = '[6] MCP-ER 1 Steiner'
                  limit 1
              )
              order by r2.timestamp
