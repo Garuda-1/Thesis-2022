@@ -1,0 +1,16 @@
+{
+  "experiments": [
+    {
+      "name": "[6] MCP-ERX+ 100 CB6",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/cb/cb6.cnf",
+      "optimizer_name": "mcper-c-p-L"
+    },
+    {
+      "name": "[6] MCP-ERX+ 100 URQ",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/DAC02Bench/Urq3_5.cnf",
+      "optimizer_name": "mcper-c-p-L"
+    }
+  ]
+}

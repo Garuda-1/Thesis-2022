@@ -9,6 +9,8 @@
 #include <boost/process.hpp>
 #include <libpq-fe.h>
 
+#define MCPER_XOR
+
 namespace bp = boost::process;
 
 namespace common {

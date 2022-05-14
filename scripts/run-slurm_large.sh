@@ -10,5 +10,5 @@ srun \
   --mem=192G \
   --cpus-per-task=24 \
   --time=180:00:00 \
-  --output="output-large-2.log" \
-  ./run-singularity.sh /Thesis/experiments/6/6_large_2.json
+  --output="output-large-8.log" \
+  ./run-singularity.sh /Thesis/experiments/8/8_large.json

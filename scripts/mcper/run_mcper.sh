@@ -12,12 +12,12 @@ cd /Thesis/cmaes-optimizer/build
 #cmake -DCMAKE_BUILD_TYPE=Release ..
 #make glucose runner
 
-for experiment in /Thesis/experiments/7/7_mcper_{1,10,100,1000}.json
+for experiment in /Thesis/experiments/8/8_mcper_{1,10,100,1000}.json
 do
   ./runner $experiment &
 done
 
-for experiment in /Thesis/experiments/7/7_mcper_p_{1,10,100,1000}.json
+for experiment in /Thesis/experiments/8/8_mcper_p_{1,10,100,1000}.json
 do
   ./runner $experiment &
 done

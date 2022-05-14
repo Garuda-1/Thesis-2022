@@ -44,10 +44,17 @@ ssize_t mcper_optimizer::fit() {
       auto var_b = static_cast<size_t>(std::abs(lit_b));
       auto lit_x = static_cast<int64_t>(var_x);
       ++benchmark.var_count;
+
+#ifdef MCPER_XOR
+      benchmark.cla_count += 2;
+      benchmark.clauses.push_back({-lit_x, lit_a, -lit_b});
+      benchmark.clauses.push_back({-lit_x, -lit_a, lit_b});
+#else
       benchmark.cla_count += 3;
       benchmark.clauses.push_back({lit_x, -lit_a, -lit_b});
       benchmark.clauses.push_back({-lit_x, lit_a});
       benchmark.clauses.push_back({-lit_x, lit_b});
+#endif
 
       activity[var_a] += bump_factor;
       activity[var_b] += bump_factor;
