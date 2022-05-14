@@ -2,11 +2,11 @@
 set -eu
 
 srun \
-  --job-name "[6] Large x24" \
+  --job-name "[8] Large x24" \
   --mail-type=ALL \
   --mail-user=yan.dolzhanskiy@gmail.com \
   --ntasks=1 \
-  --nodelist=meduza-1 \
+  --nodelist=meduza-2 \
   --mem=192G \
   --cpus-per-task=24 \
   --time=180:00:00 \
