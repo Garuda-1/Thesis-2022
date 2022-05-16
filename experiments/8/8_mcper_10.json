@@ -11,18 +11,6 @@
       "path_to_solver": "./glucose",
       "path_to_dimacs": "/Thesis/sat/php/php-8.cnf",
       "optimizer_name": "mcper-c-n-M"
-    },
-    {
-      "name": "[6] MCP-ERX 10 Bsat",
-      "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-bsat180-648.cnf",
-      "optimizer_name": "mcper-c-n-M"
-    },
-    {
-      "name": "[6] MCP-ERX 10 Steiner",
-      "path_to_solver": "./glucose",
-      "path_to_dimacs": "/Thesis/sat/simpler_g3/Steiner-45-16-bce.cnf",
-      "optimizer_name": "mcper-c-n-M"
     }
   ]
 }

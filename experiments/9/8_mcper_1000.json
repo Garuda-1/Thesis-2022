@@ -1,0 +1,28 @@
+{
+  "experiments": [
+    {
+      "name": "[6] MCP-ERX 1000 Dubois100",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/dubois/dubois100.cnf",
+      "optimizer_name": "mcper-c-n-X"
+    },
+    {
+      "name": "[6] MCP-ERX 1000 PHP8",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/php/php-8.cnf",
+      "optimizer_name": "mcper-c-n-X"
+    },
+    {
+      "name": "[6] MCP-ERX 1000 Bsat",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-bsat180-648.cnf",
+      "optimizer_name": "mcper-c-n-X"
+    },
+    {
+      "name": "[6] MCP-ERX 1000 Steiner",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/simpler_g3/Steiner-45-16-bce.cnf",
+      "optimizer_name": "mcper-c-n-X"
+    }
+  ]
+}

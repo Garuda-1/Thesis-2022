@@ -1,0 +1,81 @@
+{
+  "experiments": [
+    {
+      "name": "[6] EA-ERX Dubois100",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/dubois/dubois100.cnf",
+      "optimizer_name": "eaer"
+    },
+    {
+      "name": "[6] GA-ERX Dubois100",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/dubois/dubois100.cnf",
+      "optimizer_name": "gaer"
+    },
+
+    {
+      "name": "[6] EA-ERX PHP8",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/php/php-8.cnf",
+      "optimizer_name": "eaer"
+    },
+    {
+      "name": "[6] GA-ERX PHP8",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/php/php-8.cnf",
+      "optimizer_name": "gaer"
+    },
+
+    {
+      "name": "[6] EA-ERX Bsat",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-bsat180-648.cnf",
+      "optimizer_name": "eaer"
+    },
+    {
+      "name": "[6] GA-ERX Bsat",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/benchmarks_part/mp1-bsat180-648.cnf",
+      "optimizer_name": "gaer"
+    },
+
+    {
+      "name": "[6] EA-ERX Steiner",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/simpler_g3/Steiner-45-16-bce.cnf",
+      "optimizer_name": "eaer"
+    },
+    {
+      "name": "[6] GA-ERX Steiner",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/simpler_g3/Steiner-45-16-bce.cnf",
+      "optimizer_name": "gaer"
+    },
+
+    {
+      "name": "[6] EA-ERX CB6",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/cb/cb6.cnf",
+      "optimizer_name": "eaer"
+    },
+    {
+      "name": "[6] GA-ERX CB6",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/cb/cb6.cnf",
+      "optimizer_name": "gaer"
+    },
+
+    {
+      "name": "[6] EA-ERX URQ",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/DAC02Bench/Urq3_5.cnf",
+      "optimizer_name": "eaer"
+    },
+    {
+      "name": "[6] GA-ERX URQ",
+      "path_to_solver": "./glucose",
+      "path_to_dimacs": "/Thesis/sat/DAC02Bench/Urq3_5.cnf",
+      "optimizer_name": "gaer"
+    }
+  ]
+}
