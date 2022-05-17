@@ -1,78 +1,130 @@
 [
   {
-    "json_agg": "[568283, 694178, 598209, 568923, 551622, 554474, 563719, 492725]",
+    "json_agg": [535004],
     "name": "[6] MCP-ERX 1 Bsat"
   },
   {
-    "json_agg": "[42237]",
+    "json_agg": [42237],
     "name": "[6] MCP-ERX 1 CB6"
   },
   {
-    "json_agg": "[999, 814, 914, 706, 964, 693, 878, 739]",
+    "json_agg": [693],
     "name": "[6] MCP-ERX 1 Dubois100"
   },
   {
-    "json_agg": "[13285, 18460, 16895, 15943, 13417, 21250, 16048, 22161]",
+    "json_agg": [22161],
     "name": "[6] MCP-ERX 1 PHP8"
   },
   {
-    "json_agg": "[467689]",
+    "json_agg": [147494],
+    "name": "[6] MCP-ERX 1 Steiner"
+  },
+  {
+    "json_agg": [467689],
     "name": "[6] MCP-ERX 1 URQ"
   },
   {
-    "json_agg": "[50399]",
+    "json_agg": [563719],
+    "name": "[6] MCP-ERX 10 Bsat"
+  },
+  {
+    "json_agg": [50399],
     "name": "[6] MCP-ERX 10 CB6"
   },
   {
-    "json_agg": "[547910]",
+    "json_agg": [814],
+    "name": "[6] MCP-ERX 10 Dubois100"
+  },
+  {
+    "json_agg": [21250],
+    "name": "[6] MCP-ERX 10 PHP8"
+  },
+  {
+    "json_agg": [154604],
+    "name": "[6] MCP-ERX 10 Steiner"
+  },
+  {
+    "json_agg": [547910],
     "name": "[6] MCP-ERX 10 URQ"
   },
   {
-    "json_agg": "[51103]",
+    "json_agg": [51103],
     "name": "[6] MCP-ERX 100 CB6"
   },
   {
-    "json_agg": "[663054]",
+    "json_agg": [663054],
     "name": "[6] MCP-ERX 100 URQ"
   },
   {
-    "json_agg": "[55689]",
+    "json_agg": [55689],
     "name": "[6] MCP-ERX 1000 CB6"
   },
   {
-    "json_agg": "[603184]",
+    "json_agg": [603184],
     "name": "[6] MCP-ERX 1000 URQ"
   },
   {
-    "json_agg": "[43185]",
+    "json_agg": [505857],
+    "name": "[6] MCP-ERX+ 1 Bsat"
+  },
+  {
+    "json_agg": [43185],
     "name": "[6] MCP-ERX+ 1 CB6"
   },
   {
-    "json_agg": "[457440]",
+    "json_agg": [706],
+    "name": "[6] MCP-ERX+ 1 Dubois100"
+  },
+  {
+    "json_agg": [13285],
+    "name": "[6] MCP-ERX+ 1 PHP8"
+  },
+  {
+    "json_agg": [145361],
+    "name": "[6] MCP-ERX+ 1 Steiner"
+  },
+  {
+    "json_agg": [457440],
     "name": "[6] MCP-ERX+ 1 URQ"
   },
   {
-    "json_agg": "[54857]",
+    "json_agg": [492725],
+    "name": "[6] MCP-ERX+ 10 Bsat"
+  },
+  {
+    "json_agg": [54857],
     "name": "[6] MCP-ERX+ 10 CB6"
   },
   {
-    "json_agg": "[505506]",
+    "json_agg": [739],
+    "name": "[6] MCP-ERX+ 10 Dubois100"
+  },
+  {
+    "json_agg": [16105],
+    "name": "[6] MCP-ERX+ 10 PHP8"
+  },
+  {
+    "json_agg": [156472],
+    "name": "[6] MCP-ERX+ 10 Steiner"
+  },
+  {
+    "json_agg": [505506],
     "name": "[6] MCP-ERX+ 10 URQ"
   },
   {
-    "json_agg": "[57680]",
+    "json_agg": [57680],
     "name": "[6] MCP-ERX+ 100 CB6"
   },
   {
-    "json_agg": "[515103]",
+    "json_agg": [515103],
     "name": "[6] MCP-ERX+ 100 URQ"
   },
   {
-    "json_agg": "[56463]",
+    "json_agg": [56463],
     "name": "[6] MCP-ERX+ 1000 CB6"
   },
   {
-    "json_agg": "[712708]",
+    "json_agg": [712708],
     "name": "[6] MCP-ERX+ 1000 URQ"
   }
 ]

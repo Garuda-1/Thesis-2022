@@ -1,7 +1,9 @@
 select json_agg(EAER.min_proof_size_eaer) as eaer,
        json_agg(MCA.min_proof_size_mca) as mca,
        json_agg(MCPER.min_proof_size_mcper) as mcper,
-       json_agg(MCPERPLUS.min_proof_size_mcperplus) as mcperplus
+       json_agg(MCPERPLUS.min_proof_size_mcperplus) as mcperplus,
+       json_agg(MCPERM.min_proof_size_mcperm) as mcperm,
+       json_agg(MCPERMPLUS.min_proof_size_mcpermplus) as mcpermplus
 from (
          select
              -- EAER_SUB.proof_size,
@@ -17,7 +19,7 @@ from (
                       select e2.id
                       from experiments e2
                                inner join runs r2 on e2.id = r2.experiment_id
-                      where e2.name = '[6] EA-ER Steiner'
+                      where e2.name = '[6] EA-ER Dubois100'
                       order by r2.proof_size asc
                       limit 1
                   )
@@ -39,7 +41,7 @@ from (
                  select e2.id
                  from experiments e2
                           inner join runs r2 on e2.id = r2.experiment_id
-                 where e2.name = '[6] MC-A Steiner'
+                 where e2.name = '[6] MC-A Dubois100'
                  order by r2.proof_size asc
                  limit 1
              )
@@ -60,7 +62,7 @@ from (
              where r2.experiment_id in (
                  select e2.id
                  from experiments e2
-                 where e2.name = '[6] MCP-ER+ 1 Steiner'
+                 where e2.name = '[6] MCP-ER+ 1 Dubois100'
                  limit 1
              )
              order by r2.timestamp
@@ -80,9 +82,49 @@ from (
              where r2.experiment_id in (
                  select e2.id
                  from experiments e2
-                 where e2.name = '[6] MCP-ER 1 Steiner'
+                 where e2.name = '[6] MCP-ER 1 Dubois100'
                  limit 1
              )
              order by r2.timestamp
          ) MCPER_SUB
 ) MCPER on EAER.row_number = MCPER.row_number
+         inner join (
+    select
+        -- MCPERMPLUS_SUB.proof_size,
+        MIN(MCPERMPLUS_SUB.proof_size) over (order by MCPERMPLUS_SUB.timestamp) as min_proof_size_mcpermplus,
+        -- extract(epoch from (MCPERMPLUS_SUB.timestamp - (LAG(MCPERMPLUS_SUB.timestamp) over (order by MCPERMPLUS_SUB.timestamp)))) as duration_sec,
+        row_number() over () as row_number
+    from (
+             select
+                 r2.proof_size,
+                 r2.timestamp
+             from runs r2
+             where r2.experiment_id in (
+                 select e2.id
+                 from experiments e2
+                 where e2.name = '[6] MCP-ERX+ 1 Dubois100'
+                 limit 1
+             )
+             order by r2.timestamp
+         ) MCPERMPLUS_SUB
+) MCPERMPLUS on EAER.row_number = MCPERMPLUS.row_number
+         inner join (
+    select
+        -- MCPERM_SUB.proof_size,
+        MIN(MCPERM_SUB.proof_size) over (order by MCPERM_SUB.timestamp) as min_proof_size_mcperm,
+        -- extract(epoch from (MCPERM_SUB.timestamp - (LAG(MCPERM_SUB.timestamp) over (order by MCPERM_SUB.timestamp)))) as duration_sec,
+        row_number() over () as row_number
+    from (
+             select
+                 r2.proof_size,
+                 r2.timestamp
+             from runs r2
+             where r2.experiment_id in (
+                 select e2.id
+                 from experiments e2
+                 where e2.name = '[6] MCP-ERX 1 Dubois100'
+                 limit 1
+             )
+             order by r2.timestamp
+         ) MCPERM_SUB
+) MCPERM on EAER.row_number = MCPERM.row_number
